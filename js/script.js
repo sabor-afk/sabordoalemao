@@ -215,6 +215,11 @@ function abrirProduto(index) {
     badgeWrap.innerHTML = p.badge
         ? `<span class="prod-badge-modal">${p.badge}</span>` : '';
 
+    // Código
+    const codigoEl = document.getElementById('prodCodigo');
+    codigoEl.innerHTML = p.codigo
+        ? `<span class="prod-codigo-item">🔖 Código: <strong>${p.codigo}</strong></span>` : '';
+
     // Tags
     const tagsEl = document.getElementById('prodTags');
     tagsEl.innerHTML = (p.tags || []).map(t =>
@@ -269,11 +274,6 @@ function abrirProduto(index) {
     } else {
         ingredWrap.style.display = 'none';
     }
-
-    // Botão WhatsApp
-    const msg = `Olá! Vim pelo site do *Sabor do Alemão* e tenho interesse no produto:\n\n*${p.nome}*\n${p.descricao}\n\nPoderia me passar mais informações? 😊`;
-    document.getElementById('prodWhatsApp').href =
-        `https://wa.me/5547999743400?text=${encodeURIComponent(msg)}`;
 
     // Abrir modal
     document.getElementById('modalProduto').style.display = 'flex';
@@ -363,3 +363,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// ── VALIDAÇÃO CPF/CNPJ: apenas números ──────────────────────
+document.getElementById('cpf-cnpj').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '');
+});

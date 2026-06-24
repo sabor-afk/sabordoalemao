@@ -911,6 +911,270 @@
         opacity: 0.9;
     }
     
+    /* === EVOLUÇÃO DO EMBAIXADOR === */
+    .evolucao-container {
+        max-width: 1200px;
+        margin: 60px auto 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        position: relative;
+        z-index: 2;
+        flex-wrap: wrap;
+    }
+    
+    /* ──── TIMELINE ANIMADA ──── */
+    .evolucao-timeline {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 900px;
+        height: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 1;
+    }
+    
+    .timeline-circle {
+        width: 24px;
+        height: 24px;
+        background: var(--amarelo);
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(240, 177, 50, 0.8);
+        animation: pulseCircle 2s ease-in-out infinite;
+        position: absolute;
+    }
+    
+    .timeline-circle-left {
+        left: -12px;
+        animation-delay: 0s;
+    }
+    
+    .timeline-circle-right {
+        right: -12px;
+        animation-delay: 1s;
+    }
+    
+    @keyframes pulseCircle {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 20px rgba(240, 177, 50, 0.8);
+        }
+        50% {
+            transform: scale(1.3);
+            box-shadow: 0 0 40px rgba(240, 177, 50, 1);
+        }
+    }
+    
+    .timeline-line {
+        flex: 1;
+        height: 4px;
+        background: rgba(240, 177, 50, 0.2);
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+        margin: 0 20px;
+    }
+    
+    .timeline-progress {
+        height: 100%;
+        background: linear-gradient(90deg, 
+            var(--amarelo) 0%, 
+            rgba(240, 177, 50, 0.8) 50%, 
+            rgba(240, 177, 50, 0.6) 100%);
+        border-radius: 2px;
+        width: 0%;
+        animation: fillTimeline 3s ease-in-out 0.5s forwards;
+        box-shadow: 0 0 20px rgba(240, 177, 50, 0.6);
+    }
+    
+    @keyframes fillTimeline {
+        0% {
+            width: 0%;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+    
+    /* Mobile: esconder timeline */
+    @media (max-width: 768px) {
+        .evolucao-timeline {
+            display: none;
+        }
+    }
+    
+    
+    .evolucao-card {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(240, 177, 50, 0.2);
+        border-radius: 16px;
+        padding: 40px 30px;
+        flex: 1;
+        min-width: 280px;
+        max-width: 380px;
+        transition: all 0.3s;
+    }
+    
+    /* Animar cards SEMPRE, sem dependência do reveal */
+    .evolucao-container .evolucao-card:nth-child(1) {
+        animation: slideInCardLeft 0.8s ease-out 0.2s both;
+    }
+    
+    .evolucao-container .evolucao-card:nth-child(3) {
+        animation: slideInCardRight 0.8s ease-out 0.4s both;
+    }
+    
+    @keyframes slideInCardLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100px) scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+    }
+    
+    @keyframes slideInCardRight {
+        from {
+            opacity: 0;
+            transform: translateX(100px) scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+    }
+    
+    .evolucao-card:hover {
+        background: rgba(0, 0, 0, 0.5);
+        border-color: var(--amarelo);
+        transform: translateY(-8px);
+        box-shadow: var(--glow-amarelo);
+    }
+    
+    .evolucao-header {
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid rgba(240, 177, 50, 0.3);
+    }
+    
+    .evolucao-header.antiga {
+        border-bottom-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .evolucao-header.nova {
+        border-bottom-color: var(--amarelo);
+    }
+    
+    .evolucao-header h4 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+        margin: 0 0 4px 0;
+        color: white;
+    }
+    
+    .evolucao-ano {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+    }
+    
+    .evolucao-image {
+        margin: 24px 0;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+    
+    .evolucao-image img {
+        max-width: 100%;
+        height: auto;
+        filter: drop-shadow(0 8px 24px rgba(240, 177, 50, 0.3));
+        animation: zoomInImage 1s ease-out both;
+    }
+    
+    .evolucao-card:nth-child(1) .evolucao-image img {
+        animation-delay: 0.4s;
+    }
+    
+    .evolucao-card:nth-child(3) .evolucao-image img {
+        animation-delay: 0.6s;
+    }
+    
+    @keyframes zoomInImage {
+        from {
+            opacity: 0;
+            transform: scale(0.6) blur(8px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) blur(0);
+        }
+    }
+    
+    .evolucao-desc {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        margin: 0;
+        animation: fadeInDesc 0.8s ease-out both;
+    }
+    
+    .evolucao-card:nth-child(1) .evolucao-desc {
+        animation-delay: 0.6s;
+    }
+    
+    .evolucao-card:nth-child(3) .evolucao-desc {
+        animation-delay: 0.8s;
+    }
+    
+    @keyframes fadeInDesc {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    .evolucao-arrow {
+        font-size: 3rem;
+        color: var(--amarelo);
+        font-weight: bold;
+        opacity: 0.7;
+        animation: timelineTravel 2s ease-in-out infinite;
+        position: relative;
+        padding: 0 20px;
+    }
+    
+    @keyframes timelineTravel {
+        0% {
+            opacity: 0.5;
+            transform: translateX(0) scale(0.8);
+        }
+        50% {
+            opacity: 1;
+            transform: translateX(8px) scale(1);
+        }
+        100% {
+            opacity: 0.5;
+            transform: translateX(0) scale(0.8);
+        }
+    }
+    
     /* === VALORES === */
     .valores {
         background: var(--preto-suave);
@@ -1378,6 +1642,24 @@
         border-top: 1px solid rgba(255,215,0,0.2);
         padding-top: 12px;
     }
+    
+    .cc-codigo {
+        font-size: 0.75rem;
+        color: #FFD700;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255,215,0,0.15);
+    }
+    
+    .cc-codigo small {
+        display: block;
+    }
+    
+    .cc-codigo strong {
+        font-weight: 700;
+        color: #FFD700;
+    }
+    
     .cc-cta {
         text-align: center;
     }
@@ -1752,6 +2034,20 @@
     letter-spacing: 1px;
     text-transform: uppercase;
 }
+
+.prod-codigo {
+    margin: 12px 0;
+}
+
+.prod-codigo-item {
+    font-size: 0.9rem;
+    color: var(--amarelo);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .prod-tags {
     display: flex;
     flex-wrap: wrap;
