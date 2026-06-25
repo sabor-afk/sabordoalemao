@@ -72,7 +72,7 @@
       "embalagem": "10 UN / 145g",
       "destaque": false,
       "badge": "Assar",
-      "foto": "",
+      "foto": "img/pastel-forno-palmito.webp",
       "ingredientes": "",
       "peso_unit": "",
       "unid_caixa": "",
@@ -158,7 +158,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8605"
     },
     {
       "nome": "Pastel Forno Cru Pizza",
@@ -168,7 +168,7 @@
       "embalagem": "10 UN / 145g",
       "destaque": false,
       "badge": "Assar",
-      "foto": "",
+      "foto": "img/pastel-forno-pizza.webp",
       "ingredientes": "",
       "peso_unit": "",
       "unid_caixa": "",
@@ -286,7 +286,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8609"
     },
     {
       "nome": "Pastel Forno Pernil/BBQ",
@@ -320,39 +320,37 @@
       "fotos": [
         "img/pastel-pernil-bbq.webp"
       ],
-      "codigo": "N/A"
+      "codigo": "8610"
     },
     {
-      "nome": "Fritar Pastel de Frango",
-      "categoria": "pasteis-fritar",
-      "emoji": "🍳",
-      "descricao": "Pastel crocante de frango temperado. Perfeito para fritar.",
-      "embalagem": "20 UNID / CX",
-      "destaque": true,
-      "badge": "⭐ Carro-chefe",
-      "foto": "",
-      "ingredientes": "",
-      "peso_unit": "",
-      "unid_caixa": "",
-      "modo_preparo": [
-        "Retire o produto do freezer.",
-        "Aqueça o óleo a 180°C ou pré-aqueça o forno a 200°C.",
-        "Frite por 4 a 6 minutos ou asse por 15 a 20 minutos.",
-        "Sirva imediatamente."
-      ],
-      "info_nutricional": {
-        "porcao": "",
-        "calorias": "",
-        "carboidratos": "",
-        "proteinas": "",
-        "gorduras_totais": "",
-        "sodio": ""
-      },
-      "validade": "6 meses congelado",
-      "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
-      "tags": [],
-      "fotos": [],
-      "codigo": "1600"
+    "nome": "Pastel de Forno Catupiru",
+    "categoria": "pasteis-forno",
+    "descricao": "Pastel crocante recheado com a combinação irresistível de catupiry cremoso e peito de peru macio.",
+    "emoji": "🍗",
+    "foto": "img/pastel-forno-catuperu.webp",
+    "fotos": ["img/pastel-forno-catuperu.webp"],
+    "embalagem": "10 UN / 145g",
+    "validade": "6 meses congelado",
+    "conservacao": "Manter congelado a -18°C",
+    "peso_unit": "55g",
+    "modo_preparo": [
+        "Aqueça o forno a 200°C",
+        "Coloque os pastéis em assadeira sem óleo",
+        "Asse por 15-20 minutos até dourar"
+    ],
+    "ingredientes": "Massa (trigo, sal, água), Catupiry cremoso, Peito de Peru desfiado, Sal, Pimenta",
+    "info_nutricional": {
+        "porcao": "100g (2 unidades)",
+        "calorias": "295 kcal",
+        "carboidratos": "26g",
+        "proteinas": "15g",
+        "gorduras_totais": "13g",
+        "sodio": "580mg"
+    },
+    "tags": ["Peru", "Catupiry", "Cremoso", "Novo", "Popular"],
+    "badge": "Assar",
+    "destaque": false,
+    "codigo": "PAST-CATU-001"
     },
     {
       "nome": "Fritar Pastel de Carne",
@@ -361,7 +359,7 @@
       "descricao": "Carne moída temperada em massa crocante.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -393,7 +391,7 @@
       "descricao": "Queijo derretendo em massa dourada e crocante.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -425,7 +423,7 @@
       "descricao": "Calabresa e queijo — combinação clássica e irresistível.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -448,7 +446,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "1604"
     },
     {
       "nome": "Fritar Pastel de Palmito",
@@ -457,7 +455,7 @@
       "descricao": "Palmito selecionado em massa crocante frita.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -489,7 +487,7 @@
       "descricao": "Frango com requeijão cremoso. Favorito das lanchonetes.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -512,7 +510,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "1606"
     },
     {
       "nome": "Fritar Pastel de Pizza",
@@ -521,7 +519,7 @@
       "descricao": "Sabor pizza em formato pastel frito.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -553,7 +551,7 @@
       "descricao": "Carne moída com ovo. Receita tradicional e saborosa.",
       "embalagem": "20 UNID / CX",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -640,7 +638,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "2512"
+      "codigo": "2510"
     },
     {
       "nome": "Mini Folhado de Frango",
@@ -736,7 +734,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "2478"
     },
     {
       "nome": "Mini Folhado de Palmito",
@@ -1024,7 +1022,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "3007"
+      "codigo": "3008"
     },
     {
       "nome": "Croissant Frango/Requeijão",
@@ -1193,7 +1191,7 @@
       "descricao": "Coxinha clássica com frango desfiado e temperado. Irresistível.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Assar",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1225,7 +1223,7 @@
       "descricao": "Frango cremoso com requeijão. Versão especial da clássica.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Assar",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1257,7 +1255,7 @@
       "descricao": "Massa de aipim com frango. Receita especial e diferenciada.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Assar",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1289,7 +1287,7 @@
       "descricao": "Coxinha tamanho ideal para buffets e lanchonetes.",
       "embalagem": "40 UN / 60g",
       "destaque": false,
-      "badge": "Assar",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1312,7 +1310,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "3530"
+      "codigo": "3510"
     },
     {
       "nome": "Coxinha 30g",
@@ -1321,7 +1319,7 @@
       "descricao": "Mini coxinha perfeita para festas e eventos.",
       "embalagem": "50 UN / 30g",
       "destaque": false,
-      "badge": "Assar",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1344,7 +1342,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "3406"
     },
     {
       "nome": "Coxinha Frango Req. Frita Grande",
@@ -1376,7 +1374,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8621"
     },
     {
       "nome": "Coxinha Fgo/Req. Pequena Frita",
@@ -1408,7 +1406,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8623"
     },
     {
       "nome": "Coxinha Costela Grande",
@@ -1440,7 +1438,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "8623"
+      "codigo": "8624"
     },
     {
       "nome": "Coxinha Costela Pequena Frita",
@@ -1472,7 +1470,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "8624"
+      "codigo": "8626"
     },
     {
       "nome": "Mini Coxinha",
@@ -1536,7 +1534,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8001"
     },
     {
       "nome": "Empadinha Folhada Frango",
@@ -1568,7 +1566,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8002"
     },
     {
       "nome": "Empadinha Folhada Especial",
@@ -1600,7 +1598,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8003"
     },
     {
       "nome": "Esfiha de Carne",
@@ -1760,7 +1758,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "3404"
+      "codigo": "3704"
     },
     {
       "nome": "Mini Churros",
@@ -1824,7 +1822,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "8611"
     },
     {
       "nome": "Bolinho de Carne Frito",
@@ -1856,7 +1854,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "7812"
     },
     {
       "nome": "Salsinha Empanada Frito",
@@ -1888,7 +1886,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "1303"
     },
     {
       "nome": "Lajotinha com Requeijão",
@@ -1920,16 +1918,16 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "8613"
+      "codigo": "8612"
     },
     {
-      "nome": "Risoles de Pizza Frita",
+      "nome": "Risoles de Carne",
       "categoria": "risoles",
       "emoji": "🧀",
-      "descricao": "Risoles de pizza crocante para fritar. Sabor intenso.",
+      "descricao": "Risoles de Carne crocante para Aquecer. Sabor intenso.",
       "embalagem": "10 UN / 170g",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Frito",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1952,7 +1950,39 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "314"
+    },
+    {
+      "nome": "Risoles de Pizza",
+      "categoria": "risoles",
+      "emoji": "🧀",
+      "descricao": "Risoles de pizza crocante para Aquecer. Sabor intenso.",
+      "embalagem": "10 UN / 170g",
+      "destaque": false,
+      "badge": "Frito",
+      "foto": "",
+      "ingredientes": "",
+      "peso_unit": "",
+      "unid_caixa": "",
+      "modo_preparo": [
+        "Retire o produto do freezer.",
+        "Aqueça o óleo a 180°C ou pré-aqueça o forno a 200°C.",
+        "Frite por 4 a 6 minutos ou asse por 15 a 20 minutos.",
+        "Sirva imediatamente."
+      ],
+      "info_nutricional": {
+        "porcao": "",
+        "calorias": "",
+        "carboidratos": "",
+        "proteinas": "",
+        "gorduras_totais": "",
+        "sodio": ""
+      },
+      "validade": "6 meses congelado",
+      "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
+      "tags": [],
+      "fotos": [],
+      "codigo": "315"
     },
     {
       "nome": "Risoles Apresunto/Queijo",
@@ -1961,7 +1991,7 @@
       "descricao": "Apresunto com queijo derretido em risoles crocante.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -1993,7 +2023,7 @@
       "descricao": "Carne moída temperada em risoles artesanal.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -2025,7 +2055,7 @@
       "descricao": "Frango desfiado em risoles crocante. Leve e saboroso.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -2057,7 +2087,7 @@
       "descricao": "Palmito selecionado em risoles artesanal.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -2089,7 +2119,7 @@
       "descricao": "Camarão temperado em risoles premium. Sofisticado.",
       "embalagem": "20 UN / 135g",
       "destaque": false,
-      "badge": "Frita",
+      "badge": "Fritar",
       "foto": "",
       "ingredientes": "",
       "peso_unit": "",
@@ -2240,7 +2270,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "2221"
     },
     {
       "nome": "Pão de Queijo 50g Gourmet",
@@ -2272,7 +2302,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "2321"
+      "codigo": "2222"
     },
     {
       "nome": "Pão de Queijo 75g Gourmet",
@@ -2304,7 +2334,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "2223"
     },
     {
       "nome": "Pão de Queijo 100g Gourmet",
@@ -2336,7 +2366,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "2324"
+      "codigo": "2224"
     },
     {
       "nome": "Hamburgão Cheddar",
@@ -2400,7 +2430,7 @@
       "conservacao": "Manter congelado a -18°C. Não descongelar e recongelar.",
       "tags": [],
       "fotos": [],
-      "codigo": "N/A"
+      "codigo": "2430"
     }
   ]
 }

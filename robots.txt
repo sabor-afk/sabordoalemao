@@ -1,4 +1,19 @@
+# Buscadores - indexar tudo
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Yahoo! Slurp
 User-agent: *
 Allow: /
 
+# Bloquear IA bots
+User-agent: GPTBot
+User-agent: CCBot
+User-agent: anthropic-ai
+Disallow: /
+
+# Crawl delay
+User-agent: *
+Crawl-delay: 1
+
+# Sitemap
 Sitemap: https://sabordoalemao.com.br/sitemap.xml

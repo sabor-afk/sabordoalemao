@@ -363,7 +363,54 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// ── VALIDAÇÃO CPF/CNPJ: apenas números ──────────────────────
-document.getElementById('cpf-cnpj').addEventListener('input', function(e) {
-    e.target.value = e.target.value.replace(/\D/g, '');
+// ── VALIDAÇÃO COMPLETA: CPF/CNPJ/WHATSAPP ──────────────────────
+// Aguardar DOM carregar
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. WhatsApp: máximo 11 dígitos
+    const whatsappInput = document.getElementById('whatsapp');
+    if (whatsappInput) {
+        whatsappInput.addEventListener('input', function(e) {
+            let valor = e.target.value.replace(/\D/g, '');
+            if (valor.length > 11) {
+                valor = valor.slice(0, 11);
+            }
+            e.target.value = valor;
+        });
+    }
+
+    // 2. CPF/CNPJ: validar conforme tipo selecionado
+    const cpfCnpjTipo = document.getElementById('cpf-cnpj-tipo');
+    const cpfCnpjInput = document.getElementById('cpf-cnpj');
+
+    if (cpfCnpjInput) {
+        cpfCnpjInput.addEventListener('input', function(e) {
+            let valor = e.target.value.replace(/\D/g, '');
+            
+            // Determinar limite conforme tipo selecionado
+            let max = 14; // CNPJ padrão
+            if (cpfCnpjTipo && cpfCnpjTipo.value === 'cpf') {
+                max = 11;
+            }
+            
+            if (valor.length > max) {
+                valor = valor.slice(0, max);
+            }
+            e.target.value = valor;
+        });
+    }
+
+    // 3. Quando muda o tipo (CPF/CNPJ), limpar campo e ajustar placeholder
+    if (cpfCnpjTipo) {
+        cpfCnpjTipo.addEventListener('change', function() {
+            if (cpfCnpjInput) {
+                cpfCnpjInput.value = '';
+                if (this.value === 'cpf') {
+                    cpfCnpjInput.placeholder = '00000000000 (11 dígitos)';
+                } else if (this.value === 'cnpj') {
+                    cpfCnpjInput.placeholder = '00000000000000 (14 dígitos)';
+                }
+            }
+        });
+    }
 });
