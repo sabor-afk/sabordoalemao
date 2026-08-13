@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faça seu Pedido - Sabor do Alemão</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #0f0f0f;
+      color: #e5e7eb;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Barra vermelha lateral (como no site) */
+    body::before {
+      content: '';
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+      z-index: 1;
+    }
+
+    .container {
+      background: #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      max-width: 600px;
+      width: 100%;
+      padding: 40px;
+      position: relative;
+      z-index: 2;
+      border: 1px solid #333;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      color: #999;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .required {
+      color: #ef4444;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #262626;
+      color: #e5e7eb;
+      transition: all 0.3s;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="tel"]::placeholder,
+    textarea::placeholder {
+      color: #666;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #ef4444;
+      background: #2a2a2a;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      font-weight: 500;
+      font-size: 13px;
+      color: #e5e7eb;
+      text-transform: none;
+      letter-spacing: normal;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 8px;
+      cursor: pointer;
+      accent-color: #ef4444;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-submit {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-reset {
+      background: #333;
+      color: #e5e7eb;
+    }
+
+    .btn-reset:hover {
+      background: #444;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+      border-left: 4px solid #ef4444;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #fca5a5;
+    }
+
+    .divider {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 30px 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      height: 1px;
+      background: #333;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      font-size: 12px;
+      color: #666;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 25px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+
+    /* 🎉 SUCESSO COM ANIMAÇÃO */
+    .success-message {
+      display: none;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+      color: #86efac;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 2px solid #22c55e;
+      animation: slideDown 0.5s ease-out;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      animation: pulse 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Link WhatsApp com cor vermelha */
+    .whatsapp-link {
+      display: inline-block;
+      background: #ef4444;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .whatsapp-link:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🥟 Faça seu Pedido</h1>
+      <p>Sabor do Alemão - Salgados Congelados Premium</p>
+    </div>
+
+    <!-- 🎉 MENSAGEM DE SUCESSO COM ANIMAÇÃO -->
+    <div class="success-message" id="successMsg">
+      <div class="success-icon">✅</div>
+      <div>Pedido enviado com sucesso!</div>
+      <div style="font-size: 14px; margin-top: 8px; opacity: 0.9;">
+        Entraremos em contato em breve. Obrigado! 🙏
+      </div>
+    </div>
+
+    <div class="info-box">
+      ⚡ <strong>Resposta em até 2 horas úteis</strong>
+    </div>
+
+    <!-- 📋 FORMULÁRIO NETLIFY FORMS -->
+    <form id="formulario-pedido" name="sabor-do-alemao-formulario" method="POST" netlify netlify-honeypot="bot-field">
+      
+      <!-- Honeypot anti-spam (oculto) -->
+      <input type="hidden" name="bot-field">
+      
+      <!-- NOME/EMPRESA -->
+      <div class="form-group">
+        <label for="nome">
+          Nome / Empresa <span class="required">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="nome" 
+          name="nome" 
+          placeholder="Seu nome ou razão social"
+          required
+        >
+      </div>
+
+      <!-- CPF/CNPJ -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tipo">Tipo de documento <span class="required">*</span></label>
+          <select 
+            id="tipo" 
+            name="tipo" 
+            onchange="alternarTipo(this)"
+            required
+          >
+            <option value="CPF">CPF</option>
+            <option value="CNPJ">CNPJ</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="documento" id="label-documento">
+            CPF <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="documento" 
+            name="documento" 
+            placeholder="123.456.789-00"
+            maxlength="14"
+            required
+          >
+        </div>
+      </div>
+
+      <!-- WHATSAPP -->
+      <div class="form-group">
+        <label for="whatsapp">WhatsApp <span class="required">*</span></label>
+        <input 
+          type="tel" 
+          id="whatsapp" 
+          name="whatsapp" 
+          placeholder="(47) 99974-3400"
+          maxlength="15"
+          required
+        >
+      </div>
+
+      <!-- ENDEREÇO -->
+      <div class="form-group">
+        <label for="endereco">Endereço / Rua <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="endereco" 
+          name="endereco" 
+          placeholder="Ex: Rua das Flores"
+          required
+        >
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="numero">Número <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="numero" 
+            name="numero" 
+            placeholder="123"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="complemento">Complemento <span style="color: #999;">(opcional)</span></label>
+          <input 
+            type="text" 
+            id="complemento" 
+            name="complemento" 
+            placeholder="Apto 456, Sala 10"
+          >
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cidade">Cidade <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="cidade" 
+            name="cidade" 
+            placeholder="Joinville"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="estado">UF <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="estado" 
+            name="estado" 
+            placeholder="SC"
+            maxlength="2"
+            required
+          >
+        </div>
+      </div>
+
+      <!-- TIPO DE NEGÓCIO -->
+      <div class="form-group">
+        <label for="negocio">Tipo de negócio <span class="required">*</span></label>
+        <select id="negocio" name="negocio" required>
+          <option value="">Selecione...</option>
+          <option value="Panificadora">Panificadora</option>
+          <option value="Mercado / Supermercado">Mercado / Supermercado</option>
+          <option value="Conveniência de Posto">Conveniência de Posto</option>
+          <option value="Lanchonete / Restaurante">Lanchonete / Restaurante</option>
+          <option value="Distribuidor Atacadista">Distribuidor Atacadista</option>
+          <option value="Buffet / Eventos">Buffet / Eventos</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+
+      <!-- PRODUTOS -->
+      <div class="form-group">
+        <label>Produtos de interesse</label>
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="produtos" value="Pastéis">
+            Pastéis
+          </label>
+          <label>
+            <input type="checkbox" name="produtos" value="Coxinhas">
+            Coxinhas
+          </label>
+          <label>
+            <input type="checkbox" name="produtos" value="Folhados">
+            Folhados
+          </label>
+          <label>
+            <input type="checkbox" name="produtos" value="Risoles">
+            Risoles
+          </label>
+          <label>
+            <input type="checkbox" name="produtos" value="Pão de Queijo">
+            Pão de Queijo
+          </label>
+          <label>
+            <input type="checkbox" name="produtos" value="Mix Completo">
+            Mix Completo
+          </label>
+        </div>
+      </div>
+
+      <!-- OBSERVAÇÕES -->
+      <div class="form-group">
+        <label for="observacoes">Observações (opcional)</label>
+        <textarea 
+          id="observacoes" 
+          name="observacoes" 
+          placeholder="Alguma observação importante?"
+        ></textarea>
+      </div>
+
+      <!-- BOTÕES -->
+      <div class="button-group">
+        <button type="submit" class="btn-submit">
+          💬 Enviar Pedido
+        </button>
+        <button type="reset" class="btn-reset">
+          🔄 Limpar
+        </button>
+      </div>
+    </form>
+
+    <div class="divider">
+      ou
+    </div>
+
+    <div style="text-align: center;">
+      <p style="color: #999; font-size: 14px; margin-bottom: 10px;">
+        Prefere falar direto?
+      </p>
+      <a href="https://api.whatsapp.com/send?phone=5547999743400&text=Ol%C3%A1!%20Estou%20interessado%20em%20revender%20produtos%20Sabor%20do%20Alem%C3%A3o.%0A%0A%F0%9F%91%A4%20INFORMA%C3%87%C3%95ES%20PESSOAIS%3A%0ANome%2FRaz%C3%A3o%20Social%3A%20%0ACPF%2FCNPJ%3A%20%0ATelefone%3A%20%0A%0A%F0%9F%93%8D%20LOCALIZA%C3%87%C3%83O%3A%0ACidade%3A%20%0AEstado%20(SC%2FPR%2FSP)%3A%20%0A%0A%F0%9F%8F%AA%20NEG%C3%93CIO%3A%0ATipo%3A%20(Padaria%2FMercado%2FLanchonete%2Fetc)%0AProdutos%20de%20Interesse%3A%20%0A%0A%F0%9F%93%9D%20Observa%C3%A7%C3%B5es%3A%20%0A%0AObrigado!" 
+        target="_blank" 
+        class="whatsapp-link">
+       📱 Chat no WhatsApp
+      </a>
+    </div>
+
+    <div class="footer">
+      ✅ Seus dados são transmitidos de forma segura<br>
+      🔒 Nunca compartilhamos informações com terceiros
+    </div>
+  </div>
+
+  <script>
+    // ========================================
+    // 💻 FORMATAÇÃO AUTOMÁTICA
+    // ========================================
+
+    // Formatar CPF/CNPJ
+    document.querySelector('input[name="documento"]').addEventListener('input', function(e) {
+      let valor = e.target.value.replace(/\D/g, '');
+      const tipo = document.querySelector('select[name="tipo"]').value;
+      
+      if (tipo === 'CPF') {
+        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+        valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        e.target.maxLength = 14;
+      } else {
+        valor = valor.replace(/(\d{2})(\d)/, '$1.$2');
+        valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+        valor = valor.replace(/(\d{3})(\d)/, '$1/$2');
+        valor = valor.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+        e.target.maxLength = 18;
+      }
+      
+      e.target.value = valor;
+    });
+
+    // Formatar WhatsApp
+    document.querySelector('input[name="whatsapp"]').addEventListener('input', function(e) {
+      let valor = e.target.value.replace(/\D/g, '');
+      valor = valor.replace(/(\d{2})(\d)/, '($1) $2');
+      valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
+      e.target.maxLength = 15;
+      e.target.value = valor;
+    });
+
+    // Alternar entre CPF/CNPJ
+    function alternarTipo(select) {
+      const documento = document.getElementById('documento');
+      const label = document.querySelector('label[for="documento"]');
+      
+      if (select.value === 'CPF') {
+        documento.placeholder = '123.456.789-00';
+        label.textContent = 'CPF ';
+        label.innerHTML += '<span class="required">*</span>';
+      } else {
+        documento.placeholder = '12.345.678/0001-99';
+        label.textContent = 'CNPJ ';
+        label.innerHTML += '<span class="required">*</span>';
+      }
+      
+      documento.value = '';
+      documento.maxLength = 18;
+    }
+
+    // ========================================
+    // 🎯 MOSTRAR SUCESSO COM ANIMAÇÃO
+    // ========================================
+    document.getElementById('formulario-pedido').addEventListener('submit', function(e) {
+      const successMsg = document.getElementById('successMsg');
+      
+      // Mostrar mensagem com delay
+      setTimeout(() => {
+        successMsg.classList.add('show');
+        
+        // Scroll para mensagem
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Limpar formulário
+        this.reset();
+        
+        // Esconder após 8 segundos
+        setTimeout(() => {
+          successMsg.classList.remove('show');
+        }, 8000);
+      }, 500);
+    });
+  </script>
+</body>
+</html>

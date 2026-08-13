@@ -1,0 +1,60 @@
+# robots.txt - SABOR DO ALEMÃO
+# Arquivo de controle para crawlers de mecanismos de busca
+
+# Permitir todos os bots respeitosos
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /.git
+Disallow: /private
+Disallow: /.env
+Disallow: /node_modules
+
+# Regras específicas para bots agressivos
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SiteAuditBot
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+# Google e Bing (permitido)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Yandex (permitido)
+User-agent: Yandexbot
+Allow: /
+
+# Baidu (permitido)
+User-agent: Baiduspider
+Allow: /
+
+# Sitemap
+Sitemap: https://sabor-afk.github.io/sabordoalemao/sitemap.xml
+
+# Tempo entre requisições
+Request-rate: 1/1s
+
+# Cache-Control
+Cache-Control: max-age=2592000
