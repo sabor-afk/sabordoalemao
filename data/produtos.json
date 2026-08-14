@@ -5566,7 +5566,7 @@
       "embalagem": "2 Kg",
       "destaque": false,
       "badge": "Gourmet",
-      "foto": "",
+      "foto": "img/pao-queijo-um.webp",
       "ingredientes": "Fécula de mandioca, Polvilho Azedo, Amido Modificado de mandioca, Ovos Pasteurizados, Leite em Pó, óleo de soja, margarina 70% de lipideos, Queijo meia Cura e Sal.",
       "peso_unit": " 25 g / 80 un",
       "unid_caixa": "",
@@ -5633,7 +5633,7 @@
       "validade": "6 meses congelado",
       "conservacao": "Manter congelado a -10°C. Não descongelar e recongelar.",
       "tags": [],
-      "fotos": [],
+      "fotos": ["img/pao-queijo-um.webp","img/pao-queijo-alguns.webp"],
       "codigo": "2221"
     },
     {
@@ -5644,7 +5644,7 @@
       "embalagem": "2 Kg",
       "destaque": false,
       "badge": "Gourmet",
-      "foto": "",
+      "foto": "img/pao-queijo-um.webp",
       "ingredientes": "Fécula de mandioca, Polvilho Azedo, Amido Modificado de mandioca, Ovos Pasteurizados, Leite em Pó, óleo de soja, margarina 70% de lipideos, Queijo meia Cura e Sal.",
       "peso_unit": "50 g / 40 un",
       "unid_caixa": "",
@@ -5711,7 +5711,7 @@
       "validade": "6 meses congelado",
       "conservacao": "Manter congelado a -10°C. Não descongelar e recongelar.",
       "tags": [],
-      "fotos": [],
+      "fotos": ["img/pao-queijo-um.webp","img/pao-queijo-alguns.webp"],
       "codigo": "2222"
     },
     {
@@ -5722,7 +5722,7 @@
       "embalagem": "2 Kg",
       "destaque": false,
       "badge": "Gourmet",
-      "foto": "",
+      "foto": "img/pao-queijo-um.webp",
       "ingredientes": "Fécula de mandioca, Polvilho Azedo, Amido Modificado de mandioca, Ovos Pasteurizados, Leite em Pó, óleo de soja, margarina 70% de lipideos, Queijo meia Cura e Sal.",
       "peso_unit": "80 g / 26 un",
       "unid_caixa": "",
@@ -5789,7 +5789,7 @@
       "validade": "6 meses congelado",
       "conservacao": "Manter congelado a -10°C. Não descongelar e recongelar.",
       "tags": [],
-      "fotos": [],
+      "fotos": ["img/pao-queijo-um.webp","img/pao-queijo-alguns.webp"],
       "codigo": "2223"
     },
     {
@@ -5800,7 +5800,7 @@
       "embalagem": "2 Kg",
       "destaque": false,
       "badge": "Gourmet",
-      "foto": "",
+      "foto": "img/pao-queijo-um.webp",
       "ingredientes": "Fécula de mandioca, Polvilho Azedo, Amido Modificado de mandioca, Ovos Pasteurizados, Leite em Pó, óleo de soja, margarina 70% de lipideos, Queijo meia Cura e Sal.",
       "peso_unit": "100 g / 20 un",
       "unid_caixa": "",
@@ -5867,7 +5867,7 @@
       "validade": "6 meses congelado",
       "conservacao": "Manter congelado a -10°C. Não descongelar e recongelar.",
       "tags": [],
-      "fotos": [],
+      "fotos": ["img/pao-queijo-um.webp","img/pao-queijo-alguns.webp"],
       "codigo": "2224"
     },
     {
