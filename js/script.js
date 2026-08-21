@@ -1,8 +1,15 @@
-// ── NAVBAR: adiciona classe ao rolar ─────────────────────────
+// ── NAVBAR: adiciona classe ao rolar (com throttle via rAF) ───
+const navbar = document.getElementById('navbar');
+let scrollTicking = false;
 window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    navbar.classList.toggle('scrolled', window.scrollY > 50);
-});
+    if (!scrollTicking) {
+        requestAnimationFrame(() => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            scrollTicking = false;
+        });
+        scrollTicking = true;
+    }
+}, { passive: true });
 
 // ── MENU MOBILE ───────────────────────────────────────────────
 function toggleMenu() {
@@ -53,6 +60,7 @@ document.querySelectorAll('.btn-mais').forEach(btn => {
 
 // ── CATÁLOGO: gerar cards a partir de data/produtos.json ──────
 let todosProdutos = [];
+let produtoIndexMap = new Map(); // produto → índice global (evita indexOf O(n) a cada card)
 let categoriaAtiva = 'todos';
 
 function criarCard(p, index) {
@@ -66,7 +74,7 @@ function criarCard(p, index) {
              role="button" aria-label="Ver detalhes de ${p.nome}" tabindex="0">
             <div class="produto-image">
                 ${badge}
-                ${p.foto ? `<img src="${p.foto}" alt="${p.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0;">` : `<div class="produto-emoji">${p.emoji}</div>`}
+                ${p.foto ? `<img src="${p.foto}" alt="${p.nome}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0;">` : `<div class="produto-emoji">${p.emoji}</div>`}
             </div>
             <div class="produto-info">
                 <h3>${p.nome}</h3>
@@ -86,18 +94,23 @@ function renderProdutos(cat) {
         ? todosProdutos
         : todosProdutos.filter(p => p.categoria === cat);
 
-    grid.innerHTML = filtrados.map((p, i) => {
-        // índice global para abrir o produto certo mesmo após filtro
-        const globalIndex = todosProdutos.indexOf(p);
+    // Para de observar os cards atuais antes de substituí-los
+    // (evita que o IntersectionObserver acumule referências a nós órfãos)
+    grid.querySelectorAll('.reveal').forEach(el => observer.unobserve(el));
+
+    grid.innerHTML = filtrados.map(p => {
+        // índice global (O(1) via Map) para abrir o produto certo mesmo após filtro
+        const globalIndex = produtoIndexMap.get(p);
         return criarCard(p, globalIndex);
     }).join('');
     observeReveal();
 }
 
 function initFiltros() {
-    document.querySelectorAll('.filtro-btn').forEach(btn => {
+    const botoesFiltro = document.querySelectorAll('.filtro-btn'); // consultado 1x só
+    botoesFiltro.forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.filtro-btn').forEach(b => {
+            botoesFiltro.forEach(b => {
                 b.classList.remove('active');
                 b.setAttribute('aria-pressed', 'false');
             });
@@ -109,14 +122,37 @@ function initFiltros() {
     });
 }
 
-fetch('data/produtos.json')
-    .then(r => r.json())
-    .then(data => {
-        todosProdutos = data.produtos;
-        renderProdutos('todos');
-        initFiltros();
-    })
-    .catch(err => console.error('Erro ao carregar produtos.json:', err));
+function carregarProdutos() {
+    const grid = document.getElementById('produtosGrid');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s de limite
+
+    fetch('data/produtos.json', { signal: controller.signal })
+        .then(r => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            return r.json();
+        })
+        .then(data => {
+            clearTimeout(timeoutId);
+            todosProdutos = data.produtos;
+            produtoIndexMap = new Map(todosProdutos.map((p, i) => [p, i]));
+            renderProdutos('todos');
+            initFiltros();
+        })
+        .catch(err => {
+            clearTimeout(timeoutId);
+            const motivo = err.name === 'AbortError' ? 'tempo de carregamento excedido' : err.message;
+            console.error('Erro ao carregar produtos.json:', motivo);
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="produtos-erro" style="grid-column:1/-1;text-align:center;padding:40px 20px;">
+                        <p>Não foi possível carregar o cardápio agora. Verifique sua conexão.</p>
+                        <button type="button" onclick="carregarProdutos()" class="btn-recarregar">Tentar novamente</button>
+                    </div>`;
+            }
+        });
+}
+carregarProdutos();
 
 // ── FORMULÁRIO → WHATSAPP ─────────────────────────────────────
 function enviarPedidoWhatsApp(e) {
@@ -190,10 +226,28 @@ const categoriaNomes = {
 
 let galeriaAtual = [];
 let galeriaIndex = 0;
+let modalAbrindo = false; // evita abertura duplicada em cliques rápidos
+
+// Verifica se há algum valor nutricional preenchido, com saída antecipada
+function temValorNutricional(nutri) {
+    for (const v of Object.values(nutri)) {
+        if (v && typeof v === 'object') {
+            for (const vv of Object.values(v)) {
+                if (vv) return true;
+            }
+        } else if (v) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function abrirProduto(index) {
+    if (modalAbrindo) return;
     const p = todosProdutos[index];
     if (!p) return;
+    modalAbrindo = true;
+    setTimeout(() => { modalAbrindo = false; }, 300);
 
     // Monta a lista de fotos (suporta "fotos" array ou "foto" único, com fallback)
     galeriaAtual = (p.fotos && p.fotos.length > 0)
@@ -253,10 +307,7 @@ function abrirProduto(index) {
     // Info nutricional - Tabela DINÂMICA (detecta colunas automaticamente)
     const nutri = p.info_nutricional || {};
     const nutriWrap = document.getElementById('prodNutriWrap');
-    const temNutri = Object.values(nutri).some(v => {
-        if (typeof v === 'object') return Object.values(v).some(vv => vv);
-        return v;
-    });
+    const temNutri = temValorNutricional(nutri);
     
     if (temNutri) {
         // Detecta quais são as colunas dinamicamente
@@ -383,7 +434,7 @@ function renderGaleriaThumbs() {
     }
     thumbsWrap.style.display = 'flex';
     thumbsWrap.innerHTML = galeriaAtual.map((foto, i) =>
-        `<img src="${foto}" class="prod-thumb${i === galeriaIndex ? ' active' : ''}" onclick="irParaFoto(${i})" alt="Miniatura ${i+1}">`
+        `<img src="${foto}" class="prod-thumb${i === galeriaIndex ? ' active' : ''}" onclick="irParaFoto(${i})" alt="Miniatura ${i+1}" loading="lazy" decoding="async">`
     ).join('');
 }
 
