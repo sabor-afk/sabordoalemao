@@ -41,9 +41,11 @@ observeReveal();
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const hash = this.getAttribute('href');
+        if (!hash || hash === '#') return;
+        const target = document.getElementById(hash.slice(1));
         if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
+            target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
             document.getElementById('navLinks').classList.remove('open');
             document.querySelector('.mobile-toggle').setAttribute('aria-expanded', 'false');
         }
