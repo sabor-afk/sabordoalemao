@@ -106,9 +106,13 @@ function renderProdutos(cat) {
         return criarCard(p, globalIndex);
     }).join('');
     observeReveal();
+    window.dispatchEvent(new Event('sabordoalemao:catalog-rendered'));
 }
 
+let filtrosIniciados = false;
 function initFiltros() {
+    if (filtrosIniciados) return;
+    filtrosIniciados = true;
     const botoesFiltro = document.querySelectorAll('.filtro-btn'); // consultado 1x só
     botoesFiltro.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -138,7 +142,7 @@ function carregarProdutos() {
             clearTimeout(timeoutId);
             todosProdutos = data.produtos;
             produtoIndexMap = new Map(todosProdutos.map((p, i) => [p, i]));
-            renderProdutos('todos');
+            renderProdutos(categoriaAtiva);
             initFiltros();
         })
         .catch(err => {
