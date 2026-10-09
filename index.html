@@ -295,10 +295,32 @@
 <!-- EXPERIÊNCIA / EDITORIAL -->
 <section class="story-feature" aria-labelledby="storyFeatureTitle">
   <div class="story-feature-inner">
-    <div class="story-photo reveal">
+    <div class="story-photo story-photo-gallery reveal">
       <div class="story-photo-light" aria-hidden="true"></div>
-      <img src="img/trancinha-calabresa.webp" alt="Trancinha de calabresa da linha de salgados Sabor do Alemão" loading="lazy" decoding="async" width="560" height="560">
-      <span class="story-photo-caption">PRODUTOS QUE CHAMAM A ATENÇÃO</span>
+      <div class="story-gallery" id="storyGallery" aria-label="Vitrine de produtos Sabor do Alemão com quatro imagens">
+        <figure class="story-slide">
+          <img src="img/trancinha-calabresa.webp" alt="Trancinha de calabresa Sabor do Alemão" loading="lazy" decoding="async" width="560" height="560">
+          <figcaption class="story-slide-caption"><span>01 / 04 · PARA ASSAR</span><strong>Trancinha de calabresa</strong></figcaption>
+        </figure>
+        <figure class="story-slide">
+          <img src="img/coxinha-grande-frango-requeijao-frita.webp" alt="Coxinha de frango com requeijão Sabor do Alemão" loading="lazy" decoding="async" width="560" height="560">
+          <figcaption class="story-slide-caption"><span>02 / 04 · PARA FRITAR</span><strong>Coxinha de frango e requeijão</strong></figcaption>
+        </figure>
+        <figure class="story-slide">
+          <img src="img/pao-queijo-alguns.webp" alt="Pães de queijo gourmet Sabor do Alemão" loading="lazy" decoding="async" width="560" height="560">
+          <figcaption class="story-slide-caption"><span>03 / 04 · LINHA GOURMET</span><strong>Pão de queijo</strong></figcaption>
+        </figure>
+        <figure class="story-slide">
+          <img src="img/pastel-forno-pizza.webp" alt="Pastel de forno sabor pizza Sabor do Alemão" loading="lazy" decoding="async" width="560" height="560">
+          <figcaption class="story-slide-caption"><span>04 / 04 · PARA ASSAR</span><strong>Pastel de forno</strong></figcaption>
+        </figure>
+      </div>
+      <div class="story-gallery-overlay" aria-hidden="true">
+        <span class="story-gallery-eyebrow">CONHEÇA NOSSA VARIEDADE</span>
+        <span class="story-gallery-count"><span id="storyGalleryCurrent">01</span><span class="story-gallery-count-separator"> / </span>04</span>
+        <div class="story-gallery-bars"><span></span><span></span><span></span><span></span></div>
+        <span class="story-gallery-hint">ROLE PARA EXPLORAR <span aria-hidden="true">↓</span></span>
+      </div>
     </div>
     <div class="story-copy reveal">
       <div class="section-tag">PARA QUEM VIVE DE SABOR</div>
