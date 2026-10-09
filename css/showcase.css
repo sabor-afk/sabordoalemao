@@ -96,3 +96,9 @@
 @media(max-width:968px){.embaixador-layout{grid-template-columns:1fr;gap:25px}.embaixador-visual{min-height:420px}.embaixador-personagem{max-height:410px}.embaixador-texto{max-width:720px;margin:auto}.embaixador-ring{max-width:510px;margin:auto}}
 @media(max-width:620px){.embaixador-section{padding:75px 6%}.embaixador-visual{min-height:310px}.embaixador-personagem{max-height:320px}.embaixador-stamp{width:86px;height:86px;right:0;font-size:.5rem}.embaixador-texto .section-title{font-size:clamp(3.7rem,12vw,5.5rem)}.embaixador-historia{gap:6px}.embaixador-etapa{gap:6px}.embaixador-etapa img{width:61px;height:67px}.embaixador-etapa span{font-size:.61rem}.embaixador-historia-seta{font-size:1rem}}
 @media(prefers-reduced-motion:reduce){.embaixador-personagem{animation:none!important}}
+
+/* Em mobile, a vitrine exibe os itens sem pin nem deslocamento exagerado. */
+@media(max-width:968px){
+  .cinematic-ready .story-feature.story-gallery-section .story-photo-gallery{transform:none}
+  .story-gallery-hint{display:none}
+}
