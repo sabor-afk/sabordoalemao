@@ -58,6 +58,7 @@
 <link rel="preload" as="image" href="img/pastel-forno-pizza.webp">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/premium.css">
+<link rel="stylesheet" href="css/refinements.css">
 
 <!-- Schema.org: LocalBusiness -->
 <script type="application/ld+json">
@@ -200,7 +201,7 @@
         <div class="hero-content">
             <div class="hero-badge"><span aria-hidden="true"></span> JOINVILLE / SC · DESDE 2005</div>
             <p class="hero-eyebrow">Produção própria · Salgados congelados</p>
-            <h1 id="heroTitulo">O SABOR QUE<br>FAZ <span class="hero-serif">voltar.</span></h1>
+            <h1 id="heroTitulo">O SABOR<span class="hero-serif">que faz voltar.</span></h1>
             <p class="hero-subtitle">Para quem serve, para quem revende e para quem não abre mão de qualidade. Receitas próprias, ingredientes selecionados e aquele sabor que conquista na primeira mordida.</p>
             <div class="hero-cta">
                 <a href="#carro-chefe" class="btn-primary">Conheça nossos produtos <span aria-hidden="true">↗</span></a>
@@ -213,6 +214,7 @@
             </div>
         </div>
         <div class="hero-visual" aria-label="Seleção de salgados Sabor do Alemão">
+            <div class="hero-orbit" aria-hidden="true"></div>
             <div class="hero-visual-frame">
                 <img class="hero-main-product" src="img/pastel-forno-pizza.webp" alt="Pastel de forno sabor pizza Sabor do Alemão" width="600" height="600" fetchpriority="high" decoding="async">
                 <span class="hero-seal" aria-hidden="true">SABOR<br>ORIGINAL<br>®</span>
@@ -289,6 +291,28 @@
 
     
 
+<!-- EXPERIÊNCIA / EDITORIAL -->
+<section class="story-feature" aria-labelledby="storyFeatureTitle">
+  <div class="story-feature-inner">
+    <div class="story-photo reveal">
+      <div class="story-photo-light" aria-hidden="true"></div>
+      <img src="img/trancinha-calabresa.webp" alt="Trancinha de calabresa da linha de salgados Sabor do Alemão" loading="lazy" decoding="async" width="560" height="560">
+      <span class="story-photo-caption">PRODUTOS QUE CHAMAM A ATENÇÃO</span>
+    </div>
+    <div class="story-copy reveal">
+      <div class="section-tag">PARA QUEM VIVE DE SABOR</div>
+      <h2 id="storyFeatureTitle">PRATICIDADE<br>QUE <em>ENCANTA.</em></h2>
+      <p>Uma linha pensada para facilitar a rotina de quem atende, serve e revende. Produtos congelados, opções para assar ou fritar e o cuidado de quem cria suas próprias receitas.</p>
+      <div class="story-points">
+        <div><span>01</span><strong>Escolha os sabores</strong><small>Conheça nossa variedade de salgados.</small></div>
+        <div><span>02</span><strong>Prepare e sirva</strong><small>Encontre opções para assar ou fritar.</small></div>
+        <div><span>03</span><strong>Fale com a equipe</strong><small>Consulte o atendimento comercial na sua região.</small></div>
+      </div>
+      <a href="#fazer-pedido" class="story-link">QUERO CONHECER AS OPÇÕES <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</section>
+
 <!-- SOBRE -->
 <section class="sobre" id="sobre">
     <div class="section-header reveal">
@@ -359,8 +383,16 @@
         <p class="section-subtitle">Explore nossos salgados congelados por categoria — opções para assar ou fritar.</p>
     </div>
 
-    <!-- Filtros -->
-    <div class="categorias-filtros reveal">
+    <!-- Busca e filtros do catálogo -->
+    <div class="catalog-tools reveal">
+      <label for="catalogSearch">Qual sabor você procura?</label>
+      <div class="catalog-search-wrap">
+        <span class="search-icon" aria-hidden="true"></span>
+        <input id="catalogSearch" type="search" placeholder="Busque por pastel, coxinha, queijo..." autocomplete="off" aria-controls="produtosGrid">
+        <button type="button" id="clearCatalogSearch" aria-label="Limpar busca" hidden>Limpar</button>
+      </div>
+    </div>
+    <div class="categorias-filtros reveal" aria-label="Filtrar produtos por categoria">
         <button class="filtro-btn active" data-cat="todos" aria-label="Mostrar todos os produtos" aria-pressed="true">Todos</button>
         <button class="filtro-btn" data-cat="pasteis-forno" aria-label="Filtrar pastéis de forno">Pastéis de Forno</button>
         <button class="filtro-btn" data-cat="pasteis-fritar" aria-label="Filtrar pastéis para fritar">Pastéis p/ Fritar</button>
@@ -521,6 +553,7 @@
         © 2026 Sabor do Alemão. Todos os direitos reservados. | Marca registrada ® | <a href="#" onclick="abrirPrivacidade(event)" aria-label="Abrir política de privacidade">Política de Privacidade</a>
     </div>
 </footer>
+<button type="button" id="backToTop" class="back-to-top" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
 
 <!-- MODAL POLÍTICA DE PRIVACIDADE -->
 <div id="modalPrivacidade" class="privacidade-overlay" role="dialog" aria-modal="true" aria-label="Política de Privacidade" style="display:none;">
@@ -664,5 +697,6 @@
 
     <script src="js/script.js"></script>
     <script src="js/premium.js"></script>
+    <script src="js/refinements.js"></script>
 </body>
 </html>
