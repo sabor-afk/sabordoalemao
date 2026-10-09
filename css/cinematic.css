@@ -1,0 +1,239 @@
+/* Sabor do Alemão — scroll cinematográfico v3
+   Efeitos apenas de apresentação: imagens, conteúdo e navegação originais preservados.
+   Os efeitos são ativados só quando js/cinematic.js inicializa. */
+
+.cinematic-ready .hero-premium {
+  --scene-depth: 0;
+  --hero-image-y: 0px;
+  --hero-rotate-x: 0deg;
+  --hero-rotate-y: 0deg;
+  --hero-scale: 1;
+  --hero-orbit-y: 0px;
+  --hero-float-top: 0px;
+  --hero-float-bottom: 0px;
+}
+
+.cinematic-ready .hero-premium::before {
+  transform: translate3d(0,calc(var(--hero-orbit-y) * -0.35),0);
+  transition: none;
+}
+.cinematic-ready .hero-grain {
+  transform: translate3d(0,calc(var(--hero-orbit-y) * .15),0);
+  will-change: auto;
+}
+.cinematic-ready .hero-visual { animation: none; perspective: 1100px; }
+.cinematic-ready .hero-visual-frame {
+  transform: perspective(1300px) rotateX(var(--hero-rotate-x)) rotateY(var(--hero-rotate-y)) scale(var(--hero-scale));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.cinematic-ready .hero-main-product {
+  animation: none;
+  transform: translate3d(0,var(--hero-image-y),0) scale(1.025);
+  will-change: transform;
+}
+.cinematic-ready .hero-orbit {
+  transform: translate3d(0,var(--hero-orbit-y),0) rotate(-16deg);
+  will-change: transform;
+}
+.cinematic-ready .hero-float { animation: none; }
+.cinematic-ready .hero-float-top {
+  transform: translate3d(0,var(--hero-float-top),0);
+  will-change: transform;
+}
+.cinematic-ready .hero-float-bottom {
+  transform: translate3d(0,var(--hero-float-bottom),0);
+  will-change: transform;
+}
+.cinematic-ready .hero-content {
+  transform: translate3d(0,var(--hero-content-y,0px),0);
+  opacity: var(--hero-content-opacity,1);
+  animation: none;
+}
+
+/* Revelação de palavras com progresso contínuo — funciona nos dois sentidos. */
+.cinematic-ready [data-scroll-title] { perspective: 700px; }
+.cinematic-word {
+  display: inline-block;
+  vertical-align: baseline;
+  overflow: clip;
+  padding-bottom: .13em;
+  margin-bottom: -.13em;
+  white-space: nowrap;
+}
+.cinematic-word > .cinematic-word-inner {
+  display: inline-block;
+  transform-origin: 50% 85%;
+  backface-visibility: hidden;
+}
+.cinematic-ready [data-scroll-title] .cinematic-word {
+  opacity: var(--kinetic-opacity,1);
+}
+.cinematic-ready [data-scroll-title] .cinematic-word-inner {
+  transform: translate3d(0,var(--kinetic-y,0px),0) rotateX(var(--kinetic-tilt,0deg));
+}
+/* Quando JS não rodar, o conteúdo permanece legível por padrão. */
+
+/* Linha de texto decorativa na passagem de seção. */
+.cinematic-ready .section-header .section-title .underline::after {
+  transform: scaleX(var(--title-underline,1));
+  transform-origin: left center;
+}
+.cinematic-ready .section-header .section-title .underline::after,
+.cinematic-ready .story-copy h2 em { transition: none; }
+
+/* Produtos favoritos: perspectiva, entrada escalonada e tilt suave ao apontar. */
+.cinematic-ready .carro-chefe-grid { perspective: 1200px; }
+.cinematic-ready .cc-card {
+  --card-depth-y: 0px;
+  --card-depth-rx: 0deg;
+  --card-depth-ry: 0deg;
+  --card-pointer-rx: 0deg;
+  --card-pointer-ry: 0deg;
+  --card-hover-y: 0px;
+  opacity: var(--card-alpha,1);
+  transform:
+    perspective(1100px)
+    translate3d(0,calc(var(--card-depth-y) + var(--card-hover-y)),0)
+    rotateX(calc(var(--card-depth-rx) + var(--card-pointer-rx)))
+    rotateY(calc(var(--card-depth-ry) + var(--card-pointer-ry)));
+  transform-style: preserve-3d;
+  transition: box-shadow .3s,border-color .3s;
+  will-change: auto;
+}
+.cinematic-ready .cc-card:hover {
+  --card-hover-y: -7px;
+}
+.cinematic-ready .cc-card .cc-image img {
+  transform: translate3d(0,var(--card-photo-y,0px),22px) scale(1.02);
+  transition: none;
+}
+.cinematic-ready .cc-card:hover .cc-image img {
+  transform: translate3d(0,var(--card-photo-y,0px),35px) scale(1.09);
+  transition: transform .35s ease-out;
+}
+.cinematic-ready .cc-card .cc-image { transform-style: preserve-3d; }
+.cinematic-ready .cc-card .cc-badge,
+.cinematic-ready .cc-card .cc-nome { transform: translateZ(13px); }
+
+/* Movimento de cards gerados dinamicamente pelo catálogo.
+   Estado padrão visível, estado cinemático aplicado somente depois do observador. */
+.cinematic-ready .produto-card.cinematic-item {
+  --catalog-stagger: 0ms;
+  opacity: 0;
+  transform: perspective(900px) translate3d(0,44px,0) rotateX(8deg) scale(.975);
+  transition:
+    opacity .64s cubic-bezier(.2,.75,.2,1),
+    transform .78s cubic-bezier(.2,.75,.2,1),
+    border-color .25s,
+    box-shadow .3s;
+  transition-delay: var(--catalog-stagger);
+}
+.cinematic-ready .produto-card.cinematic-item.cinematic-in,
+.cinematic-ready .produto-card.cinematic-item.cinematic-in.reveal.visible {
+  opacity: 1;
+  transform: perspective(900px) translate3d(0,0,0) rotateX(0) scale(1);
+}
+.cinematic-ready .produto-card.cinematic-item.cinematic-in:hover {
+  transform: perspective(900px) translate3d(0,-6px,0) rotateX(-1deg) scale(1.012);
+}
+.cinematic-ready .produto-card.cinematic-item .produto-image img {
+  transform: translate3d(0,var(--catalog-img-y,0px),0) scale(1.03);
+  transition: transform .4s;
+}
+.cinematic-ready .produto-card.cinematic-item:hover .produto-image img {
+  transform: translate3d(0,var(--catalog-img-y,0px),0) scale(1.09);
+}
+
+/* Editorial com destaque progressivo. Não bloqueia a navegação. */
+@media (min-width: 969px) and (min-height: 680px) {
+  .cinematic-ready .story-feature {
+    min-height: 145svh;
+    padding-block: 60px;
+    overflow: clip;
+    background: linear-gradient(145deg,
+      hsl(33 16% calc(9% + var(--story-warmth,0) * 5%)),
+      #1c1b17 67%);
+  }
+  .cinematic-ready .story-feature-inner {
+    position: sticky;
+    top: clamp(92px,11vh,135px);
+    min-height: min(74svh,720px);
+    align-items: center;
+  }
+}
+.cinematic-ready .story-photo {
+  transform-origin: center center;
+}
+.cinematic-ready .story-photo.reveal.visible {
+  transform:
+    perspective(1300px)
+    translate3d(0,var(--story-y,0px),0)
+    rotateY(var(--story-turn,0deg))
+    scale(var(--story-scale,1));
+}
+.cinematic-ready .story-photo img {
+  transform: translate3d(0,var(--story-image-y,0px),0) scale(var(--story-image-scale,1));
+  transition: none;
+}
+.cinematic-ready .story-photo:hover img {
+  transform: translate3d(0,var(--story-image-y,0px),0) scale(calc(var(--story-image-scale,1) + .03));
+}
+.cinematic-ready .story-photo-light {
+  transform: rotate(var(--story-light-turn,0deg)) scale(var(--story-light-scale,1));
+}
+.cinematic-ready .story-copy { --story-copy-y: 0px; }
+.cinematic-ready .story-copy.reveal.visible {
+  transform: translate3d(0,var(--story-copy-y),0);
+}
+
+/* Seção final ganha uma luz sutil conforme aparece. */
+.cinematic-ready .fazer-pedido-section {
+  background:
+    radial-gradient(circle at calc(85% - var(--cta-light-x,0px)) 28%,
+      rgba(255,221,171,.27), transparent 46%),
+    linear-gradient(122deg,#93252e,#c2383e 60%,#a92b34);
+  transition: none;
+}
+.cinematic-ready .pedido-actions .btn-primary {
+  box-shadow: 0 12px 42px rgba(55,9,15,.12);
+}
+
+/* Dispositivos touch e telas pequenas: sem pin, sem tilt no hover, movimentos leves. */
+@media (max-width: 968px) {
+  .cinematic-ready .hero-visual-frame { transform: scale(var(--hero-scale)); }
+  .cinematic-ready .story-feature { min-height: 0; }
+  .cinematic-ready .story-feature-inner { position: static; min-height: 0; }
+  .cinematic-ready .story-photo.reveal.visible {
+    transform: translate3d(0,var(--story-y,0px),0) scale(var(--story-scale,1));
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .cinematic-ready .cc-card:hover { --card-hover-y: 0px; }
+  .cinematic-ready .cc-card:hover .cc-image img { transform: translate3d(0,var(--card-photo-y,0px),22px) scale(1.02); }
+}
+@media (max-width: 620px) {
+  .cinematic-ready .cc-card { transform: translate3d(0,var(--card-depth-y),0); }
+  .cinematic-ready .cc-card .cc-badge,
+  .cinematic-ready .cc-card .cc-nome { transform: none; }
+  .cinematic-ready .story-photo-light { transform: none; }
+}
+/* Obrigatório: movimento reduzido = layout estático e totalmente legível. */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-ready .hero-premium,
+  .cinematic-ready .hero-premium *,
+  .cinematic-ready .cc-card,
+  .cinematic-ready .produto-card.cinematic-item,
+  .cinematic-ready .story-photo,
+  .cinematic-ready .story-photo img,
+  .cinematic-ready [data-scroll-title] .cinematic-word,
+  .cinematic-ready [data-scroll-title] .cinematic-word-inner {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .cinematic-ready .story-feature { min-height: 0 !important; }
+  .cinematic-ready .story-feature-inner { position: static !important; }
+  .cinematic-ready .produto-card.cinematic-item { opacity: 1 !important; }
+}
