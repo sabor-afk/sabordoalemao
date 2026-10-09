@@ -50,7 +50,9 @@
    const amount=clamp(exact-i);
    bar.style.setProperty('--bar-progress',amount.toFixed(3));
   });
-  if(counter)counter.textContent=String(active+1).padStart(2,'0');
+  // O contador corresponde à foto mais visível durante a transição.
+  const displayed=slides.reduce((best,slide,i)=>Number(slide.style.opacity)>Number(slides[best].style.opacity)?i:best,0);
+  if(counter)counter.textContent=String(displayed+1).padStart(2,'0');
  }
  function queue(){if(!frame)frame=requestAnimationFrame(update);}
  window.addEventListener('scroll',queue,{passive:true});
