@@ -1,0 +1,56 @@
+/* Embaixador — 3 fases de evolução. O conteúdo permanece visível sem JS. */
+.embaixador-section { overflow:visible; }
+.embaixador-timeline{align-items:center;justify-content:center;min-width:0}
+.embaixador-stage-frame{position:relative;width:min(100%,520px);aspect-ratio:1/1;isolation:isolate;border-radius:28px;background:radial-gradient(circle at 52% 45%,rgba(247,208,137,.14),rgba(81,15,27,.07) 75%);}
+.embaixador-slide{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translateY(20px) scale(.93);pointer-events:none;transition:opacity .4s ease,transform .6s ease,visibility .4s;}
+.embaixador-slide.is-default{opacity:1;visibility:visible;transform:none}
+.embaixador-slide img{display:block;width:92%;height:88%;object-fit:contain;filter:drop-shadow(0 22px 25px rgba(40,9,19,.28));}
+.embaixador-slide img.embaixador-logo-final{width:100%;height:90%}
+.embaixador-slide figcaption{position:absolute;bottom:49px;left:20px;right:20px;text-align:center;font-size:.67rem;letter-spacing:.12em;color:#fff3d9;font-weight:800}
+.embaixador-progress-overlay{position:absolute;inset:0;z-index:5;pointer-events:none}
+.embaixador-count{position:absolute;top:20px;right:20px;font-family:'Bebas Neue',sans-serif;font-size:1.85rem;color:#fff1d8;font-variant-numeric:tabular-nums}
+.embaixador-count strong{color:#ffda98}
+.embaixador-scroll-label{position:absolute;bottom:29px;left:20px;font-size:.58rem;letter-spacing:.14em;color:#ffe9c5;font-weight:800}
+.embaixador-progress{position:absolute;left:20px;right:20px;bottom:13px;display:flex;gap:6px}
+.embaixador-progress span{height:3px;flex:1;background:rgba(255,246,230,.3);border-radius:8px;overflow:hidden}
+.embaixador-progress span::before{content:'';display:block;width:100%;height:100%;background:#ffcf83;transform:scaleX(var(--step-progress,0));transform-origin:left}
+.embaixador-copy-stage{position:relative;min-height:98px;margin:10px 0 17px;padding:18px 0;border-top:1px solid #ffe6c94d;border-bottom:1px solid #ffe6c94d}
+.embaixador-copy-step{position:absolute;inset:18px 0;display:grid;align-content:center;gap:5px;opacity:0;visibility:hidden;transform:translateY(9px);transition:opacity .35s,transform .35s,visibility .35s}
+.embaixador-copy-step.is-default{opacity:1;visibility:visible;transform:none}
+.embaixador-copy-index{color:#ffd492;letter-spacing:.15em;font-size:.65rem;font-weight:800}
+.embaixador-copy-step strong{font-size:1rem;color:#fff8e9}
+.embaixador-copy-step small{font-size:.78rem;color:#f0d7d0;line-height:1.5}
+.embaixador-steps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.embaixador-steps button{cursor:pointer;border:1px solid #ffdfb44f;border-radius:30px;background:transparent;color:#ffe5c6;font:700 .71rem 'Montserrat',sans-serif;padding:10px 15px;transition:background .2s,color .2s,border-color .2s}
+.embaixador-steps button:hover,.embaixador-steps button[aria-pressed="true"]{background:#ffda99;color:#72222c;border-color:#ffda99}
+.embaixador-timeline .embaixador-glow,.embaixador-timeline .embaixador-ring{pointer-events:none}
+@media(min-width:969px) and (min-height:680px){
+ .embaixador-section.embaixador-scroll-enabled{min-height:300svh;padding:0 5%}
+ .embaixador-scroll-enabled .embaixador-layout{position:sticky;top:clamp(80px,10vh,118px);height:min(80svh,740px);min-height:610px}
+ .embaixador-scroll-enabled .embaixador-visual{min-height:540px}
+}
+.embaixador-scroll-enabled .embaixador-slide{transition:none}
+.embaixador-scroll-enabled .embaixador-slide.is-default{opacity:0;visibility:hidden;transform:translateY(20px) scale(.93)}
+.embaixador-scroll-enabled .embaixador-copy-step{transition:none}
+.embaixador-scroll-enabled .embaixador-copy-step.is-default{opacity:0;visibility:hidden}
+@media(max-width:968px){
+ .embaixador-stage-frame{max-width:490px}
+ .embaixador-section.embaixador-scroll-enabled{min-height:0}
+ .embaixador-scroll-enabled .embaixador-layout{position:static;height:auto;min-height:0}
+ .embaixador-copy-stage{min-height:114px}
+}
+@media(max-width:620px){
+ .embaixador-stage-frame{width:min(100%,365px)}
+ .embaixador-visual.embaixador-timeline{min-height:340px}
+ .embaixador-slide figcaption{bottom:42px;font-size:.56rem}
+ .embaixador-scroll-label{bottom:25px;font-size:.5rem}
+ .embaixador-copy-stage{min-height:126px}
+ .embaixador-copy-step strong{font-size:.86rem}
+ .embaixador-copy-step small{font-size:.7rem}
+ .embaixador-steps button{padding:9px 12px;font-size:.65rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .embaixador-slide,.embaixador-copy-step{transition:none!important}
+ .embaixador-section.embaixador-scroll-enabled{min-height:0!important}
+ .embaixador-scroll-enabled .embaixador-layout{position:static!important;height:auto!important}
+}
