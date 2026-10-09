@@ -1,0 +1,25 @@
+TESTE LOCAL — REDESIGN SABOR DO ALEMÃO
+
+1. Extraia todo o ZIP para uma pasta do Windows.
+2. Abra a pasta que contem index.html e o arquivo TESTAR-SITE.cmd.
+3. Clique duas vezes em TESTAR-SITE.cmd.
+4. O navegador abre em http://127.0.0.1:8765/
+5. Deixe a janela do terminal aberta e navegue pelo site.
+6. Para encerrar, pressione Ctrl+C na janela do terminal.
+
+O catálogo precisa desse servidor local para carregar data/produtos.json.
+Abrir index.html diretamente (file://) pode impedir o catálogo de aparecer.
+
+Cheque no computador e no celular (modo responsivo do Edge — tecla F12,
+depois Ctrl+Shift+M) as animacoes, os filtros e os detalhes dos produtos.
+
+IMPORTANTE:
+- Este pacote é só para teste.
+- O formulário de pedidos usa Netlify Forms em produção: não envie dados
+  reais durante o teste local, porque o servidor local não processa pedidos.
+- Nenhuma instalacao de Python, Node.js ou dependencia externa é necessaria.
+- Se o Windows mostrar um aviso sobre um script baixado da internet, confira
+  o conteúdo dos arquivos antes de executá-los.
+
+Branch: design/premium-2026
+Repositorio: https://github.com/sabor-afk/sabordoalemao
