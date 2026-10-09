@@ -337,7 +337,7 @@
     </div>
 
     <!-- 🎉 MENSAGEM DE SUCESSO COM ANIMAÇÃO -->
-    <div class="success-message" id="successMsg">
+    <div class="success-message" id="successMsg" role="status" aria-live="polite">
       <div class="success-icon">✅</div>
       <div>Pedido enviado com sucesso!</div>
       <div style="font-size: 14px; margin-top: 8px; opacity: 0.9;">
@@ -348,9 +348,13 @@
     <div class="info-box">
       ⚡ <strong>Resposta em até 2 horas úteis</strong>
     </div>
+    <div id="errorMsg" role="alert" style="display:none;margin:20px 0;padding:15px 18px;background:#401e22;border:1px solid #bd5252;border-radius:10px;color:#fff1ec;line-height:1.65;">
+      Não foi possível confirmar o envio. Confira sua conexão e tente novamente. Você também pode entrar em contato pelo <a href="https://wa.me/5547999743400" target="_blank" rel="noopener noreferrer" style="color:#ffcd9d;text-decoration:underline;">WhatsApp</a>.
+    </div>
 
     <!-- 📋 FORMULÁRIO NETLIFY FORMS -->
-    <form id="formulario-pedido" name="sabor-do-alemao-formulario" method="POST" netlify netlify-honeypot="bot-field">
+    <form id="formulario-pedido" name="sabor-do-alemao-formulario" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="sabor-do-alemao-formulario">
       
       <!-- Honeypot anti-spam (oculto) -->
       <input type="hidden" name="bot-field">
@@ -617,24 +621,39 @@
     // ========================================
     // 🎯 MOSTRAR SUCESSO COM ANIMAÇÃO
     // ========================================
-    document.getElementById('formulario-pedido').addEventListener('submit', function(e) {
+    document.getElementById('formulario-pedido').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = this;
       const successMsg = document.getElementById('successMsg');
-      
-      // Mostrar mensagem com delay
-      setTimeout(() => {
+      const errorMsg = document.getElementById('errorMsg');
+      const submit = form.querySelector('button[type="submit"]');
+      if (submit.disabled) return;
+      errorMsg.style.display = 'none';
+      successMsg.classList.remove('show');
+      submit.disabled = true;
+      const originalText = submit.textContent;
+      submit.textContent = 'Enviando…';
+
+      try {
+        const data = new FormData(form);
+        data.set('form-name', 'sabor-do-alemao-formulario');
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString()
+        });
+        if (!response.ok) throw new Error('Envio não confirmado: HTTP ' + response.status);
         successMsg.classList.add('show');
-        
-        // Scroll para mensagem
         successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        
-        // Limpar formulário
-        this.reset();
-        
-        // Esconder após 8 segundos
-        setTimeout(() => {
-          successMsg.classList.remove('show');
-        }, 8000);
-      }, 500);
+        form.reset();
+      } catch (error) {
+        console.error('Falha ao enviar formulário:', error);
+        errorMsg.style.display = 'block';
+        errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } finally {
+        submit.disabled = false;
+        submit.textContent = originalText;
+      }
     });
   </script>
 </body>
