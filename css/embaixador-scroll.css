@@ -54,3 +54,12 @@
  .embaixador-section.embaixador-scroll-enabled{min-height:0!important}
  .embaixador-scroll-enabled .embaixador-layout{position:static!important;height:auto!important}
 }
+
+/* Leitura em telas pequenas e modo de movimento reduzido. */
+.embaixador-copy-stage{min-height:125px}
+.embaixador-copy-step{inset:12px 0}
+@media(max-width:620px){.embaixador-copy-stage{min-height:150px}}
+@media(prefers-reduced-motion:reduce){
+  .embaixador-scroll-enabled .embaixador-slide,
+  .embaixador-scroll-enabled .embaixador-copy-step{transition:none!important}
+}
