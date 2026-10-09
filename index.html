@@ -61,6 +61,7 @@
 <link rel="stylesheet" href="css/refinements.css">
 <link rel="stylesheet" href="css/cinematic.css">
 <link rel="stylesheet" href="css/showcase.css">
+<link rel="stylesheet" href="css/embaixador-scroll.css">
 
 <!-- Schema.org: LocalBusiness -->
 <script type="application/ld+json">
@@ -438,26 +439,66 @@
     </section>
 
 
-<!-- O EMBAIXADOR DA MARCA -->
+<!-- O EMBAIXADOR DA MARCA | EVOLUÇÃO POR ROLAGEM -->
 <section class="mascote-section embaixador-section" id="mascote" aria-labelledby="embaixadorTitulo">
   <div class="embaixador-layout">
-    <div class="embaixador-visual reveal">
+    <div class="embaixador-visual embaixador-timeline reveal" id="embaixadorTimeline">
       <div class="embaixador-glow" aria-hidden="true"></div>
       <div class="embaixador-ring" aria-hidden="true"><span>SABOR • TRADIÇÃO • DESDE 2005 •</span></div>
-      <img class="embaixador-personagem" src="img/mascote.webp" alt="Mascote atual Sabor do Alemão segurando um salgado" loading="lazy" decoding="async" width="480" height="510">
-      <span class="embaixador-stamp">O NOSSO<br>EMBAIXADOR</span>
+
+      <div class="embaixador-stage-frame" id="embaixadorFrame" aria-label="Evolução visual da marca Sabor do Alemão">
+        <figure class="embaixador-slide" data-embaixador-step="0" aria-hidden="true">
+          <img class="embaixador-stage-image" src="img/LOGO ANTIGA.webp" alt="Ilustração antiga da marca Sabor do Alemão" width="530" height="530" loading="lazy" decoding="async">
+          <figcaption>AS NOSSAS ORIGENS</figcaption>
+        </figure>
+        <figure class="embaixador-slide is-default" data-embaixador-step="1">
+          <img class="embaixador-stage-image" src="img/mascote.webp" alt="Mascote atual do Sabor do Alemão segurando um salgado" width="530" height="530" loading="lazy" decoding="async">
+          <figcaption>O NOSSO EMBAIXADOR</figcaption>
+        </figure>
+        <figure class="embaixador-slide" data-embaixador-step="2" aria-hidden="true">
+          <img class="embaixador-stage-image embaixador-logo-final" src="img/logo-sabor-do-alemao.webp" alt="Identidade visual e logo atual do Sabor do Alemão" width="530" height="530" loading="lazy" decoding="async">
+          <figcaption>A NOSSA MARCA HOJE</figcaption>
+        </figure>
+
+        <div class="embaixador-progress-overlay" aria-hidden="true">
+          <span class="embaixador-count"><strong id="embaixadorCounter">02</strong> / 03</span>
+          <span class="embaixador-scroll-label">NOSSA EVOLUÇÃO <span aria-hidden="true">↓</span></span>
+          <div class="embaixador-progress" id="embaixadorProgress"><span></span><span></span><span></span></div>
+        </div>
+      </div>
     </div>
+
     <div class="embaixador-texto reveal">
       <div class="section-tag">O ROSTO DO NOSSO SABOR</div>
       <h2 class="section-title" id="embaixadorTitulo">PRAZER,<br>SOU O <span class="underline">ALEMÃO.</span></h2>
-      <p class="embaixador-lead">Um personagem que faz parte da identidade Sabor do Alemão, sempre com um salgado na mão e um convite para experimentar.</p>
-      <p>Da ilustração de antigamente ao mascote atual, nossa comunicação mudou, mas a vontade de representar o sabor dos nossos produtos continua.</p>
-      <a href="#produtos" class="embaixador-link">CONHEÇA NOSSOS SABORES <span aria-hidden="true">↗</span></a>
-      <div class="embaixador-historia" aria-label="Evolução visual da marca">
-        <div class="embaixador-etapa"><img src="img/LOGO ANTIGA.webp" alt="Ilustração antiga da marca Sabor do Alemão" loading="lazy" decoding="async"><div><strong>Ontem</strong><span>As nossas origens</span></div></div>
-        <span class="embaixador-historia-seta" aria-hidden="true">→</span>
-        <div class="embaixador-etapa"><img src="img/logo-sabor-do-alemao.webp" alt="Logo atual Sabor do Alemão" loading="lazy" decoding="async"><div><strong>Hoje</strong><span>Uma identidade renovada</span></div></div>
+      <p class="embaixador-lead">O personagem que representa o carinho, a tradição e a vontade de servir sempre algo gostoso.</p>
+      <p>Nossa marca ganhou novas formas ao longo do tempo, mas o sabor e a identidade Sabor do Alemão continuam presentes.</p>
+
+      <div class="embaixador-copy-stage" id="embaixadorCopyStage">
+        <div class="embaixador-copy-step" data-embaixador-copy="0" aria-hidden="true">
+          <span class="embaixador-copy-index">01 — ORIGEM</span>
+          <strong>Tudo tem uma história.</strong>
+          <small>Uma lembrança das primeiras ilustrações da marca.</small>
+        </div>
+        <div class="embaixador-copy-step is-default" data-embaixador-copy="1">
+          <span class="embaixador-copy-index">02 — EVOLUÇÃO</span>
+          <strong>Um rosto que dá as boas-vindas.</strong>
+          <small>O mascote atual traz personalidade à nossa comunicação.</small>
+        </div>
+        <div class="embaixador-copy-step" data-embaixador-copy="2" aria-hidden="true">
+          <span class="embaixador-copy-index">03 — HOJE</span>
+          <strong>Uma identidade que segue em frente.</strong>
+          <small>A logo atual reúne o personagem e o nome Sabor do Alemão.</small>
+        </div>
       </div>
+
+      <div class="embaixador-steps" role="group" aria-label="Conhecer as fases do Embaixador">
+        <button type="button" data-embaixador-jump="0" aria-pressed="false">Origem</button>
+        <button type="button" data-embaixador-jump="1" aria-pressed="true">Embaixador</button>
+        <button type="button" data-embaixador-jump="2" aria-pressed="false">Hoje</button>
+      </div>
+
+      <a href="#produtos" class="embaixador-link">CONHEÇA NOSSOS SABORES <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
@@ -708,5 +749,6 @@
     <script src="js/refinements.js"></script>
     <script src="js/cinematic.js"></script>
     <script src="js/showcase.js"></script>
+    <script src="js/embaixador-scroll.js"></script>
 </body>
 </html>
