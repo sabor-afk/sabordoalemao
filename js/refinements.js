@@ -8,7 +8,6 @@
   const count = document.getElementById('catalogCount');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  const escapeText = value => String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let query = '';
   const refresh = () => {
     if (!grid || !Array.isArray(window.todosProdutos) && typeof todosProdutos === 'undefined') return;
@@ -37,10 +36,10 @@
     clear.addEventListener('click', () => {
       input.value = ''; query = ''; clear.hidden = true; refresh(); input.focus();
     });
-    document.querySelectorAll('.filtro-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (query) refresh();
-      });
+    // A categoria oficial eh gerenciada em script.js; este evento
+    // reaplica a busca depois de renderizacoes e tentativas de recarga.
+    window.addEventListener('sabordoalemao:catalog-rendered', () => {
+      if (query) refresh();
     });
   }
   if (toTop) {
