@@ -1,7 +1,6 @@
 /* Interações leves do redesign premium — preserva o catálogo original. */
 (() => {
     'use strict';
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const progress = document.getElementById('readingProgress');
     const nav = document.getElementById('navbar');
     const links = [...document.querySelectorAll('#navLinks a[href^="#"]')];
@@ -46,10 +45,7 @@
     });
     links.forEach(link => link.addEventListener('click', () => {
         closeNav();
-        if (reduceMotion) {
-            const target = document.getElementById(link.hash.slice(1));
-            if (target) target.scrollIntoView({behavior: 'instant'});
-        }
+        // A rolagem já é tratada por js/script.js, respeitando reduced-motion.
     }));
 
     // Observa seções para orientar navegação, sem travar rolagem.
@@ -72,7 +68,16 @@
     function refreshCount() {
         if (!count || !grid) return;
         const total = grid.querySelectorAll('.produto-card').length;
-        count.textContent = total ? total + (total === 1 ? ' produto encontrado' : ' produtos encontrados') : 'Nenhum produto nesta categoria';
+        const failure = grid.querySelector('.produtos-erro');
+        if (failure) {
+            count.textContent = 'Catálogo temporariamente indisponível';
+        } else if (total) {
+            count.textContent = total + (total === 1 ? ' produto encontrado' : ' produtos encontrados');
+        } else if (grid.hasChildNodes()) {
+            count.textContent = 'Nenhum produto nesta categoria';
+        } else {
+            count.textContent = 'Carregando catálogo…';
+        }
     }
     if (grid && 'MutationObserver' in window) {
         new MutationObserver(refreshCount).observe(grid, {childList: true});
