@@ -30,7 +30,9 @@
   }
   const exact=p*originalSlides;
   const active=Math.min(originalSlides-1,Math.floor(exact));
-  const within=active===originalSlides-1?1:clamp(exact-active);
+  // O ultimo produto nao tem proximo slide: deve permanecer 100% visivel.
+  // Antes 'within=1' desvanecia a quarta foto para transparencia zero.
+  const within=active===originalSlides-1?0:clamp(exact-active);
   slides.forEach((slide,i)=>{
    let alpha=0, scale=1.04, shift=14;
    if(reduce.matches){
