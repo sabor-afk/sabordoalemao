@@ -81,6 +81,7 @@
     const lines=[
       'Olá! Vim pelo site do Sabor do Alemão e gostaria de solicitar atendimento comercial.','',
       '*Nome / estabelecimento:* '+field('nome'),
+      '*Endereço do estabelecimento:* '+field('endereco'),
       '*Cidade / UF:* '+place
     ];
     if(field('negocio'))lines.push('*Tipo de negócio:* '+field('negocio'));
