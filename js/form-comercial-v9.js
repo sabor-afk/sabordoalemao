@@ -128,12 +128,14 @@
       note.textContent='Selecione e copie o texto acima (Ctrl+C).';
     }
   });
-  btnOpen.addEventListener('click',()=>{
+  btnOpen.addEventListener('click',e=>{
     if(!dataBox.value.trim()){
-      note.textContent='Revise sua mensagem antes de continuar.';
+      e.preventDefault();
+      note.textContent='A mensagem está vazia. Escreva ou volte para revisar seus dados.';
+      dataBox.focus();
       return;
     }
     btnOpen.href=makeURL(dataBox.value);
-    sendLabel.textContent='O WhatsApp foi aberto. O envio só é concluído quando você confirmar na conversa.';
+    sendLabel.textContent='Se o WhatsApp abrir, confira a conversa e confirme o envio da mensagem.';
   });
 })();
