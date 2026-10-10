@@ -17,6 +17,27 @@
 - [ ] Fortalecer "Quem somos": história real, fotos do negócio/equipe/produção, valores e diferenciais que possam ser comprovados.
 - [ ] FAQ comercial visível com informações reais; não manter FAQ estruturada sobre informações não verificadas.
 
+## Diretriz comercial aprovada: dois canais no mesmo site
+
+O Sabor do Alemão terá **catálogo institucional + WhatsApp** e, em uma etapa futura, **pedidos diretamente pelo site**. Não transformar a versão atual em loja aberta antes de validar regras comerciais e de estoque.
+
+### Canal A — institucional / WhatsApp (primeiro)
+
+- Catálogo completo, pesquisa, categorias, fichas de produtos e contato comercial.
+- Formulário com endereço, revisão da mensagem e confirmação humana pelo WhatsApp.
+- Funciona mesmo para prospects sem login nem cadastro.
+- Esse fluxo deve permanecer disponível quando os pedidos online forem lançados.
+
+### Canal B — pedidos no site (etapa futura)
+
+- Interface de catálogo com carrinho, quantidades, identificação do estabelecimento e revisão antes do envio.
+- Exibir preços e condições apenas conforme política comercial real; avaliar tabelas B2B e autorização por cliente.
+- Validar cobertura de entrega, quantidade mínima, unidade/caixa, estoque disponível e limites de pedido.
+- **Arquitetura preferida:** estudar integração do site com **Bischof Vendas**, que já se integra à **Câmara Fria**, em vez de criar outro estoque ou duplicar regras de reserva.
+- **Decisão pendente:** pedidos entram diretamente na operação ou chegam primeiro como solicitações de aprovação. Antes de integrar, mapear endpoints, autenticação e eventos de reserva/baixa de estoque para evitar pedidos duplicados.
+- Não adicionar pagamento online, cadastro obrigatório ou backend até haver necessidade comercial e avaliação de segurança/cotas.
+- Preservar o acesso rápido ao WhatsApp em todos os fluxos.
+
 ## 2. Experiência corporativa e conversão
 
 - [ ] Navegação e rodapé completos com acessos rápidos a catálogo, empresa, dúvidas, política de privacidade e atendimento.
