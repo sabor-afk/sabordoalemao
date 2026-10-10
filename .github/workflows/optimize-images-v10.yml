@@ -1,7 +1,12 @@
-name: Otimizar fotos da V10 (manual)
+name: Otimizar fotos da V10 (testes)
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - design/premium-2026
+    paths:
+      - .github/workflows/optimize-images-v10.yml
 
 permissions:
   contents: write
