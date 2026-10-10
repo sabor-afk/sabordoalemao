@@ -42,6 +42,14 @@ input:not([type=checkbox]),select,textarea{width:100%;min-height:49px;border:1px
 input::placeholder,textarea::placeholder{color:#a5978a}
 input:focus,select:focus,textarea:focus{border-color:#b35456;box-shadow:0 0 0 3px #b8494930;outline:0}
 textarea{min-height:103px;resize:vertical}
+.address-card{background:linear-gradient(155deg,#fff6eb,#fffaf3);border:1px solid #e6cdb7;border-radius:18px;padding:20px 20px 2px;margin:4px 0 24px;box-shadow:0 9px 22px #8b4b3020}
+.address-card-head{display:flex;align-items:flex-start;gap:11px;margin:0 0 18px}
+.address-card-symbol{width:37px;height:37px;flex:none;display:grid;place-items:center;border-radius:11px;background:#f6dfc7;color:#95313a;font-size:1.6rem;font-weight:900}
+.address-card-head h3{font-size:.98rem;font-weight:900;letter-spacing:-.02em;color:#4a312a;margin:0 0 6px}
+.address-card-head p{font-size:.73rem;line-height:1.55;color:#867063;margin:0}
+.address-text-group textarea{min-height:102px;line-height:1.65;resize:vertical;background:#fffefb}
+.address-card .coverage-status{margin:-3px 0 17px}
+@media(max-width:620px){.address-card{padding:18px 14px 3px;border-radius:14px}.address-card-head{gap:9px}.address-card-head h3{font-size:.87rem}.address-card-head p{font-size:.67rem}}
 .coverage-status{border-radius:12px;border:1px solid #ddcec0;background:#f7f0e7;color:#6e6158;font-size:.74rem;line-height:1.6;padding:12px 15px;margin:-4px 0 24px}
 .coverage-status[data-status=ready]{background:#fff0d9;border-color:#f0c99c;color:#805130}
 .interest-group{border:0;padding:0;margin:6px 0 22px;min-width:0}
