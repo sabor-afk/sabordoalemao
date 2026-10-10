@@ -65,36 +65,62 @@ let todosProdutos = [];
 let produtoIndexMap = new Map(); // produto → índice global (evita indexOf O(n) a cada card)
 let categoriaAtiva = 'todos';
 
+function escaparCatalogo(v) {
+    return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
+}
 function criarCard(p, index) {
+    const safe = escaparCatalogo;
+    const foto = p.foto || (Array.isArray(p.fotos) && p.fotos.length ? p.fotos.find(Boolean) : '');
     const destaque = p.destaque ? ' produto-destaque' : '';
+    const imagem = foto
+        ? `<img src="${safe(foto)}" alt="${safe(p.nome)}" loading="lazy" decoding="async" width="560" height="440">`
+        : `<div class="produto-v2-sem-foto" aria-label="Fotografia ainda não disponível"><span class="produto-v2-glyph" aria-hidden="true">✦</span><span>FOTO EM BREVE</span></div>`;
     const badge = p.badge
-        ? `<div class="produto-badge${p.destaque ? ' badge-ouro' : ''}">${p.badge}</div>`
+        ? `<div class="produto-badge${p.destaque ? ' badge-ouro' : ''}">${safe(p.badge)}</div>`
         : '';
     return `
-        <div class="produto-card reveal${destaque}" data-cat="${p.categoria}"
-             onclick="abrirProduto(${index})" style="cursor:pointer;" 
-             role="button" aria-label="Ver detalhes de ${p.nome}" tabindex="0">
+        <article class="produto-card produto-card-v2 reveal${destaque}" data-cat="${safe(p.categoria)}"
+             data-product-index="${Number(index)}" role="button" aria-label="Ver detalhes de ${safe(p.nome)}" tabindex="0">
             <div class="produto-image">
+                <span class="produto-v2-image-caption">SABOR DO ALEMÃO</span>
+                ${imagem}
                 ${badge}
-                ${p.foto ? `<img src="${p.foto}" alt="${p.nome}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0;">` : `<div class="produto-emoji">${p.emoji}</div>`}
+                <span class="produto-v2-photo-corner" aria-hidden="true">↗</span>
             </div>
             <div class="produto-info">
-                <h3>${p.nome}</h3>
-                <p>${p.descricao}</p>
+                <span class="produto-v2-category">${safe(categoriaNomes[p.categoria] || p.categoria)}</span>
+                <h3>${safe(p.nome)}</h3>
+                <p>${safe(p.descricao || '')}</p>
                 <div class="preco">
-                    <div class="preco-tag">${p.peso_unit}<small>Peso E Unidade</small></div>
+                    <div class="preco-tag">${safe(p.peso_unit || 'Consulte os detalhes')}<small>PESO / UNIDADE</small></div>
+                    <span class="card-ver-mais">VER PRODUTO <span aria-hidden="true">↗</span></span>
                 </div>
-                <span class="card-ver-mais">Ver detalhes →</span>
             </div>
-        </div>`;
+        </article>`;
 }
+
+document.getElementById('produtosGrid')?.addEventListener('click', function(e) {
+    const card = e.target.closest('[data-product-index]');
+    if (!card) return;
+    const index = Number(card.dataset.productIndex);
+    window.catalogV2LastFocusedIndex = index;
+    abrirProduto(index);
+});
+document.getElementById('produtosGrid')?.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('[data-product-index]');
+    if (!card) return;
+    e.preventDefault();
+    window.catalogV2LastFocusedIndex = Number(card.dataset.productIndex);
+    abrirProduto(window.catalogV2LastFocusedIndex);
+});
 
 function renderProdutos(cat) {
     const grid = document.getElementById('produtosGrid');
     if (!grid) return;
-    const filtrados = cat === 'todos'
-        ? todosProdutos
-        : todosProdutos.filter(p => p.categoria === cat);
+    const filtrados = typeof window.filtrarCatalogoV2 === 'function'
+        ? window.filtrarCatalogoV2(cat)
+        : (cat === 'todos' ? todosProdutos : todosProdutos.filter(p => p.categoria === cat));
 
     // Para de observar os cards atuais antes de substituí-los
     // (evita que o IntersectionObserver acumule referências a nós órfãos)
@@ -291,6 +317,11 @@ function abrirProduto(index) {
     // Textos principais
     document.getElementById('prodCategoria').textContent = categoriaNomes[p.categoria] || p.categoria;
     document.getElementById('prodNome').textContent = p.nome;
+    const consulta = document.getElementById('prodWhatsApp');
+    if (consulta) {
+        const texto = 'Olá! Gostaria de informações sobre o produto ' + p.nome + (p.codigo ? ' (código ' + p.codigo + ')' : '') + ' da Sabor do Alemão.';
+        consulta.href = 'https://wa.me/5547999743400?text=' + encodeURIComponent(texto);
+    }
     document.getElementById('prodDescModal').textContent = p.descricao;
     document.getElementById('prodEmbalagem').textContent = p.embalagem || '—';
     document.getElementById('prodValidade').textContent = p.validade || '6 meses congelado';
@@ -397,6 +428,7 @@ function abrirProduto(index) {
     // Abrir modal
     document.getElementById('modalProduto').style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    document.querySelector('#modalProduto .prod-fechar')?.focus({preventScroll:true});
 }
 
 // Renderiza a foto atual da galeria (ou emoji/placeholder se não houver)
@@ -466,8 +498,13 @@ function galeriaProxima(e) {
 }
 
 function fecharProduto() {
-    document.getElementById('modalProduto').style.display = 'none';
+    const modal = document.getElementById('modalProduto');
+    const wasOpen = modal.style.display === 'flex';
+    modal.style.display = 'none';
     document.body.style.overflow = '';
+    if (wasOpen && Number.isInteger(window.catalogV2LastFocusedIndex)) {
+        document.querySelector('[data-product-index="' + window.catalogV2LastFocusedIndex + '"]')?.focus({preventScroll:true});
+    }
 }
 
 document.getElementById('modalProduto').addEventListener('click', function(e) {
