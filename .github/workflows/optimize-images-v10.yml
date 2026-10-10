@@ -1,0 +1,35 @@
+name: Otimizar fotos da V10 (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    if: github.ref == 'refs/heads/design/premium-2026'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow
+        run: python -m pip install --disable-pip-version-check "Pillow==11.3.0"
+      - name: Optimize WebP photos and validate preserved dimensions
+        run: python tools/optimize_images.py
+      - name: Commit optimized images only when modified
+        shell: bash
+        run: |
+          if [[ -z "$(git status --porcelain -- img/)" ]]; then
+            echo "No images needed optimization."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- img/*.webp
+          git commit -m "perf: compress heavy WebP photos with quality checks"
+          git push origin HEAD:design/premium-2026
