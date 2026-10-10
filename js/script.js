@@ -322,6 +322,12 @@ function abrirProduto(index) {
         const texto = 'Olá! Gostaria de informações sobre o produto ' + p.nome + (p.codigo ? ' (código ' + p.codigo + ')' : '') + ' da Sabor do Alemão.';
         consulta.href = 'https://wa.me/5547999743400?text=' + encodeURIComponent(texto);
     }
+    const formLink = document.getElementById('prodSolicitarContato');
+    if (formLink) {
+        const query = new URLSearchParams({produto:p.nome});
+        if (p.codigo) query.set('codigo', p.codigo);
+        formLink.href = 'formulario-sabor-do-alemao.html?' + query.toString();
+    }
     document.getElementById('prodDescModal').textContent = p.descricao;
     document.getElementById('prodEmbalagem').textContent = p.embalagem || '—';
     document.getElementById('prodValidade').textContent = p.validade || '6 meses congelado';
