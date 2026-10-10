@@ -62,6 +62,7 @@
 <link rel="stylesheet" href="css/cinematic.css">
 <link rel="stylesheet" href="css/showcase.css">
 <link rel="stylesheet" href="css/embaixador-scroll.css">
+<link rel="stylesheet" href="css/catalog-v2.css">
 
 <!-- Schema.org: LocalBusiness -->
 <script type="application/ld+json">
@@ -432,7 +433,23 @@
         <button class="filtro-btn" data-cat="doces" aria-label="Filtrar doces">Doces</button>
     </div>
 
-    <p class="catalog-count" id="catalogCount" role="status" aria-live="polite">Carregando catálogo…</p>
+    <div class="catalog-v2-controls reveal" aria-label="Refinar resultados do catálogo">
+      <div class="catalog-v2-switches" role="group" aria-label="Filtros rápidos">
+        <label class="catalog-v2-chip"><input type="checkbox" id="catalogOnlyPhotos"><span>Com foto</span></label>
+        <label class="catalog-v2-chip"><input type="checkbox" id="catalogOnlyFeatured"><span>Destaques</span></label>
+      </div>
+      <label class="catalog-v2-sort-label" for="catalogSort">Organizar
+        <select id="catalogSort">
+          <option value="original">Ordem do catálogo</option>
+          <option value="az">Nome: A a Z</option>
+          <option value="za">Nome: Z a A</option>
+        </select>
+      </label>
+    </div>
+    <div class="catalog-v2-meta">
+      <p class="catalog-count" id="catalogCount" role="status" aria-live="polite">Carregando catálogo…</p>
+      <button type="button" id="catalogReset" class="catalog-v2-reset" hidden>Limpar filtros <span aria-hidden="true">↗</span></button>
+    </div>
     <div class="produtos-grid" id="produtosGrid">
         <!-- gerado via script.js a partir de data/produtos.json -->
     </div>
@@ -664,7 +681,7 @@
 
 
 <!-- MODAL PRODUTO INDIVIDUAL -->
-<div id="modalProduto" class="prod-overlay" role="dialog" aria-modal="true" style="display:none;">
+<div id="modalProduto" class="prod-overlay" role="dialog" aria-modal="true" aria-labelledby="prodNome" aria-describedby="prodDescModal" style="display:none;">
     <div class="prod-modal">
 
         <button class="prod-fechar" onclick="fecharProduto()" aria-label="Fechar produto">✕</button>
@@ -674,8 +691,8 @@
             <div class="prod-foto" id="prodFoto">
                 <span class="prod-emoji-grande" id="prodEmoji"></span>
                 <div class="prod-foto-placeholder" id="prodFotoPlaceholder">
-                    <span>📷</span>
-                    <small>Foto em breve</small>
+                    <span class="prod-v2-placeholder-icon" aria-hidden="true">✦</span>
+                    <small>Fotografia em breve</small>
                 </div>
                 <img id="prodImg" src="" alt="" style="display:none;">
 
@@ -700,6 +717,11 @@
             <div class="prod-categoria" id="prodCategoria"></div>
             <h2 class="prod-nome" id="prodNome"></h2>
             <p class="prod-desc-modal" id="prodDescModal"></p>
+
+            <div class="prod-v2-contact">
+                <div><strong>Gostou deste produto?</strong><span>Consulte nossa equipe sobre disponibilidade e condições comerciais.</span></div>
+                <a id="prodWhatsApp" class="prod-v2-whatsapp" target="_blank" rel="noopener noreferrer" href="https://wa.me/5547999743400">Consultar no WhatsApp <span aria-hidden="true">↗</span></a>
+            </div>
 
             <div class="prod-info-grid">
                 <div class="prod-info-item">
