@@ -1,16 +1,3 @@
-// ── NAVBAR: adiciona classe ao rolar (com throttle via rAF) ───
-const navbar = document.getElementById('navbar');
-let scrollTicking = false;
-window.addEventListener('scroll', () => {
-    if (!scrollTicking) {
-        requestAnimationFrame(() => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-            scrollTicking = false;
-        });
-        scrollTicking = true;
-    }
-}, { passive: true });
-
 // ── MENU MOBILE ───────────────────────────────────────────────
 function toggleMenu() {
     const navLinks = document.getElementById('navLinks');
@@ -41,9 +28,11 @@ observeReveal();
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const hash = this.getAttribute('href');
+        if (!hash || hash === '#') return;
+        const target = document.getElementById(hash.slice(1));
         if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
+            target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
             document.getElementById('navLinks').classList.remove('open');
             document.querySelector('.mobile-toggle').setAttribute('aria-expanded', 'false');
         }
@@ -63,36 +52,62 @@ let todosProdutos = [];
 let produtoIndexMap = new Map(); // produto → índice global (evita indexOf O(n) a cada card)
 let categoriaAtiva = 'todos';
 
+function escaparCatalogo(v) {
+    return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
+}
 function criarCard(p, index) {
+    const safe = escaparCatalogo;
+    const foto = p.foto || (Array.isArray(p.fotos) && p.fotos.length ? p.fotos.find(Boolean) : '');
     const destaque = p.destaque ? ' produto-destaque' : '';
+    const imagem = foto
+        ? `<img src="${safe(foto)}" alt="${safe(p.nome)}" loading="lazy" decoding="async" width="560" height="440">`
+        : `<div class="produto-v2-sem-foto" aria-label="Fotografia ainda não disponível"><span class="produto-v2-glyph" aria-hidden="true">✦</span><span>FOTO EM BREVE</span></div>`;
     const badge = p.badge
-        ? `<div class="produto-badge${p.destaque ? ' badge-ouro' : ''}">${p.badge}</div>`
+        ? `<div class="produto-badge${p.destaque ? ' badge-ouro' : ''}">${safe(p.badge)}</div>`
         : '';
     return `
-        <div class="produto-card reveal${destaque}" data-cat="${p.categoria}"
-             onclick="abrirProduto(${index})" style="cursor:pointer;" 
-             role="button" aria-label="Ver detalhes de ${p.nome}" tabindex="0">
+        <article class="produto-card produto-card-v2 reveal${destaque}" data-cat="${safe(p.categoria)}"
+             data-product-index="${Number(index)}" role="button" aria-label="Ver detalhes de ${safe(p.nome)}" tabindex="0">
             <div class="produto-image">
+                <span class="produto-v2-image-caption">SABOR DO ALEMÃO</span>
+                ${imagem}
                 ${badge}
-                ${p.foto ? `<img src="${p.foto}" alt="${p.nome}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0;">` : `<div class="produto-emoji">${p.emoji}</div>`}
+                <span class="produto-v2-photo-corner" aria-hidden="true">↗</span>
             </div>
             <div class="produto-info">
-                <h3>${p.nome}</h3>
-                <p>${p.descricao}</p>
+                <span class="produto-v2-category">${safe(categoriaNomes[p.categoria] || p.categoria)}</span>
+                <h3>${safe(p.nome)}</h3>
+                <p>${safe(p.descricao || '')}</p>
                 <div class="preco">
-                    <div class="preco-tag">${p.peso_unit}<small>Peso E Unidade</small></div>
+                    <div class="preco-tag">${safe(p.peso_unit || 'Consulte os detalhes')}<small>PESO / UNIDADE</small></div>
+                    <span class="card-ver-mais">VER PRODUTO <span aria-hidden="true">↗</span></span>
                 </div>
-                <span class="card-ver-mais">Ver detalhes →</span>
             </div>
-        </div>`;
+        </article>`;
 }
+
+document.getElementById('produtosGrid')?.addEventListener('click', function(e) {
+    const card = e.target.closest('[data-product-index]');
+    if (!card) return;
+    const index = Number(card.dataset.productIndex);
+    window.catalogV2LastFocusedIndex = index;
+    abrirProduto(index);
+});
+document.getElementById('produtosGrid')?.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('[data-product-index]');
+    if (!card) return;
+    e.preventDefault();
+    window.catalogV2LastFocusedIndex = Number(card.dataset.productIndex);
+    abrirProduto(window.catalogV2LastFocusedIndex);
+});
 
 function renderProdutos(cat) {
     const grid = document.getElementById('produtosGrid');
     if (!grid) return;
-    const filtrados = cat === 'todos'
-        ? todosProdutos
-        : todosProdutos.filter(p => p.categoria === cat);
+    const filtrados = typeof window.filtrarCatalogoV2 === 'function'
+        ? window.filtrarCatalogoV2(cat)
+        : (cat === 'todos' ? todosProdutos : todosProdutos.filter(p => p.categoria === cat));
 
     // Para de observar os cards atuais antes de substituí-los
     // (evita que o IntersectionObserver acumule referências a nós órfãos)
@@ -104,9 +119,13 @@ function renderProdutos(cat) {
         return criarCard(p, globalIndex);
     }).join('');
     observeReveal();
+    window.dispatchEvent(new Event('sabordoalemao:catalog-rendered'));
 }
 
+let filtrosIniciados = false;
 function initFiltros() {
+    if (filtrosIniciados) return;
+    filtrosIniciados = true;
     const botoesFiltro = document.querySelectorAll('.filtro-btn'); // consultado 1x só
     botoesFiltro.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -136,7 +155,7 @@ function carregarProdutos() {
             clearTimeout(timeoutId);
             todosProdutos = data.produtos;
             produtoIndexMap = new Map(todosProdutos.map((p, i) => [p, i]));
-            renderProdutos('todos');
+            renderProdutos(categoriaAtiva);
             initFiltros();
         })
         .catch(err => {
@@ -153,41 +172,6 @@ function carregarProdutos() {
         });
 }
 carregarProdutos();
-
-// ── FORMULÁRIO → WHATSAPP ─────────────────────────────────────
-function enviarPedidoWhatsApp(e) {
-    e.preventDefault();
-
-    const nome     = document.getElementById('nome').value.trim();
-    const whatsapp = document.getElementById('whatsapp').value.trim();
-    const cidade   = document.getElementById('cidade').value.trim();
-    const tipo     = document.getElementById('tipo').value;
-    const mensagem = document.getElementById('mensagem').value.trim();
-
-    // Coletar checkboxes marcados
-    const checks = [...document.querySelectorAll('.form-checks input[type="checkbox"]:checked')]
-        .map(c => c.value);
-    const produtos = checks.length > 0 ? checks.join(', ') : 'Não especificado';
-
-    // Montar mensagem formatada
-    const texto = `Olá! Vim pelo site do *Sabor do Alemão* e gostaria de receber a tabela de preços. 😊
-
-*📋 Dados do pedido:*
-• *Nome/Empresa:* ${nome}
-• *WhatsApp:* ${whatsapp}
-• *Cidade:* ${cidade}
-• *Tipo de negócio:* ${tipo}
-• *Produtos de interesse:* ${produtos}${mensagem ? `
-• *Observações:* ${mensagem}` : ''}
-
-Aguardo o contato!`;
-
-    // Número do Sabor do Alemão — altere conforme necessário
-    const numero = '5547999743400';
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
-
-    window.open(url, '_blank');
-}
 
 // ── MODAL PRIVACIDADE ─────────────────────────────────────────
 function abrirPrivacidade(e) {
@@ -285,6 +269,17 @@ function abrirProduto(index) {
     // Textos principais
     document.getElementById('prodCategoria').textContent = categoriaNomes[p.categoria] || p.categoria;
     document.getElementById('prodNome').textContent = p.nome;
+    const consulta = document.getElementById('prodWhatsApp');
+    if (consulta) {
+        const texto = 'Olá! Gostaria de informações sobre o produto ' + p.nome + (p.codigo ? ' (código ' + p.codigo + ')' : '') + ' da Sabor do Alemão.';
+        consulta.href = 'https://wa.me/5547999743400?text=' + encodeURIComponent(texto);
+    }
+    const formLink = document.getElementById('prodSolicitarContato');
+    if (formLink) {
+        const query = new URLSearchParams({produto:p.nome});
+        if (p.codigo) query.set('codigo', p.codigo);
+        formLink.href = 'formulario-sabor-do-alemao.html?' + query.toString();
+    }
     document.getElementById('prodDescModal').textContent = p.descricao;
     document.getElementById('prodEmbalagem').textContent = p.embalagem || '—';
     document.getElementById('prodValidade').textContent = p.validade || '6 meses congelado';
@@ -330,10 +325,10 @@ function abrirProduto(index) {
                 <td style="padding: 2px 4px; border-right: 1px solid #ddd; font-size: 0.65rem;">${nome}</td>`;
             
             for (const col of colunas) {
-                html += `<td style="padding: 2px 4px; border-right: 1px solid #ddd; text-align: center; font-size: 0.65rem;">${dados[col] || '—'}</td>`;
+                html += `<td style="padding: 2px 4px; border-right: 1px solid #ddd; text-align: center; font-size: 0.65rem;">${dados[col] ?? '—'}</td>`;
             }
             
-            html += `<td style="padding: 2px 4px; text-align: center; font-size: 0.65rem;">${dados['vd'] || '—'}</td></tr>`;
+            html += `<td style="padding: 2px 4px; text-align: center; font-size: 0.65rem;">${dados['vd'] ?? '—'}</td></tr>`;
             return html;
         };
         
@@ -391,6 +386,7 @@ function abrirProduto(index) {
     // Abrir modal
     document.getElementById('modalProduto').style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    document.querySelector('#modalProduto .prod-fechar')?.focus({preventScroll:true});
 }
 
 // Renderiza a foto atual da galeria (ou emoji/placeholder se não houver)
@@ -460,70 +456,23 @@ function galeriaProxima(e) {
 }
 
 function fecharProduto() {
-    document.getElementById('modalProduto').style.display = 'none';
+    const modal = document.getElementById('modalProduto');
+    const wasOpen = modal.style.display === 'flex';
+    modal.style.display = 'none';
     document.body.style.overflow = '';
+    if (wasOpen && Number.isInteger(window.catalogV2LastFocusedIndex)) {
+        document.querySelector('[data-product-index="' + window.catalogV2LastFocusedIndex + '"]')?.focus({preventScroll:true});
+    }
 }
 
 document.getElementById('modalProduto').addEventListener('click', function(e) {
     if (e.target === this) fecharProduto();
 });
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') fecharProduto();
+    if (e.key === 'Escape' && document.getElementById('modalProduto').style.display === 'flex') fecharProduto();
     // Navegação por teclado quando modal está aberto
     if (document.getElementById('modalProduto').style.display === 'flex') {
         if (e.key === 'ArrowLeft') galeriaAnterior(e);
         if (e.key === 'ArrowRight') galeriaProxima(e);
-    }
-});
-
-// ── VALIDAÇÃO COMPLETA: CPF/CNPJ/WHATSAPP ──────────────────────
-// Aguardar DOM carregar
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. WhatsApp: máximo 11 dígitos
-    const whatsappInput = document.getElementById('whatsapp');
-    if (whatsappInput) {
-        whatsappInput.addEventListener('input', function(e) {
-            let valor = e.target.value.replace(/\D/g, '');
-            if (valor.length > 11) {
-                valor = valor.slice(0, 11);
-            }
-            e.target.value = valor;
-        });
-    }
-
-    // 2. CPF/CNPJ: validar conforme tipo selecionado
-    const cpfCnpjTipo = document.getElementById('cpf-cnpj-tipo');
-    const cpfCnpjInput = document.getElementById('cpf-cnpj');
-
-    if (cpfCnpjInput) {
-        cpfCnpjInput.addEventListener('input', function(e) {
-            let valor = e.target.value.replace(/\D/g, '');
-            
-            // Determinar limite conforme tipo selecionado
-            let max = 14; // CNPJ padrão
-            if (cpfCnpjTipo && cpfCnpjTipo.value === 'cpf') {
-                max = 11;
-            }
-            
-            if (valor.length > max) {
-                valor = valor.slice(0, max);
-            }
-            e.target.value = valor;
-        });
-    }
-
-    // 3. Quando muda o tipo (CPF/CNPJ), limpar campo e ajustar placeholder
-    if (cpfCnpjTipo) {
-        cpfCnpjTipo.addEventListener('change', function() {
-            if (cpfCnpjInput) {
-                cpfCnpjInput.value = '';
-                if (this.value === 'cpf') {
-                    cpfCnpjInput.placeholder = '00000000000 (11 dígitos)';
-                } else if (this.value === 'cnpj') {
-                    cpfCnpjInput.placeholder = '00000000000000 (14 dígitos)';
-                }
-            }
-        });
     }
 });

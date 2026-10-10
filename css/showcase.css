@@ -1,0 +1,104 @@
+/* Vitrine animada — quatro produtos com transições reversíveis por scroll. */
+.story-photo-gallery{isolation:isolate;display:block;overflow:hidden}
+.story-gallery{position:absolute;inset:0;z-index:1;overflow:hidden}
+.story-slide{position:absolute;inset:0;margin:0;overflow:hidden;opacity:0;visibility:hidden;transform:scale(1.035);transition:opacity .52s ease,transform .8s cubic-bezier(.2,.7,.2,1),visibility .52s}
+.story-slide:first-child{opacity:1;visibility:visible;transform:scale(1)}
+.story-slide img{display:block;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center;filter:none;transform:none!important;transition:none!important}
+.story-slide-caption{position:absolute;z-index:3;left:0;right:0;bottom:0;padding:78px 26px 37px;background:linear-gradient(transparent,rgba(22,15,13,.83));color:#fff;display:grid;gap:6px}
+.story-slide-caption span{font-size:.64rem;font-weight:800;letter-spacing:.15em;color:#ffd49d}
+.story-slide-caption strong{font-size:1.15rem;font-weight:800;line-height:1.35}
+.story-gallery-overlay{position:absolute;inset:0;z-index:3;pointer-events:none}
+.story-gallery-eyebrow{position:absolute;top:25px;left:25px;background:rgba(30,21,19,.75);border:1px solid rgba(255,241,222,.22);padding:10px 14px;border-radius:50px;color:#fff1d8;font-size:.6rem;font-weight:800;letter-spacing:.13em;backdrop-filter:blur(8px)}
+.story-gallery-count{position:absolute;top:25px;right:25px;font-family:'Bebas Neue',sans-serif;color:#fff4dc;font-size:1.6rem;letter-spacing:.08em;text-shadow:0 2px 8px #0008}
+.story-gallery-count-separator{color:#e5b477}
+.story-gallery-bars{position:absolute;left:26px;right:26px;bottom:13px;display:flex;gap:5px}
+.story-gallery-bars span{height:3px;border-radius:8px;flex:1;background:rgba(255,255,255,.35);overflow:hidden}
+.story-gallery-bars span::before{content:'';display:block;height:100%;width:100%;background:#ffd191;transform:scaleX(0);transform-origin:left;transition:none}
+.story-gallery-bars span:first-child::before{transform:scaleX(1)}
+.story-gallery-hint{position:absolute;bottom:96px;right:25px;font-size:.58rem;letter-spacing:.12em;color:#fff8ed;font-weight:800}
+.story-photo-gallery .story-photo-light{z-index:2;pointer-events:none;border-color:rgba(255,248,228,.13)}
+.story-photo-gallery .story-photo-caption{display:none}
+.story-gallery-active .story-slide{transition:none}
+.story-gallery-active .story-slide:first-child{opacity:0;visibility:hidden;transform:scale(1.035)}
+.story-gallery-active .story-slide.is-current{opacity:1;visibility:visible;transform:scale(1)}
+.story-gallery-active .story-slide.is-neighbor{visibility:visible}
+.story-gallery-active .story-slide img{transform:scale(var(--gallery-img-scale,1)) translate3d(0,var(--gallery-img-y,0px),0)!important}
+/* O indicador é irmão do .story-gallery, e não seu descendente.
+   A regra antiga não alcançava as quatro barras (ficavam paradas). */
+.story-gallery-active + .story-gallery-overlay .story-gallery-bars span::before {
+  transform:scaleX(var(--bar-progress,0));
+}
+@media(min-width:969px) and (min-height:680px){
+ .cinematic-ready .story-feature.story-gallery-section{min-height:350svh;padding:0 5%;overflow:visible}
+ .cinematic-ready .story-feature.story-gallery-section .story-feature-inner{height:min(78svh,730px);min-height:0;position:sticky;top:clamp(86px,11vh,128px);align-items:center}
+ .cinematic-ready .story-feature.story-gallery-section .story-photo-gallery{height:min(68svh,590px);min-height:440px}
+}
+@media(max-width:968px){
+ .story-photo-gallery{aspect-ratio:1.15;min-height:0!important;max-height:500px}
+ .story-slide-caption{padding:75px 17px 38px}
+ .story-gallery-eyebrow{top:15px;left:15px}
+ .story-gallery-count{top:16px;right:16px}
+ .story-gallery-bars{left:17px;right:17px}
+ .cinematic-ready .story-feature.story-gallery-section{min-height:0;padding:75px 6%;overflow:visible}
+ .cinematic-ready .story-feature.story-gallery-section .story-feature-inner{position:static;height:auto}
+ .story-gallery-hint{bottom:88px;right:17px}
+}
+@media(max-width:620px){
+ .story-photo-gallery{aspect-ratio:1.06;min-height:0}
+ .story-gallery-eyebrow{font-size:.49rem}
+ .story-slide-caption strong{font-size:.99rem}
+ .story-slide-caption span{font-size:.56rem}
+ .story-gallery-hint{font-size:.49rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .story-slide{transition:none!important;transform:none!important}
+ .story-gallery-active .story-slide img{transform:none!important}
+}
+
+/* Mantém o texto e as imagens legíveis em telas menores. */
+.story-copy{min-width:0}
+.story-copy>p{overflow-wrap:break-word}
+.story-slide-caption{pointer-events:none}
+.story-gallery-count{font-variant-numeric:tabular-nums}
+@media(min-width:969px) and (min-height:680px){
+  .cinematic-ready .story-feature.story-gallery-section{min-height:320svh}
+}
+@media(max-width:620px){
+  .story-slide-caption strong{font-size:.92rem}
+  .story-gallery-hint{bottom:92px}
+}
+
+
+/* Embaixador — apresentação contemporânea com os arquivos oficiais da marca. */
+.embaixador-section{background:radial-gradient(ellipse at 24% 45%,#b83c42,#74212b 75%);color:#fff6e7;text-align:left;padding:105px 5%;overflow:hidden}
+.embaixador-layout{width:min(1320px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(45px,8vw,105px);align-items:center}
+.embaixador-visual{position:relative;min-height:570px;display:flex;align-items:flex-end;justify-content:center;isolation:isolate}
+.embaixador-glow{position:absolute;inset:14% 8% 4%;border-radius:50%;background:radial-gradient(circle,#e3a66799,transparent 69%);filter:blur(12px);z-index:-1}
+.embaixador-ring{position:absolute;top:9%;left:6%;right:6%;aspect-ratio:1;border:1px solid #f8daaa55;border-radius:50%;display:flex;justify-content:center;align-items:flex-start;z-index:-1}
+.embaixador-ring span{position:relative;top:-11px;background:#912631;padding:0 16px;color:#f2d39b;font-size:.65rem;letter-spacing:.22em;font-weight:800}
+.embaixador-personagem{position:relative;max-width:100%;width:min(480px,95%);height:auto;max-height:540px;object-fit:contain;filter:drop-shadow(0 25px 30px #2a111866);animation:embaixador-flutuar 6s ease-in-out infinite}
+.embaixador-stamp{position:absolute;right:-10px;bottom:12%;width:118px;height:118px;border-radius:50%;background:#f1bf74;color:#73212b;display:grid;place-content:center;text-align:center;font-size:.7rem;line-height:1.6;letter-spacing:.09em;font-weight:900;transform:rotate(12deg);box-shadow:0 14px 32px #2a11183d}
+.embaixador-texto .section-tag{color:#f4cc87}
+.embaixador-texto .section-title{font-size:clamp(4.1rem,7vw,7.4rem);line-height:.9;letter-spacing:-.025em}
+.embaixador-texto .section-title .underline{color:#ffe0a1}
+.embaixador-texto .section-title .underline::after{background:#ffe0a1}
+.embaixador-texto p{color:#edd9d3;line-height:1.85;margin:20px 0;font-size:.95rem}
+.embaixador-texto .embaixador-lead{color:#fff3df;font-weight:600;font-size:1.07rem}
+.embaixador-link{display:inline-flex;gap:14px;color:#ffe4b1;border-bottom:1px solid #f9d399;padding:9px 0;text-decoration:none;font-size:.78rem;font-weight:800;letter-spacing:.08em;margin:14px 0 35px}
+.embaixador-link:hover{color:white}
+.embaixador-historia{display:flex;align-items:center;gap:12px;border-top:1px solid #ffe3ce44;padding-top:23px}
+.embaixador-etapa{display:flex;align-items:center;gap:13px;flex:1;min-width:0}
+.embaixador-etapa img{width:84px;height:78px;object-fit:contain;flex:none}
+.embaixador-etapa strong{display:block;font-size:.78rem;color:#fff4df}
+.embaixador-etapa span{display:block;font-size:.7rem;color:#e0bfbb;line-height:1.4}
+.embaixador-historia-seta{color:#f7c480;font-size:1.6rem}
+@keyframes embaixador-flutuar{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@media(max-width:968px){.embaixador-layout{grid-template-columns:1fr;gap:25px}.embaixador-visual{min-height:420px}.embaixador-personagem{max-height:410px}.embaixador-texto{max-width:720px;margin:auto}.embaixador-ring{max-width:510px;margin:auto}}
+@media(max-width:620px){.embaixador-section{padding:75px 6%}.embaixador-visual{min-height:310px}.embaixador-personagem{max-height:320px}.embaixador-stamp{width:86px;height:86px;right:0;font-size:.5rem}.embaixador-texto .section-title{font-size:clamp(3.7rem,12vw,5.5rem)}.embaixador-historia{gap:6px}.embaixador-etapa{gap:6px}.embaixador-etapa img{width:61px;height:67px}.embaixador-etapa span{font-size:.61rem}.embaixador-historia-seta{font-size:1rem}}
+@media(prefers-reduced-motion:reduce){.embaixador-personagem{animation:none!important}}
+
+/* Em mobile, a vitrine exibe os itens sem pin nem deslocamento exagerado. */
+@media(max-width:968px){
+  .cinematic-ready .story-feature.story-gallery-section .story-photo-gallery{transform:none}
+  .story-gallery-hint{display:none}
+}
