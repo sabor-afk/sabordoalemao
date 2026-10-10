@@ -32,14 +32,15 @@
 .produto-card-v2 .preco-tag{font-size:.73rem}
 .produto-card-v2 .preco-tag small{font-size:.52rem}
 .prod-overlay{background:rgba(26,16,14,.81);backdrop-filter:blur(13px);padding:22px}
-.prod-overlay .prod-modal{max-width:1130px;max-height:min(91dvh,900px);grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);background:#fffaf3;border:1px solid #e9d9c8;border-radius:25px;box-shadow:0 35px 120px rgba(0,0,0,.35)}
-.prod-overlay .prod-esquerda{background:linear-gradient(150deg,#f6e5cd,#f0d7b7);border-right:1px solid #e0cbb3;padding:35px 25px;gap:11px}
+.prod-overlay .prod-modal{max-width:1130px;max-height:min(91dvh,900px);grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-areas:"visual details";align-items:start;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;background:#fffaf3;border:1px solid #e9d9c8;border-radius:25px;box-shadow:0 35px 120px rgba(0,0,0,.35)}
+.prod-overlay .prod-esquerda{grid-area:visual;min-width:0;min-height:0;background:linear-gradient(150deg,#f6e5cd,#f0d7b7);border-right:1px solid #e0cbb3;padding:35px 25px;gap:11px}
 .prod-overlay .prod-foto{width:100%;max-width:480px;aspect-ratio:1/1;background:radial-gradient(circle,#faebd5,#e5c5a3);border:1px solid #ead6c1;border-radius:20px}
 .prod-overlay .prod-foto img{object-fit:contain;max-width:94%;max-height:94%;inset:3%;width:94%;height:94%;border-radius:15px;filter:drop-shadow(0 18px 22px #66422b33)}
 .prod-overlay .prod-foto-placeholder{color:#986c54}
 .prod-overlay .prod-v2-placeholder-icon{font:5rem Georgia,serif;color:#a97757}
-.prod-overlay .prod-fechar{position:sticky;top:12px;float:right;margin:14px 14px -51px auto;width:40px;height:40px;border-radius:50%;background:#8c2832;color:#fff;border:0;z-index:15}
-.prod-overlay .prod-direita{padding:48px 42px 38px;overflow:visible}
+/* O botao deve ficar fora do fluxo do grid: sticky criava uma terceira celula invisivel. */
+.prod-overlay .prod-fechar{position:absolute;top:14px;right:14px;float:none;margin:0;width:40px;height:40px;border-radius:50%;background:#8c2832;color:#fff;border:0;z-index:15}
+.prod-overlay .prod-direita{grid-area:details;min-width:0;padding:48px 42px 38px;overflow:visible}
 .prod-overlay .prod-categoria{color:#a23c40;font-size:.7rem;letter-spacing:.13em}
 .prod-overlay .prod-nome{color:#30251e;font-family:'Montserrat',sans-serif;font-size:clamp(1.6rem,3vw,2.7rem);line-height:1.16;letter-spacing:-.035em}
 .prod-overlay .prod-desc-modal{color:#7c7167;font-size:.88rem}
@@ -69,7 +70,7 @@
 .prod-overlay .prod-nutri table{min-width:410px;background:white;color:#292423}
 .prod-overlay .prod-nutri table thead{color:white}
 @media(max-width:800px){
- .prod-overlay .prod-modal{grid-template-columns:1fr;max-height:94dvh;overflow:auto}
+ .prod-overlay .prod-modal{grid-template-columns:minmax(0,1fr);grid-template-areas:"visual" "details";max-height:94dvh;overflow-x:hidden;overflow-y:auto}
  .prod-overlay .prod-esquerda{padding:22px;border-right:0;border-bottom:1px solid #e8d8c5}
  .prod-overlay .prod-foto{max-width:360px}
  .prod-overlay .prod-direita{padding:27px 25px 35px}
