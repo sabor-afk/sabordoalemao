@@ -34,7 +34,10 @@ O Sabor do Alemão terá **catálogo institucional + WhatsApp** e, em uma etapa 
 - Exibir preços e condições apenas conforme política comercial real; avaliar tabelas B2B e autorização por cliente.
 - Validar cobertura de entrega, quantidade mínima, unidade/caixa, estoque disponível e limites de pedido.
 - **Arquitetura preferida:** estudar integração do site com **Bischof Vendas**, que já se integra à **Câmara Fria**, em vez de criar outro estoque ou duplicar regras de reserva.
-- **Decisão pendente:** pedidos entram diretamente na operação ou chegam primeiro como solicitações de aprovação. Antes de integrar, mapear endpoints, autenticação e eventos de reserva/baixa de estoque para evitar pedidos duplicados.
+- **Decisão aprovada (10/10/2026): fluxo híbrido por autorização do cliente.** Clientes cadastrados e autorizados poderão enviar pedidos diretamente ao Bischof Vendas; clientes novos ou não autorizados enviarão uma solicitação para aprovação comercial.
+- **Proteção de estoque:** a solicitação ainda não aprovada não pode reservar ou baixar estoque automaticamente. No caminho direto, a reserva e a baixa deverão obedecer à integração já existente entre Bischof Vendas e Câmara Fria, após validação técnica.
+- **Controle de acesso:** a autorização do cliente e as condições comerciais devem ser conferidas no servidor, nunca apenas por um campo ou botão do navegador.
+- **Integração a definir:** mapear APIs, autenticação, estados e regras de reserva/baixa, além de prevenção de pedidos duplicados, antes de construir o checkout. Detalhamento: `FLUXOS-PEDIDOS-SITE-B2B.md`.
 - Não adicionar pagamento online, cadastro obrigatório ou backend até haver necessidade comercial e avaliação de segurança/cotas.
 - Preservar o acesso rápido ao WhatsApp em todos os fluxos.
 
