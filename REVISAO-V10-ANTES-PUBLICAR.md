@@ -1,28 +1,43 @@
-# V10 — Checklist pré-publicação (branch de testes)
+# V10 — Revisão de publicação (sem lançamento)
 
-Data da revisão: 10/10/2026
+Data da última atualização: 10/10/2026.
 
-## Revisões concluídas (V9)
-- Scripts e HTML verificados estaticamente; fluxo de consulta do formulário revisto.
-- Catálogo: 91 produtos, 30 com foto cadastrada. As imagens citadas no JSON existem no repositório.
-- Botão WhatsApp: mensagem vazia agora é bloqueada; confirmação de envio continua no WhatsApp.
-- Eventos de teclado antigos removidos; sitemap e robots revisados.
+## Estado verificado
 
-## Imagens
-- O repositório contém 44 arquivos em img/ (~46,7 MB antes da otimização).
-- Foram adicionados `tools/optimize_images.py` e um workflow **manual** em `.github/workflows/optimize-images-v10.yml`.
-- **A otimização NÃO foi executada.** O workflow trabalha somente em `design/premium-2026`, compara dimensões e exige pelo menos 15% de economia e PSNR de 36 dB.
-- Para rodar: disponibilizar o workflow em Actions, selecionar branch design/premium-2026 e executar manualmente quando estiver visível; se o GitHub não listar workflows novos presentes apenas em branch de testes, não executar em produção.
+- Site premium e formulário comercial V9 presentes em `design/premium-2026`.
+- Catálogo: 91 produtos; imagens do JSON verificadas no repositório. Fotos ausentes continuam pendentes.
+- Teste de código realizado anteriormente: sete arquivos JavaScript com sintaxe válida, estrutura HTML consistente.
+- Correções anteriores: revisões de WhatsApp, teclado e sitemap.
+- **O domínio definitivo foi confirmado:** `sabordoalemao.com.br`. **Hospedagem futura: Cloudflare Pages.**
+- **Nenhuma ligação do domínio ou publicação oficial realizada.**
 
-## Conferência comercial pendente — não alterar sem validação
-- Código 8808: **Torta Limão** e **Torta Maracuja**
-- Código 8810: **Bolo de Ninho Com Coco** aparece em dois registros
-- Código 8813: **Torta Palha Italiana** aparece em dois registros
-As duplicações são reais no JSON atual, mas podem representar variações/embalagens. Não deduplicar sem validar.
-- Conferir número comercial do WhatsApp, regiões atendidas e domínio definitivo antes da publicação.
-- A lista sugerida de cidades no formulário não confirma atendimento.
+## Otimização de imagens: concluída no GitHub
 
-## Validação visual pendente
-- Testar Edge desktop e mobile: scroll cinematográfico, quatro produtos, evolução do Embaixador, filtros, detalhes, tabela nutricional, formulário (endereço + prévia) e WhatsApp.
-- Verificar alterações em imagens antes/depois da compressão manual e confirmar qualidade visual.
-- Não mesclar em main nem publicar sem aprovação.
+- GitHub Actions: https://github.com/sabor-afk/sabordoalemao/actions/runs/38063272758
+- Resultado: **20 fotos otimizadas**, 46.678.442 → 7.466.764 bytes no total de `img/`. Economia: 39.211.678 bytes (~84%).
+- Script `tools/optimize_images.py`, máximo de 1.800 px no maior lado das fotos pesadas; verificação de fidelidade por PSNR.
+- Workflow ativo em `.github/workflows/optimize-images-v10.yml`: executado manualmente ou quando arquivo de configuração/script do processo for alterado na branch de testes. Não altera `main`.
+- **Pendente:** conferir qualidade visual das 20 fotos no navegador e repetir testes responsivos.
+
+## Cloudflare Pages: preparação no código
+
+- `_headers`: cabeçalhos de segurança, permissões e cache revalidável de imagens com URLs estáveis; CSP permite futura Web Analytics.
+- `404.html`: página personalizada para links inexistentes.
+- `GUIA-CLOUDFLARE-PAGES.md`: instruções sem ligar domínio nem publicar.
+- `PLANO-SITE-CORPORATIVO-CLOUDFLARE.md`: roteiro de evolução corporativa e validação.
+- `netlify.toml` é legado; não configurar o site novo via Netlify.
+
+## Pendências comerciais — conferir antes de mudar
+
+- Código 8808: **Torta Limão** e **Torta Maracuja**.
+- Código 8810: **Bolo de Ninho Com Coco** (dois registros).
+- Código 8813: **Torta Palha Italiana** (dois registros).
+- Validar pedido mínimo, telefone, e-mail e cobertura comercial; SEO atualmente cita dados que ainda exigem confirmação.
+- Confirmar fichas técnicas e materiais institucionais reais.
+
+## Qualidade e lançamento
+
+- Testar no Edge desktop e celular: animações, catálogo, filtros, modal, produtos sem foto, formulário, endereço e revisão do WhatsApp.
+- Validar métricas reais Lighthouse/Core Web Vitals, acessibilidade e política LGPD.
+- Revisar SEO estruturado, CNPJ/contatos, FAQs comprovadas, conteúdo por página e links.
+- **Não promover para `main`, não configurar DNS e não tornar domínio público sem aprovação explícita.**
