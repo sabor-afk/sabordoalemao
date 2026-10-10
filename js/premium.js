@@ -34,7 +34,8 @@
     });
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeNav();
-        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.cc-card, .produto-card')) {
+        // Os cartões do catálogo já tratam Enter/Espaço em js/script.js.
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.cc-card')) {
             e.preventDefault();
             e.target.click();
         }
