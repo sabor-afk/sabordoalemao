@@ -7,6 +7,7 @@ on:
       - design/premium-2026
     paths:
       - .github/workflows/optimize-images-v10.yml
+      - tools/optimize_images.py
 
 permissions:
   contents: write
