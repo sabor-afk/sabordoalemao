@@ -93,3 +93,9 @@
  .prod-overlay .prod-info-grid{grid-template-columns:1fr 1fr;gap:8px}
 }
 @media(prefers-reduced-motion:reduce){.produto-card-v2,.produto-card-v2 img,.prod-v2-whatsapp{transition:none!important}}
+
+
+/* Caminho alternativo de atendimento: mantém produto pré-selecionado na V9. */
+.prod-v2-form-link{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;border:1px solid #b75059;background:#fffaf3;color:#8b2d38!important;border-radius:11px;padding:12px 15px;text-align:center;font-size:.73rem;font-weight:900;line-height:1.45;text-decoration:none;transition:background .2s,border-color .2s}
+.prod-v2-form-link:hover{background:#fce8df;border-color:#9c303b}
+.prod-v2-form-link span{color:inherit;display:inline}
