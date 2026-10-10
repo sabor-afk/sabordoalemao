@@ -2,26 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sabordoalemao.com.br/</loc>
-    <lastmod>2026-06-25</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://sabordoalemao.com.br/#sobre</loc>
-    <lastmod>2026-06-25</lastmod>
+    <loc>https://sabordoalemao.com.br/formulario-sabor-do-alemao.html</loc>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sabordoalemao.com.br/#produtos</loc>
-    <lastmod>2026-06-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
-    <loc>https://sabordoalemao.com.br/#pedido</loc>
-    <lastmod>2026-06-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>
