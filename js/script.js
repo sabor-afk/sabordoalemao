@@ -1,16 +1,3 @@
-// ── NAVBAR: adiciona classe ao rolar (com throttle via rAF) ───
-const navbar = document.getElementById('navbar');
-let scrollTicking = false;
-window.addEventListener('scroll', () => {
-    if (!scrollTicking) {
-        requestAnimationFrame(() => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-            scrollTicking = false;
-        });
-        scrollTicking = true;
-    }
-}, { passive: true });
-
 // ── MENU MOBILE ───────────────────────────────────────────────
 function toggleMenu() {
     const navLinks = document.getElementById('navLinks');
@@ -186,41 +173,6 @@ function carregarProdutos() {
 }
 carregarProdutos();
 
-// ── FORMULÁRIO → WHATSAPP ─────────────────────────────────────
-function enviarPedidoWhatsApp(e) {
-    e.preventDefault();
-
-    const nome     = document.getElementById('nome').value.trim();
-    const whatsapp = document.getElementById('whatsapp').value.trim();
-    const cidade   = document.getElementById('cidade').value.trim();
-    const tipo     = document.getElementById('tipo').value;
-    const mensagem = document.getElementById('mensagem').value.trim();
-
-    // Coletar checkboxes marcados
-    const checks = [...document.querySelectorAll('.form-checks input[type="checkbox"]:checked')]
-        .map(c => c.value);
-    const produtos = checks.length > 0 ? checks.join(', ') : 'Não especificado';
-
-    // Montar mensagem formatada
-    const texto = `Olá! Vim pelo site do *Sabor do Alemão* e gostaria de receber a tabela de preços. 😊
-
-*📋 Dados do pedido:*
-• *Nome/Empresa:* ${nome}
-• *WhatsApp:* ${whatsapp}
-• *Cidade:* ${cidade}
-• *Tipo de negócio:* ${tipo}
-• *Produtos de interesse:* ${produtos}${mensagem ? `
-• *Observações:* ${mensagem}` : ''}
-
-Aguardo o contato!`;
-
-    // Número do Sabor do Alemão — altere conforme necessário
-    const numero = '5547999743400';
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
-
-    window.open(url, '_blank');
-}
-
 // ── MODAL PRIVACIDADE ─────────────────────────────────────────
 function abrirPrivacidade(e) {
     e.preventDefault();
@@ -373,10 +325,10 @@ function abrirProduto(index) {
                 <td style="padding: 2px 4px; border-right: 1px solid #ddd; font-size: 0.65rem;">${nome}</td>`;
             
             for (const col of colunas) {
-                html += `<td style="padding: 2px 4px; border-right: 1px solid #ddd; text-align: center; font-size: 0.65rem;">${dados[col] || '—'}</td>`;
+                html += `<td style="padding: 2px 4px; border-right: 1px solid #ddd; text-align: center; font-size: 0.65rem;">${dados[col] ?? '—'}</td>`;
             }
             
-            html += `<td style="padding: 2px 4px; text-align: center; font-size: 0.65rem;">${dados['vd'] || '—'}</td></tr>`;
+            html += `<td style="padding: 2px 4px; text-align: center; font-size: 0.65rem;">${dados['vd'] ?? '—'}</td></tr>`;
             return html;
         };
         
@@ -517,62 +469,10 @@ document.getElementById('modalProduto').addEventListener('click', function(e) {
     if (e.target === this) fecharProduto();
 });
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') fecharProduto();
+    if (e.key === 'Escape' && document.getElementById('modalProduto').style.display === 'flex') fecharProduto();
     // Navegação por teclado quando modal está aberto
     if (document.getElementById('modalProduto').style.display === 'flex') {
         if (e.key === 'ArrowLeft') galeriaAnterior(e);
         if (e.key === 'ArrowRight') galeriaProxima(e);
-    }
-});
-
-// ── VALIDAÇÃO COMPLETA: CPF/CNPJ/WHATSAPP ──────────────────────
-// Aguardar DOM carregar
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. WhatsApp: máximo 11 dígitos
-    const whatsappInput = document.getElementById('whatsapp');
-    if (whatsappInput) {
-        whatsappInput.addEventListener('input', function(e) {
-            let valor = e.target.value.replace(/\D/g, '');
-            if (valor.length > 11) {
-                valor = valor.slice(0, 11);
-            }
-            e.target.value = valor;
-        });
-    }
-
-    // 2. CPF/CNPJ: validar conforme tipo selecionado
-    const cpfCnpjTipo = document.getElementById('cpf-cnpj-tipo');
-    const cpfCnpjInput = document.getElementById('cpf-cnpj');
-
-    if (cpfCnpjInput) {
-        cpfCnpjInput.addEventListener('input', function(e) {
-            let valor = e.target.value.replace(/\D/g, '');
-            
-            // Determinar limite conforme tipo selecionado
-            let max = 14; // CNPJ padrão
-            if (cpfCnpjTipo && cpfCnpjTipo.value === 'cpf') {
-                max = 11;
-            }
-            
-            if (valor.length > max) {
-                valor = valor.slice(0, max);
-            }
-            e.target.value = valor;
-        });
-    }
-
-    // 3. Quando muda o tipo (CPF/CNPJ), limpar campo e ajustar placeholder
-    if (cpfCnpjTipo) {
-        cpfCnpjTipo.addEventListener('change', function() {
-            if (cpfCnpjInput) {
-                cpfCnpjInput.value = '';
-                if (this.value === 'cpf') {
-                    cpfCnpjInput.placeholder = '00000000000 (11 dígitos)';
-                } else if (this.value === 'cnpj') {
-                    cpfCnpjInput.placeholder = '00000000000000 (14 dígitos)';
-                }
-            }
-        });
     }
 });
