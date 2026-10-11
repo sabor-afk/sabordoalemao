@@ -1,0 +1,178 @@
+/* Experiência imersiva leve — produtos reais, sem canvas/WebGL, v1. */
+#experiencia.immersive-spotlight {
+  --im-gold: #edbd7e;
+  --im-move-x: 0px;
+  --im-move-y: 0px;
+  --im-scroll-y: 0px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(90px, 9vw, 138px) 5%;
+  color: #fff3e7;
+  background:
+    radial-gradient(ellipse at 72% 42%, rgba(147, 58, 61, .20), transparent 54%),
+    radial-gradient(ellipse at 7% 88%, rgba(230, 161, 91, .11), transparent 46%),
+    #201416;
+}
+#experiencia.immersive-spotlight::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: repeating-linear-gradient(108deg, transparent 0 145px, rgba(255, 223, 181, .025) 146px, transparent 147px);
+}
+#experiencia .immersive-inner { max-width: 1380px; margin: 0 auto; }
+#experiencia .immersive-heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: clamp(28px, 4.5vw, 60px); }
+#experiencia .immersive-kicker { display: flex; align-items: center; gap: 12px; color: var(--im-gold); letter-spacing: .2em; font: 800 .69rem/1.4 Montserrat, sans-serif; text-transform: uppercase; margin-bottom: 19px; }
+#experiencia .immersive-kicker::before { content: ""; display: inline-block; width: 28px; height: 1px; background: currentColor; }
+#experiencia .immersive-heading h2 { font: 400 clamp(4.7rem, 8.4vw, 9.1rem)/.87 "Bebas Neue", Impact, sans-serif; letter-spacing: -.014em; max-width: 820px; }
+#experiencia .immersive-heading h2 em { display: inline; font: italic 500 .48em/1.1 "Playfair Display", Georgia, serif; letter-spacing: -.05em; color: var(--im-gold); text-transform: none; white-space: nowrap; }
+#experiencia .immersive-heading > p { max-width: 275px; color: #dbbcb5; font: 500 .88rem/1.85 Montserrat, sans-serif; padding-bottom: 7px; }
+#experiencia .immersive-stage {
+  --im-accent: #d2a16d;
+  --im-aura: rgba(235, 160, 102, .26);
+  display: grid; grid-template-columns: minmax(0, 1.07fr) minmax(0, .93fr);
+  min-height: clamp(450px, 43vw, 630px);
+  position: relative; isolation: isolate; overflow: hidden;
+  border: 1px solid rgba(255, 216, 173, .19); border-radius: clamp(20px, 2.7vw, 34px);
+  background: linear-gradient(115deg, #49302b 0%, #44242b 48%, #321d24 100%);
+  box-shadow: 0 40px 95px rgba(0, 0, 0, .19);
+  transition: background-color .5s ease;
+}
+#experiencia .immersive-stage[data-immersive-active="1"] { --im-accent: #e6ae86; --im-aura: rgba(231, 118, 93, .23); }
+#experiencia .immersive-stage[data-immersive-active="2"] { --im-accent: #f0ca88; --im-aura: rgba(242, 193, 107, .24); }
+#experiencia .immersive-stage::after {
+  content: "SABOR DO ALEMÃO"; position: absolute; right: 27px; top: 25px;
+  z-index: 3; pointer-events: none;
+  font: 800 .54rem/1.4 Montserrat, sans-serif; letter-spacing: .25em;
+  color: rgba(255, 234, 212, .65);
+}
+#experiencia .immersive-visual { min-width: 0; position: relative; overflow: hidden; }
+#experiencia .immersive-aura {
+  position: absolute; width: 84%; aspect-ratio: 1; left: 8%; top: 50%;
+  border-radius: 50%; transform: translateY(-50%);
+  background: radial-gradient(circle, var(--im-aura) 0%, rgba(255, 215, 158, .055) 46%, transparent 72%);
+  pointer-events: none; transition: background .5s ease;
+}
+#experiencia .immersive-rings {
+  position: absolute; border-radius: 50%; aspect-ratio: 1; width: 81%; top: 50%; left: 9.5%;
+  transform: translateY(-50%) rotate(-15deg);
+  border: 1px solid rgba(253, 221, 188, .19); pointer-events: none;
+}
+#experiencia .immersive-rings::before {
+  content: ""; position: absolute; inset: 10%; border-radius: inherit;
+  border: 1px dashed rgba(245, 207, 171, .19);
+}
+#experiencia .immersive-rings::after {
+  content: "✦"; position: absolute; top: 7%; right: 12%;
+  color: #edc18b; font-size: 26px; transform: rotate(15deg);
+}
+#experiencia .immersive-product {
+  position: absolute; inset: 7% 2% 10%; margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transform: translate3d(0, 22px, 0) scale(.95);
+  transition: opacity .5s ease, transform .7s cubic-bezier(.2,.75,.2,1), visibility .5s;
+  pointer-events: none;
+}
+#experiencia .immersive-product.is-current { opacity: 1; visibility: visible; transform: translate3d(0, 0, 0) scale(1); }
+#experiencia .immersive-product img {
+  width: 100%; height: 100%; max-width: 670px; object-fit: contain; display: block;
+  transform: translate3d(var(--im-move-x), calc(var(--im-move-y) + var(--im-scroll-y)), 0);
+  filter: drop-shadow(0 34px 26px rgba(19, 8, 11, .32));
+}
+#experiencia .immersive-halo-label {
+  position: absolute; left: 8%; bottom: 7%; z-index: 2;
+  display: inline-flex; gap: 9px; align-items: center;
+  font: 800 .62rem/1.5 Montserrat, sans-serif; letter-spacing: .18em;
+  color: #fbe6d3; text-transform: uppercase;
+}
+#experiencia .immersive-halo-label::before { content: ""; width: 8px; height: 8px; background: #f1c98e; border-radius: 50%; box-shadow: 0 0 0 5px rgba(252, 212, 158, .13); }
+#experiencia .immersive-content { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: clamp(48px, 5vw, 78px) clamp(24px, 5vw, 75px) clamp(35px, 5vw, 70px) clamp(24px, 2.5vw, 48px); position: relative; z-index: 2; }
+#experiencia .immersive-content::before {
+  content: ""; position: absolute; left: 0; top: 14%; bottom: 14%;
+  width: 1px; background: linear-gradient(transparent, rgba(255, 214, 176, .28), transparent);
+}
+#experiencia .immersive-stage-label { display: flex; gap: 12px; align-items: center; font: 800 .64rem/1.4 Montserrat, sans-serif; letter-spacing: .18em; color: #f7c58e; text-transform: uppercase; margin-bottom: 30px; }
+#experiencia .immersive-stage-label > span { display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 218, 184, .32); border-radius: 30px; padding: 8px 13px; min-width: 58px; color: #fff6e8; letter-spacing: .1em; font-size: .67rem; }
+#experiencia .immersive-panel h3 { font: 400 clamp(3.7rem, 5.6vw, 6.8rem)/.91 "Bebas Neue", Impact, sans-serif; text-transform: uppercase; letter-spacing: -.016em; color: #fff4e9; max-width: 500px; }
+#experiencia .immersive-panel h3 em { display: block; color: var(--im-accent); font: italic 500 .55em/1.18 "Playfair Display", Georgia, serif; text-transform: none; letter-spacing: -.035em; margin-top: 7px; }
+#experiencia .immersive-panel p { margin-top: clamp(20px, 2vw, 28px); max-width: 410px; color: #ead4ca; font: 500 .87rem/1.85 Montserrat, sans-serif; }
+#experiencia .immersive-link {
+  margin-top: 29px; display: inline-flex; align-items: center; gap: 16px; width: fit-content;
+  border-bottom: 1px solid rgba(255, 208, 160, .58); padding-bottom: 11px;
+  text-decoration: none; color: #ffdda9; font: 800 .69rem/1.4 Montserrat, sans-serif;
+  letter-spacing: .09em; text-transform: uppercase; transition: gap .25s ease, color .25s ease;
+}
+#experiencia .immersive-link:hover { color: #fff; gap: 23px; }
+#experiencia .immersive-panel:not([hidden]) { animation: immersive-copy-in .48s both cubic-bezier(.2,.8,.2,1); }
+#experiencia .immersive-panel[hidden] { display: none !important; }
+@keyframes immersive-copy-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+#experiencia .immersive-controls { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 20px; }
+#experiencia .immersive-tab {
+  appearance: none; min-width: 0; border: 1px solid rgba(250, 215, 184, .19);
+  border-radius: 14px; background: rgba(255, 232, 205, .035);
+  color: #d7aca3; padding: 19px 19px; cursor: pointer;
+  text-align: left; display: flex; align-items: center; gap: 16px; font: 800 .74rem/1.5 Montserrat, sans-serif;
+  transition: background .22s, border-color .22s, color .22s, transform .22s;
+}
+#experiencia .immersive-tab > span:first-child { color: #b78a7f; font: 400 1.45rem/1 "Bebas Neue", Impact, sans-serif; }
+#experiencia .immersive-tab[aria-selected="true"] { border-color: rgba(246, 201, 144, .55); background: rgba(245, 194, 132, .13); color: #fff4df; }
+#experiencia .immersive-tab[aria-selected="true"] > span:first-child { color: #f8ce94; }
+#experiencia .immersive-tab:hover { background: rgba(251, 224, 190, .1); transform: translateY(-2px); }
+#experiencia .immersive-foot { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; margin-top: 19px; font-size: .65rem; font-weight: 700; letter-spacing: .08em; color: #aa8984; }
+#experiencia .immersive-foot span + span { color: #d9b3a7; }
+
+/* Só o bloco da experiência entra com profundidade; o conteúdo nunca depende da animação. */
+#experiencia.immersive-enhanced .immersive-stage {
+  transition: opacity .75s ease, transform .85s cubic-bezier(.2,.8,.2,1);
+}
+#experiencia.immersive-enhanced:not(.immersive-in-view) .immersive-stage {
+  opacity: .88; transform: translateY(16px);
+}
+@media (max-width: 960px) {
+  #experiencia.immersive-spotlight { padding: 80px 5%; }
+  #experiencia .immersive-heading { flex-direction: column; align-items: start; gap: 18px; }
+  #experiencia .immersive-heading h2 { font-size: clamp(4.8rem, 11vw, 7.4rem); }
+  #experiencia .immersive-heading > p { max-width: 640px; }
+  #experiencia .immersive-stage { grid-template-columns: 1fr; }
+  #experiencia .immersive-visual { min-height: clamp(320px, 53vw, 495px); }
+  #experiencia .immersive-rings { width: min(72%, 400px); left: 50%; transform: translate(-50%, -50%) rotate(-15deg); }
+  #experiencia .immersive-aura { width: min(88%, 470px); left: 50%; transform: translate(-50%, -50%); }
+  #experiencia .immersive-product { inset: 3% 5%; }
+  #experiencia .immersive-content { padding: 5px 7% 42px; }
+  #experiencia .immersive-content::before { display: none; }
+  #experiencia .immersive-stage::after { top: 18px; }
+  #experiencia .immersive-stage-label { margin-bottom: 18px; }
+  #experiencia .immersive-panel h3 { font-size: clamp(3.8rem, 8vw, 5.8rem); }
+  #experiencia .immersive-panel p { margin-top: 15px; }
+}
+@media (max-width: 620px) {
+  #experiencia.immersive-spotlight { padding: 72px 6%; }
+  #experiencia .immersive-kicker { font-size: .58rem; letter-spacing: .16em; }
+  #experiencia .immersive-heading h2 { font-size: clamp(4.2rem, 13vw, 6rem); }
+  #experiencia .immersive-heading h2 em { white-space: normal; }
+  #experiencia .immersive-heading > p { font-size: .82rem; }
+  #experiencia .immersive-stage { border-radius: 20px; }
+  #experiencia .immersive-stage::after { top: 14px; right: 14px; font-size: .47rem; }
+  #experiencia .immersive-visual { min-height: clamp(250px, 73vw, 350px); }
+  #experiencia .immersive-product { inset: 7% 2% 5%; }
+  #experiencia .immersive-halo-label { bottom: 5%; left: 7%; font-size: .51rem; }
+  #experiencia .immersive-content { padding: 15px 7% 29px; }
+  #experiencia .immersive-stage-label { margin-bottom: 14px; }
+  #experiencia .immersive-panel h3 { font-size: clamp(3.25rem, 12vw, 4.5rem); }
+  #experiencia .immersive-panel p { font-size: .79rem; line-height: 1.7; }
+  #experiencia .immersive-link { font-size: .62rem; margin-top: 19px; }
+  #experiencia .immersive-controls { gap: 6px; margin-top: 12px; }
+  #experiencia .immersive-tab { padding: 13px 8px; flex-direction: column; text-align: center; gap: 4px; font-size: .56rem; line-height: 1.4; letter-spacing: .005em; border-radius: 10px; }
+  #experiencia .immersive-tab > span:first-child { font-size: 1.3rem; }
+  #experiencia .immersive-foot { font-size: .55rem; gap: 5px; }
+}
+@media (hover: none), (pointer: coarse) {
+  #experiencia .immersive-tab:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #experiencia .immersive-product,
+  #experiencia .immersive-panel:not([hidden]),
+  #experiencia .immersive-stage,
+  #experiencia .immersive-tab,
+  #experiencia .immersive-link { animation: none !important; transition: none !important; }
+  #experiencia .immersive-product img { transform: none !important; }
+  #experiencia.immersive-enhanced:not(.immersive-in-view) .immersive-stage { opacity: 1; transform: none; }
+}
