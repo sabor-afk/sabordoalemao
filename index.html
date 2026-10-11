@@ -63,6 +63,7 @@
 <link rel="stylesheet" href="css/showcase.css">
 <link rel="stylesheet" href="css/embaixador-scroll.css">
 <link rel="stylesheet" href="css/catalog-v2.css">
+    <link rel="stylesheet" href="css/immersive-experience.css">
 
 <!-- Schema.org: LocalBusiness -->
 <script type="application/ld+json">
@@ -400,6 +401,65 @@
     </div>
     </section>
 
+
+<!-- EXPERIÊNCIA IMERSIVA LEVE — três linhas, fotos reais, sem vídeo nem WebGL -->
+<section class="immersive-spotlight" id="experiencia" aria-labelledby="experienciaTitulo">
+  <div class="immersive-inner">
+    <header class="immersive-heading">
+      <div>
+        <p class="immersive-kicker">Uma vitrine que desperta o apetite</p>
+        <h2 id="experienciaTitulo">SABOR QUE<br><em>se sente de perto.</em></h2>
+      </div>
+      <p>Explore três estilos da nossa linha. Uma experiência feita para descobrir o próximo favorito do seu negócio.</p>
+    </header>
+
+    <div class="immersive-stage" data-immersive-stage data-immersive-active="0">
+      <div class="immersive-visual" aria-hidden="true">
+        <div class="immersive-aura"></div>
+        <div class="immersive-rings"></div>
+        <figure class="immersive-product is-current" data-immersive-image="0" aria-hidden="false">
+          <img src="img/pastel-forno-pizza.webp" alt="" loading="lazy" decoding="async" width="600" height="600">
+        </figure>
+        <figure class="immersive-product" data-immersive-image="1" aria-hidden="true">
+          <img src="img/coxinha-grande-frango-requeijao-frita.webp" alt="" loading="lazy" decoding="async" width="600" height="600">
+        </figure>
+        <figure class="immersive-product" data-immersive-image="2" aria-hidden="true">
+          <img src="img/pao-queijo-alguns.webp" alt="" loading="lazy" decoding="async" width="600" height="600">
+        </figure>
+        <span class="immersive-halo-label">Nossa seleção</span>
+      </div>
+
+      <div class="immersive-content">
+        <div class="immersive-stage-label"><span data-immersive-counter>01</span> / 03 &nbsp; · &nbsp; Descubra o sabor</div>
+        <div id="immersive-panel-0" class="immersive-panel" role="tabpanel" aria-labelledby="immersive-tab-0" data-immersive-panel="0" tabindex="0">
+          <h3>DO FORNO<br><em>para o seu balcão.</em></h3>
+          <p>Pastéis de forno para quem valoriza praticidade e quer oferecer opções que chamam atenção na vitrine.</p>
+          <a class="immersive-link" href="#produtos">Explorar pastéis de forno <span aria-hidden="true">↗</span></a>
+        </div>
+        <div id="immersive-panel-1" class="immersive-panel" role="tabpanel" aria-labelledby="immersive-tab-1" data-immersive-panel="1" tabindex="0" hidden>
+          <h3>CROCÂNCIA<br><em>que conquista.</em></h3>
+          <p>Uma linha de salgados para fritar, pensada para completar o atendimento com variedade e muito sabor.</p>
+          <a class="immersive-link" href="#produtos">Conhecer a linha para fritar <span aria-hidden="true">↗</span></a>
+        </div>
+        <div id="immersive-panel-2" class="immersive-panel" role="tabpanel" aria-labelledby="immersive-tab-2" data-immersive-panel="2" tabindex="0" hidden>
+          <h3>PEQUENOS<br><em>grandes favoritos.</em></h3>
+          <p>Pães de queijo e opções práticas para acompanhar diferentes momentos do seu negócio.</p>
+          <a class="immersive-link" href="#produtos">Descobrir a linha gourmet <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="immersive-controls" role="tablist" aria-label="Explore nossas linhas de produtos">
+      <button type="button" class="immersive-tab" role="tab" id="immersive-tab-0" aria-controls="immersive-panel-0" aria-selected="true" tabindex="0" data-immersive-tab="0"><span>01</span><span>PARA ASSAR</span></button>
+      <button type="button" class="immersive-tab" role="tab" id="immersive-tab-1" aria-controls="immersive-panel-1" aria-selected="false" tabindex="-1" data-immersive-tab="1"><span>02</span><span>PARA FRITAR</span></button>
+      <button type="button" class="immersive-tab" role="tab" id="immersive-tab-2" aria-controls="immersive-panel-2" aria-selected="false" tabindex="-1" data-immersive-tab="2"><span>03</span><span>GOURMET</span></button>
+    </div>
+    <div class="immersive-foot" aria-hidden="true">
+      <span>FEITO PARA O SEU NEGÓCIO</span>
+      <span>ESCOLHA UMA LINHA PARA EXPLORAR ↑</span>
+    </div>
+  </div>
+</section>
 
     <!-- PRODUTOS -->
     <section class="section" id="produtos">
@@ -775,5 +835,6 @@
     <script src="js/cinematic.js"></script>
     <script src="js/showcase.js"></script>
     <script src="js/embaixador-scroll.js"></script>
+    <script src="js/immersive-experience.js" defer></script>
 </body>
 </html>
