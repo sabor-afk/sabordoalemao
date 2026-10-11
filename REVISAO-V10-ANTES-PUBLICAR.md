@@ -19,15 +19,14 @@ Data da última atualização: 11/10/2026.
 - Workflow ativo em `.github/workflows/optimize-images-v10.yml`: executado manualmente ou quando arquivo de configuração/script do processo for alterado na branch de testes. Não altera `main`.
 - **Pendente:** conferir qualidade visual das 20 fotos no navegador e repetir testes responsivos.
 
-## Experiência imersiva leve — implementada na branch de testes
+## Revisão da imersão — uma única vitrine, sem duplicação (11/10/2026)
 
-- Seção `#experiencia`, localizada entre Sobre e Catálogo, com 3 cenas de produtos reais: para assar, para fritar e gourmet.
-- Transições com CSS, movimento discreto sob demanda no desktop e controles de toque/clique/teclado; sem vídeo, WebGL, bibliotecas externas ou novos arquivos de imagem.
-- Fotos WebP reaproveitadas: `pastel-forno-pizza.webp`, `coxinha-grande-frango-requeijao-frita.webp`, `pao-queijo-alguns.webp`.
-- Acessibilidade: controles com papéis de abas, painéis associados e desativação de animações em `prefers-reduced-motion`. No mobile, efeitos de ponteiro/parallax não são executados.
-- Código: `css/immersive-experience.css`, `js/immersive-experience.js`, `index.html`; teste `tests/immersive-experience.test.mjs`.
-- GitHub Actions validado com sucesso: https://github.com/sabor-afk/sabordoalemao/actions/runs/38154675078
-- **Pendente:** revisão visual e experiência real no Edge desktop e celulares, incluindo toque, rolagem, trocas de aba, leitura e carregamento. O CI não substitui essa homologação.
+- A segunda vitrine `#experiencia` foi **removida** após revisão: repetia o conteúdo de `Praticidade que encanta`.
+- Em vez de acrescentar outro carrossel, a seção original `story-feature` / `#storyGallery` agora oferece o botão **Olhar de perto**: diálogo nativo acessível, com zoom 100–300%, arraste para explorar, botão de fechar e tecla Escape.
+- No celular, a galeria original permite **deslizar horizontalmente** ou usar setas. Rolagem vertical continua rolando a página. Desktop permanece com a progressão cinematográfica pelo scroll.
+- Sem downloads extras de imagens, vídeo, WebGL ou dependências. Usa as quatro fotografias WebP **já existentes** na seção.
+- Arquivos alterados: `index.html`, `js/showcase.js`, `css/showcase.css`; testes `tests/immersive-experience.test.mjs`. CSS/JS experimentais da vitrine duplicada foram excluídos.
+- **Pendente:** validar visualmente no Edge e em celulares reais, inclusive legibilidade, zoom, toque, Escape, acessibilidade e performance. CI é somente smoke test do código.
 
 ## Cloudflare Pages: preparação no código
 
