@@ -1,0 +1,3 @@
+# Arquivos gerados para hospedagem local e Cloudflare Pages
+dist/
+node_modules/

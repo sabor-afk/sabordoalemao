@@ -1,0 +1,28 @@
+name: Site • Imersão leve (smoke test)
+
+on:
+  push:
+    branches:
+      - design/premium-2026
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testar sintaxe do JavaScript
+        run: |
+          node --check js/script.js
+          node --check js/showcase.js
+          node --check js/cinematic.js
+          node --check js/embaixador-scroll.js
+          node --check js/premium.js
+          node --check js/refinements.js
+          node --check tools/build-pages.mjs
+      - name: Validar secao imersiva e imagens
+        run: node --test tests/*.test.mjs

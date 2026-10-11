@@ -10,8 +10,7 @@
   # Se usar um build process (npm build, etc), defina aqui:
   # command = "npm run build"
   
-  # Arquivos que trigam rebuild
-  ignore = "git log -1 --pretty=%B"
+  # Netlify detecta alterações automaticamente. Evitar 'ignore' que retorna 0.
 
 # ==========================================
 # CONTEXT: Produção (Default)
