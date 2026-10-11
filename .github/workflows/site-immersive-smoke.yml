@@ -23,5 +23,6 @@ jobs:
           node --check js/embaixador-scroll.js
           node --check js/premium.js
           node --check js/refinements.js
+          node --check tools/build-pages.mjs
       - name: Validar secao imersiva e imagens
         run: node --test tests/*.test.mjs
