@@ -65,3 +65,25 @@ test('mobile navigation does not break existing desktop scroll progression', () 
   assert.ok(html.indexOf('id="storyGallery"') < html.indexOf('id="sobre"'));
   assert.ok(html.indexOf('id="sobre"') < html.indexOf('id="produtos"'));
 });
+
+
+test('home hero, floating details, highlighted cards and story use distinct photos', () => {
+  const hero = html.match(/class="hero-main-product" src="([^"]+)"/)?.[1];
+  const floating = [...html.matchAll(/class="hero-float [^"]+"\s*>\s*<img src="([^"]+)"/g)].map(m=>m[1]);
+  const cards = [...html.matchAll(/class="cc-image"><img src="([^"]+)"/g)].map(m=>m[1]);
+  const gallery = [...section.matchAll(/class="story-slide">\s*<img src="([^"]+)"/g)].map(m=>m[1]);
+  const all = [hero,...floating,...cards,...gallery];
+  assert.equal(floating.length,2);
+  assert.equal(cards.length,4);
+  assert.equal(gallery.length,4);
+  assert.equal(all.length,11);
+  assert.equal(new Set(all).size,11,'the homepage must not repeat a highlighted product photo');
+  assert.ok(html.includes('<link rel="preload" as="image" href="'+hero+'">'));
+  for(const path of all) {
+    assert.match(path,/^img\/[^"<]+\.webp$/);
+    assert.ok(existsSync(path),'missing product photo '+path);
+  }
+  // The commercial catalog remains the full source of products; these are highlights only.
+  assert.ok(html.includes('id="produtosGrid"'));
+  assert.ok(html.includes('href="#produtos"'));
+});
