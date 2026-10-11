@@ -28,6 +28,16 @@ Data da última atualização: 11/10/2026.
 - Arquivos alterados: `index.html`, `js/showcase.js`, `css/showcase.css`; testes `tests/immersive-experience.test.mjs`. CSS/JS experimentais da vitrine duplicada foram excluídos.
 - **Pendente:** validar visualmente no Edge e em celulares reais, inclusive legibilidade, zoom, toque, Escape, acessibilidade e performance. CI é somente smoke test do código.
 
+## Revisão leve: carregamento, navegação e conteúdo técnico (11/10/2026)
+
+- `#storyInspectImage` (zoom de "Olhar de perto") agora recebe `src` somente na abertura do diálogo; evita solicitação desnecessária da imagem do visualizador ao iniciar a página.
+- Fechamento da política de privacidade agora preserva o estado anterior de rolagem e o foco, e não altera nada quando ela já está fechada.
+- O catálogo não inventa mais uma validade de **6 meses** ou uma conservação de **-18°C** quando o produto não tem essas informações no JSON; nesses casos indica consulta à ficha técnica. Dados existentes dos produtos permanecem intactos.
+- Retirado o `FAQPage` estruturado que afirmava pedido mínimo e condições de pagamento sem validação comercial. A FAQ só deve retornar quando houver conteúdo visível e comprovado.
+- Breadcrumb de contato corrigido de `#pedido` para `#fazer-pedido`.
+- Criados `tests/site-readiness.test.mjs` e expansão do GitHub Actions para testar os arquivos JavaScript principais e os dois testes de regressão.
+- **Ainda pendente:** conferência visual em Edge desktop e celular, testes de performance Lighthouse/Core Web Vitals em site servido por HTTP, revisão dos dados comerciais e fichas técnicas. Smoke test não comprova desempenho real.
+
 ## Cloudflare Pages: preparação no código
 
 - `_headers`: cabeçalhos de segurança, permissões e cache revalidável de imagens com URLs estáveis; CSP permite futura Web Analytics.
