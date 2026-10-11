@@ -91,8 +91,8 @@ Leia `REGRAS-SISTEMA-A-B-WTTI.md` para as regras completas, perguntas ao suporte
 
 Veja `GUIA-CLOUDFLARE-PAGES.md`.
 
-- [ ] Quando autorizado, criar projeto Pages vinculado ao GitHub `sabor-afk/sabordoalemao`.
-- [ ] Framework: nenhum. Build command: em branco ou `exit 0`. Output directory: `.` (raiz).
+- [ ] Com aprovação final, revisar e incorporar `design/premium-2026` à `main`, então criar projeto Pages vinculado ao GitHub `sabor-afk/sabordoalemao` (produção `main`).
+- [x] Site estático e build de publicação seguro preparados na branch de testes: `node tools/build-pages.mjs` → `dist/` (exclui arquivos de planejamento, scripts locais e testes). **Ainda não implantado na Cloudflare.**
 - [ ] Branch principal (produção): `main`. Desenvolvimento: `design/premium-2026`.
 - [ ] **Importante:** o projeto Pages terá endereço `*.pages.dev`, que poderá ser público. Restringir prévias via Cloudflare Access; se não quiser nenhuma presença pública, adiar a criação do projeto.
 - [ ] Confirmar no painel que a prévia não é indexada por mecanismos de busca.
