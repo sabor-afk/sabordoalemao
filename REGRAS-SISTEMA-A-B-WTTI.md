@@ -30,6 +30,45 @@ Site Sabor do Alemão (catálogo / pedidos)
                                                                   fiscal autorizado
 ```
 
+## Três empresas emissoras no WTTI — vínculo fiscal do cliente
+
+**Informação operacional fornecida:** existem três empresas cadastradas no WTTI, cada uma com sua própria carteira/cadastro fiscal de clientes:
+
+1. **Bischof / Bischof Distribuidora** — Santa Catarina.
+2. **Sabor do Alemão — Matriz** — Santa Catarina.
+3. **Sabor do Alemão — Filial** — Paraná.
+
+Os nomes acima são operacionais; confirmar razão social, CNPJ, códigos internos e relação matriz/filial no WTTI antes de implementar.
+
+**Regra fundamental:** `Sistema A/B` é a modalidade/destino do **pedido**; `empresa emissora WTTI` é o estabelecimento fiscal cadastrado para aquele **cliente**. Essas duas dimensões NÃO são a mesma coisa, e a empresa emissora WTTI também não deve ser confundida com a empresa responsável pelo estoque na Câmara Fria.
+
+### Preparar primeiro o cadastro de clientes
+
+- No Bischof Vendas, prever vínculo fiscal do cliente com **uma das três empresas do WTTI**, usando identificadores estáveis (CNPJ/código da empresa e ID do cliente no WTTI, quando disponível); **não buscar só pelo nome**, pois há homônimos.
+- Verificar onde esse relacionamento será mantido e sincronizado: se a WTTI não oferecer API/importação ou consulta de clientes, a correspondência poderá precisar ser cadastrada/validada **manualmente** no Bischof Vendas. Não afirmar que o sistema consegue consultar o WTTI automaticamente antes de confirmar a integração.
+- Na hipótese de um cliente ter cadastro em **mais de uma** empresa emissora, a escolha deve ser inequívoca, controlada e validada por pedido. **Pendência para confirmar com a operação**.
+- Nenhum pedido fiscal pode avançar com vínculo ausente, divergente ou ambíguo. Sinalizar `Cadastro fiscal pendente de conferência` e permitir correção apenas a usuário autorizado.
+- Preservar no pedido a empresa emissora validada e o ID fiscal do cliente, como registro histórico; alterações posteriores no cadastro não podem mudar retroativamente pedidos existentes.
+
+### Fluxo desejado para um pedido no Sistema A
+
+1. Vendedor inicia um novo pedido e seleciona o cliente.
+2. O PDV identifica a **empresa fiscal vinculada** ao cadastro do cliente (ex.: José → Sabor do Alemão Matriz/SC; Luiz → Sabor do Alemão Filial/PR).
+3. O vendedor escolhe **Sistema A ou B** para **aquele pedido**; essa escolha independe do cliente. Se A, a tela mostra `Empresa emissora WTTI: [empresa do cliente]`, para conferência **antes de adicionar itens** ou de concluir.
+4. Se for **Sistema A**, o pedido fica identificado para o fluxo fiscal da empresa encontrada; quando e somente quando existir conector WTTI homologado, o envio deverá usar tanto o ID da empresa emissora quanto o ID fiscal do cliente nessa empresa.
+5. Se for **Sistema B**, o pedido continua somente de venda, sem integração WTTI, mesmo que o cliente tenha vínculo fiscal cadastrado.
+6. Os eventos de estoque da Câmara Fria continuam seguindo as regras já existentes, **sem baixa duplicada** por causa do destino fiscal.
+
+**Exemplos informados:** cliente vinculado à **Bischof** → empresa emissora Bischof; José vinculado à **Matriz/SC** → empresa emissora Matriz; Luiz vinculado à **Filial/PR** → empresa emissora Filial. Em todos os três casos, somente o pedido escolhido como **Sistema A** poderá seguir ao faturamento WTTI.
+
+### Ordem de implementação, sem alterar a produção ainda
+
+1. Confirmar as três empresas fiscais reais no WTTI e identificar seus IDs, CNPJs e cadastros de clientes.
+2. Mapear os vínculos fiscais dos clientes existentes no Bischof Vendas, tratando duplicidade de nomes e cadastros entre empresas.
+3. Mostrar no PDV **Cliente → Empresa fiscal identificada → escolha Sistema A/B → Produtos** (a posição visual de A/B pode ser ajustada, desde que a empresa emissora de A sempre apareça para conferência).
+4. Validar que empresa fiscal, empresa do estoque e preço/tabela do cliente não sejam alterados indevidamente.
+5. Só depois estudar o conector WTTI, sem presumir que a plataforma oferece API ou emissão automática de notas.
+
 ### Decisão confirmada — A/B deve ser escolhido por pedido, não por cliente
 
 **Um mesmo cliente, vendedor ou empresa pode operar tanto pelo Sistema A quanto pelo Sistema B.** A classificação A/B pertence a **cada pedido**. Não vincular o cliente ou a empresa a um único sistema e não mudar pedidos antigos quando o cadastro for alterado.
@@ -78,7 +117,7 @@ Site Sabor do Alemão (catálogo / pedidos)
 ## Próximos passos, sem interferir na operação
 
 1. Suporte WTTI confirma ou nega capacidades por escrito.
-2. Revisar o código e as migrações **atuais** do Bischof Vendas (sem presumir campo A/B já existente), mapeando multiempresa, preços, pedidos e reservas Câmara Fria.
+2. Revisar o código e as migrações **atuais** do Bischof Vendas (sem presumir campo A/B ou vínculo fiscal já existente), mapeando as três empresas emissoras da WTTI, clientes por empresa, IDs fiscais, preços, pedidos e reservas Câmara Fria.
 3. **Definido: selecionar A/B por pedido.** Antes de implementar, conferir no PDV existente onde inserir a escolha após o cliente e antes dos produtos, com confirmação explícita e sem alterar empresa/estoque.
 4. Implementar filtro/etiqueta/classificação A/B no Bischof Vendas **com migração segura e compatibilidade dos pedidos existentes**, se aprovado.
 5. Só depois criar e testar o conector WTTI para o Sistema A, inicialmente em homologação com registros fictícios.
