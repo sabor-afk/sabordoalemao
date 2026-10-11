@@ -13,19 +13,19 @@
 | Domínio canônico final | `https://sabordoalemao.com.br/` |
 | `www` | `https://www.sabordoalemao.com.br/` → redirecionar para domínio sem `www` **na ativação** |
 | Framework | Nenhum (HTML, CSS, JS e JSON estáticos) |
-| Comando de build | Em branco ou `exit 0` |
-| Build output directory | `.` |
+| Comando de build | `node tools/build-pages.mjs` |
+| Build output directory | `dist` |
 | Root directory | Raiz do repositório |
 | API / banco | Não necessários na versão institucional B2B |
 | Captura de interesse | Usuário revisa e confirma o envio no WhatsApp; não há envio automático ou banco de leads |
 
-O site tem `index.html` na raiz, portanto não precisa compilar front-end. O `netlify.toml` é legado e não configura Cloudflare Pages. A política de cabeçalhos fica em `_headers` e a página de erro em `404.html`.
+O site tem `index.html` na raiz e não precisa de framework nem de compilação front-end. O script `tools/build-pages.mjs` **somente copia uma lista permitida de arquivos públicos** para `dist/`: páginas HTML, `robots.txt`, `sitemap.xml`, `_headers`, e os diretórios `css/`, `js/`, `img/` e `data/`. **Não publicar a raiz do repositório como saída:** ela inclui documentos operacionais (WTTI, Bischof Vendas/Câmara Fria), testes, scripts locais e `netlify.toml` legados. A saída `dist/` não recebe esse conteúdo. O `netlify.toml` não configura Cloudflare Pages.
 
 ## Quando você autorizar criar ambiente de teste
 
 1. Cloudflare → **Workers & Pages** → Create application → **Pages** → **Connect to Git**.
 2. Escolher GitHub e o repositório `sabor-afk/sabordoalemao`.
-3. Definir produção `main`, comando em branco ou `exit 0`, saída `.`.
+3. **Antes de conectar o repositório à produção**, concluir a homologação da branch `design/premium-2026` e, com aprovação, incorporar a versão final na branch `main`. Na criação do Pages, selecionar produção `main`, comando **`node tools/build-pages.mjs`**, saída **`dist`**, sem preset de framework. Se `main` ainda não contiver o script, a implantação falhará.
 4. Configurar testes apenas para `design/premium-2026` em branch controls.
 5. **Proteção das prévias:** páginas `*.pages.dev` podem ser públicas. Habilitar a política de acesso em Settings → General → Enable access policy antes de compartilhar o link de teste. Essa configuração protege prévias, mas não necessariamente o domínio base de produção `<nome>.pages.dev`.
 6. Verificar que prévias retornam `X-Robots-Tag: noindex`.
@@ -45,7 +45,7 @@ O site tem `index.html` na raiz, portanto não precisa compilar front-end. O `ne
 
 ## Observações de segurança e custos
 
-- O catálogo atual é estático: não precisa criar outra Cloudflare Worker nem banco D1 para hospedar.
+- O catálogo atual é estático: não precisa criar outra Cloudflare Worker nem banco D1 para hospedar. O build com Node é apenas uma cópia segura para `dist/`, sem dependências externas.
 - Não adicionar Pages Functions sem necessidade: mudanças de backend exigem avaliação de cotas, custo, segurança e retenção de dados.
 - O cabeçalho `_headers` define cache revalidável para fotos com nomes estáveis; cache imutável de um ano causaria versões antigas após substituição.
 - Não ativar HSTS preload antecipadamente: exige garantias adicionais sobre todos os subdomínios e deve ser avaliado após o lançamento.
