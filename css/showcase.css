@@ -102,3 +102,127 @@
   .cinematic-ready .story-feature.story-gallery-section .story-photo-gallery{transform:none}
   .story-gallery-hint{display:none}
 }
+
+
+
+/* V11 — uma só experiência: olhar de perto a vitrine original, sem novo carrossel. */
+.story-gallery-interactions {
+  position: absolute; right: 19px; top: 73px; z-index: 7;
+  display: flex; align-items: center; justify-content: flex-end; gap: 9px;
+}
+.story-gallery-interactions button { cursor: pointer; font-family: 'Montserrat', sans-serif; }
+.story-gallery-interactions button:focus-visible {
+  outline: 3px solid #ffd08f; outline-offset: 3px;
+}
+.story-gallery-inspect {
+  appearance: none; display: inline-flex; align-items: center; gap: 11px;
+  color: #2d1919; background: #f2ce97; border: 1px solid #fbe4c2;
+  border-radius: 40px; padding: 12px 15px;
+  font-weight: 800; font-size: .64rem; letter-spacing: .075em;
+  box-shadow: 0 8px 22px #180a0a33; transition: background .2s, transform .2s;
+}
+.story-gallery-inspect:hover { background: #fff0cf; transform: translateY(-2px); }
+.story-gallery-mobile-controls { display: none; gap: 6px; }
+.story-gallery-arrow {
+  appearance: none; width: 40px; height: 40px; border-radius: 50%;
+  color: #fff4e8; background: #2a181bbd; border: 1px solid #f2d4b969;
+  font-size: 1.18rem; line-height: 1; box-shadow: 0 5px 15px #0003;
+}
+.story-gallery-arrow:hover { background: #6e3033; }
+.story-gallery-active.story-gallery-manual .story-slide {
+  transition: opacity .28s ease, transform .42s cubic-bezier(.2,.7,.2,1), visibility .28s;
+}
+.story-gallery-manual + .story-gallery-overlay .story-gallery-hint { display: none; }
+
+/* O navegador gerencia foco, Escape e camada superior via <dialog>. */
+.story-inspect-dialog {
+  position: fixed; inset: 0; margin: auto;
+  width: min(94vw, 1080px); height: min(91dvh, 820px);
+  max-width: none; max-height: none; padding: 0;
+  background: #20181a; color: #fff0df;
+  border: 1px solid #e7c29566; border-radius: 23px;
+  box-shadow: 0 35px 100px #0008; overflow: hidden;
+}
+.story-inspect-dialog:not([open]) { display: none !important; }
+.story-inspect-dialog::backdrop { background: rgba(15, 9, 12, .88); }
+.story-inspect-shell { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; min-height: 0; }
+.story-inspect-top {
+  display: flex; gap: 20px; align-items: center; justify-content: space-between;
+  padding: 15px clamp(15px, 3.3vw, 28px); border-bottom: 1px solid #edd4ba26;
+}
+.story-inspect-top p {
+  margin: 0; color: #f0bc7e; font: 800 .61rem/1.5 'Montserrat', sans-serif;
+  letter-spacing: .16em;
+}
+.story-inspect-close {
+  appearance: none; flex: none; border: 1px solid #edcaad65; border-radius: 50px;
+  padding: 10px 16px; color: #fff1e1; background: #ffffff0d;
+  font: 800 .64rem/1.3 'Montserrat', sans-serif; letter-spacing: .08em; cursor: pointer;
+}
+.story-inspect-close:hover { background: #fff1e11e; }
+.story-inspect-stage {
+  position: relative; overflow: hidden; min-height: 0; isolation: isolate;
+  touch-action: none; cursor: default;
+  background: radial-gradient(ellipse at 51% 44%, #9b654e 0, #633b37 48%, #352127 100%);
+}
+.story-inspect-stage::before {
+  content: ""; position: absolute; inset: 11% 25%; border: 1px solid #ffe2b122;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+}
+.story-inspect-stage img {
+  position: relative; width: 100%; height: 100%; object-fit: contain;
+  display: block; user-select: none; -webkit-user-drag: none; pointer-events: none;
+  filter: drop-shadow(0 26px 20px #1b0e1452); transform-origin: center;
+}
+.story-inspect-stage.is-zoomed { cursor: grab; }
+.story-inspect-stage.is-zoomed:active { cursor: grabbing; }
+.story-inspect-corner {
+  position: absolute; left: 18px; bottom: 14px; z-index: 2;
+  font: 800 .54rem/1.4 'Montserrat', sans-serif; letter-spacing: .16em;
+  color: #fff5e2; text-shadow: 0 2px 10px #000a; pointer-events: none;
+}
+.story-inspect-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 28px; padding: 18px clamp(15px, 3.3vw, 28px) 20px;
+  border-top: 1px solid #edd4ba26;
+}
+.story-inspect-description { min-width: 0; }
+.story-inspect-eyebrow { font: 800 .56rem/1.4 'Montserrat',sans-serif; letter-spacing: .16em; color: #dcb588; }
+.story-inspect-description h2 { font: 400 clamp(1.65rem, 3.1vw, 2.6rem)/1 'Bebas Neue', Impact,sans-serif; margin-top: 5px; }
+.story-inspect-description > p:last-child { font: 500 .71rem/1.45 'Montserrat',sans-serif; color: #d8bdb1; margin-top: 5px; }
+.story-inspect-zoom { display: flex; gap: 7px; align-items: center; flex: none; }
+.story-inspect-zoom button {
+  border: 1px solid #efcc9f70; background: #fff5e40e; color: #fff2e3; width: 42px; height: 42px;
+  border-radius: 11px; cursor: pointer; font-size: 1.35rem; line-height: 1;
+}
+.story-inspect-zoom button:hover:not(:disabled) { background: #e8b57d2d; }
+.story-inspect-zoom button:disabled { opacity: .35; cursor: default; }
+.story-inspect-zoom output {
+  width: 58px; text-align: center; color: #ffdcad;
+  font: 800 .77rem/1.4 'Montserrat',sans-serif; font-variant-numeric: tabular-nums;
+}
+.story-inspect-dialog button:focus-visible { outline: 3px solid #f6bf81; outline-offset: 3px; }
+@media(max-width: 968px), (prefers-reduced-motion: reduce) {
+  .story-gallery-mobile-controls { display: flex; }
+}
+@media(max-width: 620px) {
+  .story-gallery-interactions { top: 66px; right: 12px; gap: 6px; }
+  .story-gallery-arrow { width: 35px; height: 35px; }
+  .story-gallery-inspect { padding: 10px 11px; font-size: .52rem; gap: 5px; }
+  .story-inspect-dialog {
+    width: calc(100vw - 18px); height: min(91dvh, 790px); border-radius: 16px;
+  }
+  .story-inspect-top { padding: 11px 12px; gap: 8px; }
+  .story-inspect-top p { font-size: .49rem; letter-spacing: .08em; }
+  .story-inspect-close { padding: 9px 11px; font-size: .57rem; }
+  .story-inspect-bottom { padding: 12px 13px; gap: 9px; align-items: start; }
+  .story-inspect-description h2 { font-size: 1.5rem; }
+  .story-inspect-description > p:last-child { font-size: .64rem; }
+  .story-inspect-zoom button { width: 36px; height: 36px; border-radius: 9px; }
+  .story-inspect-zoom { gap: 2px; }
+  .story-inspect-zoom output { width: 44px; font-size: .65rem; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .story-gallery-active.story-gallery-manual .story-slide { transition: none !important; }
+  .story-gallery-inspect { transition: none !important; }
+}
