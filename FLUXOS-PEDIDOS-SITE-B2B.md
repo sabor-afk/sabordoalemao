@@ -17,6 +17,19 @@
 - **Vínculo com operações:** manter IDs do usuário/site e do cliente/empresa no Bischof Vendas distintos e vinculados de modo explícito. Jamais autorizar pedidos diretos com uma flag controlada pelo navegador.
 - **Cadastro de contas:** ainda é preciso decidir se novos clientes podem se registrar no site e ficar aguardando liberação ou se a equipe criará/enviará convites para as contas.
 
+
+## Separação operacional obrigatória: Sistema A / Sistema B
+
+O Bischof Vendas deverá manter os pedidos separados por **Sistema A** e **Sistema B** sem confundir essa classificação com empresa, origem do pedido, vínculo de estoque ou status de aprovação comercial.
+
+- **Sistema B:** pedido de venda apenas; não aciona a WTTI.
+- **Sistema A:** pedido de venda elegível para futura integração fiscal com a WTTI, **somente se a WTTI confirmar uma forma suportada de integração e após homologação**. Enquanto isso, faturamento manual como hoje.
+- **Câmara Fria:** a separação A/B não deve duplicar RESERVE/COMMIT/RETURN/RELEASE; os eventos existentes e as regras multiempresa precisam ser preservados.
+- **Cliente, itens, quantidade e preços específicos:** preservar os valores comerciais e validar o tratamento fiscal antes de qualquer emissão de NF-e.
+- A decisão sobre criar e aprovar contas no site é independente de A/B.
+
+Leia `REGRAS-SISTEMA-A-B-WTTI.md` para as regras completas, perguntas ao suporte e etapas de implementação.
+
 ## Visão simplificada
 
 ```text
