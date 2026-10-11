@@ -51,7 +51,7 @@ test('original gallery gains usable zoom and mobile navigation controls', () => 
   assert.match(js,/pointerup/);
   assert.match(js,/Math\.abs\(dx\)>48/);
   assert.match(js,/pointermove/);
-  assert.match(js,/aria/);
+  assert.match(js,/detailImage\.alt/);
 });
 
 test('mobile navigation does not break existing desktop scroll progression', () => {
