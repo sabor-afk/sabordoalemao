@@ -129,6 +129,7 @@
   font-size: 1.18rem; line-height: 1; box-shadow: 0 5px 15px #0003;
 }
 .story-gallery-arrow:hover { background: #6e3033; }
+.story-gallery.story-gallery-manual { touch-action: pan-y; }
 .story-gallery-active.story-gallery-manual .story-slide {
   transition: opacity .28s ease, transform .42s cubic-bezier(.2,.7,.2,1), visibility .28s;
 }
