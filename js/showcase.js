@@ -27,7 +27,7 @@
   const desktop = window.matchMedia('(min-width:969px) and (min-height:680px)');
   const mobile = window.matchMedia('(max-width:968px)');
   const clamp = (n,a=0,b=1) => Math.min(b,Math.max(a,n));
-  const useManual = () => mobile.matches || reduce.matches || !desktop.matches;
+  const useManual = () => mobile.matches || reduce.matches;
   let frame = 0;
   let active = 0;
   let manualIndex = 0;
@@ -62,9 +62,15 @@
 
     const r = section.getBoundingClientRect();
     if (r.top > window.innerHeight || r.bottom < 0) return;
-    const stickyTop = Math.max(86,Math.min(window.innerHeight * .11,128));
-    const distance = Math.max(1,section.offsetHeight-window.innerHeight);
-    const p = clamp((-r.top + stickyTop * .18) / distance);
+    let p;
+    if (desktop.matches) {
+      const stickyTop = Math.max(86,Math.min(window.innerHeight * .11,128));
+      const distance = Math.max(1,section.offsetHeight-window.innerHeight);
+      p = clamp((-r.top + stickyTop * .18) / distance);
+    } else {
+      const vh = window.innerHeight;
+      p = clamp((vh * .75-r.top) / Math.max(1,r.height+vh * .28));
+    }
     const exact = p * slides.length;
     const index = Math.min(slides.length - 1,Math.floor(exact));
     const within = index === slides.length - 1 ? 0 : clamp(exact-index);
