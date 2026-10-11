@@ -30,6 +30,22 @@ Site Sabor do Alemão (catálogo / pedidos)
                                                                   fiscal autorizado
 ```
 
+### Decisão confirmada — A/B deve ser escolhido por pedido, não por cliente
+
+**Um mesmo cliente, vendedor ou empresa pode operar tanto pelo Sistema A quanto pelo Sistema B.** A classificação A/B pertence a **cada pedido**. Não vincular o cliente ou a empresa a um único sistema e não mudar pedidos antigos quando o cadastro for alterado.
+
+**PDV proposto, ainda não implementado:**
+1. Vendedor clica em **Novo pedido** e escolhe o cliente normalmente.
+2. Logo após o cliente e **antes de incluir produtos**, aparece a seleção obrigatória **Destino do pedido: Sistema A / Sistema B**. Sem seleção, impedir a conclusão do pedido.
+3. A seleção pode receber uma **sugestão visual** baseada no histórico ou preferência do cliente, mas deve exigir confirmação explícita do usuário em cada pedido. Para evitar erro fiscal, não salvar com A/B silenciosamente predefinido.
+4. Selecionar A ou B **não pode trocar a empresa dona do estoque, os preços ou as quantidades**; apenas define o caminho comercial/fiscal aplicável ao pedido.
+5. Mostrar o destino no resumo antes da confirmação e também no detalhe e na listagem de pedidos, com filtros A/B.
+6. Depois de salvo, alterar o destino requer permissão, registro de auditoria e bloqueios para pedidos já faturados ou transmitidos ao WTTI.
+7. **Site futuro:** não expor livremente essa escolha ao cliente final sem política comercial definida. O servidor deve atribuir/validar o destino por pedido; cliente autorizado ou não é outra regra independente.
+8. Migração: pedidos antigos sem esse campo devem manter um estado **legado/indefinido** até decisão comercial; não converter todos para A ou B por suposição.
+
+**Exemplo:** Mercado Exemplo pode ter `Pedido #101 — Sistema A` e `Pedido #102 — Sistema B` no mesmo dia, sem conflito, com os respectivos estados separados.
+
 ### Regras de negócio para o Bischof Vendas
 
 1. Cada pedido deve ter identificação clara de **Sistema A** ou **Sistema B** (nomes internos até confirmação operacional); não é uma propriedade automática de todo pedido do site.
@@ -63,7 +79,7 @@ Site Sabor do Alemão (catálogo / pedidos)
 
 1. Suporte WTTI confirma ou nega capacidades por escrito.
 2. Revisar o código e as migrações **atuais** do Bischof Vendas (sem presumir campo A/B já existente), mapeando multiempresa, preços, pedidos e reservas Câmara Fria.
-3. Definir se A/B é escolhido por pedido, pelo cliente ou pela empresa — com possibilidade de exceção controlada.
+3. **Definido: selecionar A/B por pedido.** Antes de implementar, conferir no PDV existente onde inserir a escolha após o cliente e antes dos produtos, com confirmação explícita e sem alterar empresa/estoque.
 4. Implementar filtro/etiqueta/classificação A/B no Bischof Vendas **com migração segura e compatibilidade dos pedidos existentes**, se aprovado.
 5. Só depois criar e testar o conector WTTI para o Sistema A, inicialmente em homologação com registros fictícios.
 6. Site no Cloudflare Pages permanece em desenvolvimento até aprovação formal.
