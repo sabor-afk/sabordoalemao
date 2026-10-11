@@ -2,7 +2,20 @@
 
 **Decisão comercial aprovada em 10/10/2026:** no futuro site, clientes **autorizados** poderão enviar pedidos diretamente ao Bischof Vendas; clientes **novos ou sem autorização** terão seus pedidos submetidos à **aprovação comercial**. O canal institucional/WhatsApp continuará funcionando para todos.
 
+**Autenticação definida (10/10/2026):** clientes terão conta **própria do site Sabor do Alemão**, com **e-mail e senha**. Esse login não será o mesmo login interno do Bischof Vendas. A autorização comercial continua separada do simples ato de criar a conta.
+
 **Status deste documento:** especificação de proposta para implementação posterior. **Não há checkout, login, autorização nem API implantados neste repositório.** Não promover a produção nem apontar `sabordoalemao.com.br` sem aprovação.
+
+## Login próprio e autorização comercial
+
+- **Credenciais:** e-mail e senha exclusivos para a área do cliente no site, sem reutilizar credenciais internas do Bischof Vendas.
+- **Separação de conceitos:** `conta criada` não significa `cliente autorizado`. A conta precisa estar vinculada ao cadastro comercial correto e receber permissão explícita.
+- **Estados propostos:** `pendente` (pode consultar catálogo e enviar pedido para avaliação), `autorizado` (pode encaminhar diretamente após validação do servidor) e `suspenso` (sem pedidos diretos).
+- **Experiência:** visitante não precisa de login para ver o catálogo e chamar pelo WhatsApp. Na área do cliente, oferecer login, recuperação de acesso, perfil, endereços e histórico de pedidos/solicitações conforme disponibilidade real de dados.
+- **Segurança obrigatória:** senhas armazenadas só como hashes fortes com salt (por exemplo, Argon2id), verificação e recuperação de e-mail, proteção contra tentativas de login, sessão segura em cookie HttpOnly/Secure/SameSite, expiração e revogação de sessões, controle de acesso no servidor e auditoria das aprovações.
+- **Cloudflare:** Pages hospeda o front-end público; a autenticação real requer backend, base de usuários e serviço de recuperação de senha. Avaliar integração segura com backend já existente ou Pages Functions/D1 considerando cotas e custo. Não implementar login apenas em JavaScript do navegador nem armazenar senhas no `localStorage`.
+- **Vínculo com operações:** manter IDs do usuário/site e do cliente/empresa no Bischof Vendas distintos e vinculados de modo explícito. Jamais autorizar pedidos diretos com uma flag controlada pelo navegador.
+- **Cadastro de contas:** ainda é preciso decidir se novos clientes podem se registrar no site e ficar aguardando liberação ou se a equipe criará/enviará convites para as contas.
 
 ## Visão simplificada
 
@@ -24,7 +37,7 @@ Visitante -> Catálogo institucional -> Carrinho -> Identificação
 
 ### A. Cliente autorizado — envio direto
 
-1. Identifica-se por sessão segura, vinculada à empresa/cliente no sistema comercial.
+1. Entra com e-mail e senha da conta própria do site. Uma sessão segura, validada no servidor, vincula o usuário à empresa/cliente correto no sistema comercial.
 2. Seleciona produtos, quantidades/unidades e endereço cadastrado ou permitido.
 3. O servidor verifica **na hora do envio** se o cliente está autorizado, se os produtos são vendidos para ele, preços/condições e regras de pedido vigentes.
 4. O site usa uma integração **autenticada do servidor** com o Bischof Vendas. Nunca incluir tokens secretos no JavaScript público.
@@ -68,7 +81,8 @@ Visitante -> Catálogo institucional -> Carrinho -> Identificação
 
 ## Decisões futuras que precisam de confirmação
 
-- Como o Bischof Vendas identifica clientes autorizados hoje (login, vínculo com empresa, usuários e permissão).
+- Como o Bischof Vendas identifica o cadastro de clientes e suas permissões comerciais, para vincular à conta própria do site (sem reutilizar login interno).
+- Se o cadastro da conta do site será aberto com aprovação posterior ou por convite criado pela equipe.
 - Quem aprova novos cadastros e solicitações, e em qual sistema.
 - Quando exatamente estoque é reservado e baixado no Bischof Vendas/Câmara Fria.
 - Se preços por cliente poderão ser exibidos antes do login; mínimo de pedidos, condições e entrega.
