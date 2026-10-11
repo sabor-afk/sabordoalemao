@@ -46,14 +46,14 @@ Os nomes acima são operacionais; confirmar razão social, CNPJ, códigos intern
 
 - No Bischof Vendas, prever vínculo fiscal do cliente com **uma das três empresas do WTTI**, usando identificadores estáveis (CNPJ/código da empresa e ID do cliente no WTTI, quando disponível); **não buscar só pelo nome**, pois há homônimos.
 - Verificar onde esse relacionamento será mantido e sincronizado: se a WTTI não oferecer API/importação ou consulta de clientes, a correspondência poderá precisar ser cadastrada/validada **manualmente** no Bischof Vendas. Não afirmar que o sistema consegue consultar o WTTI automaticamente antes de confirmar a integração.
-- Na hipótese de um cliente ter cadastro em **mais de uma** empresa emissora, a escolha deve ser inequívoca, controlada e validada por pedido. **Pendência para confirmar com a operação**.
-- Nenhum pedido fiscal pode avançar com vínculo ausente, divergente ou ambíguo. Sinalizar `Cadastro fiscal pendente de conferência` e permitir correção apenas a usuário autorizado.
+- **Regra confirmada (11/10/2026): cada cliente pertence a exatamente uma empresa fiscal do WTTI.** O PDV deve identificar automaticamente essa única empresa a partir do cadastro do cliente; o vendedor **não escolhe nem troca a empresa fiscal durante o pedido**. Qualquer mudança de vínculo é feita no cadastro, por usuário autorizado e com auditoria. A seleção Sistema A/B continua sendo feita **a cada pedido**.
+- Nenhum pedido fiscal pode avançar com vínculo ausente ou divergente. Sinalizar `Cadastro fiscal pendente de conferência`, bloquear o envio ao WTTI e permitir correção **no cadastro do cliente**, apenas a usuário autorizado. Não criar uma escolha livre de empresa emissora no PDV.
 - Preservar no pedido a empresa emissora validada e o ID fiscal do cliente, como registro histórico; alterações posteriores no cadastro não podem mudar retroativamente pedidos existentes.
 
 ### Fluxo desejado para um pedido no Sistema A
 
 1. Vendedor inicia um novo pedido e seleciona o cliente.
-2. O PDV identifica a **empresa fiscal vinculada** ao cadastro do cliente (ex.: José → Sabor do Alemão Matriz/SC; Luiz → Sabor do Alemão Filial/PR).
+2. O PDV identifica **automaticamente a única empresa fiscal vinculada** ao cadastro do cliente (ex.: José → Sabor do Alemão Matriz/SC; Luiz → Sabor do Alemão Filial/PR); essa empresa não é editável no pedido.
 3. O vendedor escolhe **Sistema A ou B** para **aquele pedido**; essa escolha independe do cliente. Se A, a tela mostra `Empresa emissora WTTI: [empresa do cliente]`, para conferência **antes de adicionar itens** ou de concluir.
 4. Se for **Sistema A**, o pedido fica identificado para o fluxo fiscal da empresa encontrada; quando e somente quando existir conector WTTI homologado, o envio deverá usar tanto o ID da empresa emissora quanto o ID fiscal do cliente nessa empresa.
 5. Se for **Sistema B**, o pedido continua somente de venda, sem integração WTTI, mesmo que o cliente tenha vínculo fiscal cadastrado.
@@ -64,8 +64,8 @@ Os nomes acima são operacionais; confirmar razão social, CNPJ, códigos intern
 ### Ordem de implementação, sem alterar a produção ainda
 
 1. Confirmar as três empresas fiscais reais no WTTI e identificar seus IDs, CNPJs e cadastros de clientes.
-2. Mapear os vínculos fiscais dos clientes existentes no Bischof Vendas, tratando duplicidade de nomes e cadastros entre empresas.
-3. Mostrar no PDV **Cliente → Empresa fiscal identificada → escolha Sistema A/B → Produtos** (a posição visual de A/B pode ser ajustada, desde que a empresa emissora de A sempre apareça para conferência).
+2. Mapear os vínculos fiscais dos clientes existentes no Bischof Vendas, garantindo **um único vínculo fiscal por cliente** e identificadores corretos, sem depender só de nomes coincidentes.
+3. Mostrar no PDV **Cliente → Empresa fiscal identificada automaticamente (somente leitura) → escolha Sistema A/B → Produtos**. A empresa fiscal do Sistema A deve aparecer claramente na confirmação do pedido.
 4. Validar que empresa fiscal, empresa do estoque e preço/tabela do cliente não sejam alterados indevidamente.
 5. Só depois estudar o conector WTTI, sem presumir que a plataforma oferece API ou emissão automática de notas.
 
