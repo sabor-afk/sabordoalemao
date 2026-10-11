@@ -1,7 +1,7 @@
 // Cloudflare Pages: copia somente arquivos publicos para dist/.
 // Executar: node tools/build-pages.mjs
 // Sem bibliotecas externas e sem alterar a origem do site.
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, lstatSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 
 const root = resolve(process.cwd());
@@ -26,7 +26,7 @@ function checkedPath(relative) {
 }
 
 function copyAssets(source, target) {
-  const stats = statSync(source, { throwIfNoEntry: true });
+  const stats = lstatSync(source, { throwIfNoEntry: true });
   if (stats.isSymbolicLink()) throw new Error('Link simbolico nao permitido: ' + source);
   if (stats.isDirectory()) {
     mkdirSync(target, { recursive: true });
