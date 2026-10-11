@@ -34,9 +34,10 @@ O Sabor do Alemão terá **catálogo institucional + WhatsApp** e, em uma etapa 
 - Exibir preços e condições apenas conforme política comercial real; avaliar tabelas B2B e autorização por cliente.
 - Validar cobertura de entrega, quantidade mínima, unidade/caixa, estoque disponível e limites de pedido.
 - **Arquitetura preferida:** estudar integração do site com **Bischof Vendas**, que já se integra à **Câmara Fria**, em vez de criar outro estoque ou duplicar regras de reserva.
+- **Decisão aprovada (10/10/2026): autenticação própria por e-mail e senha para a área de clientes.** A conta do site é independente do login interno do Bischof Vendas e não concede autorização comercial automaticamente.
 - **Decisão aprovada (10/10/2026): fluxo híbrido por autorização do cliente.** Clientes cadastrados e autorizados poderão enviar pedidos diretamente ao Bischof Vendas; clientes novos ou não autorizados enviarão uma solicitação para aprovação comercial.
 - **Proteção de estoque:** a solicitação ainda não aprovada não pode reservar ou baixar estoque automaticamente. No caminho direto, a reserva e a baixa deverão obedecer à integração já existente entre Bischof Vendas e Câmara Fria, após validação técnica.
-- **Controle de acesso:** a autorização do cliente e as condições comerciais devem ser conferidas no servidor, nunca apenas por um campo ou botão do navegador.
+- **Controle de acesso:** a autorização do cliente e as condições comerciais devem ser conferidas no servidor, nunca apenas por um campo ou botão do navegador. Proteger senhas com hashes fortes e sessões HttpOnly/Secure; implantar fluxo de recuperação de senha e proteção contra tentativas abusivas quando houver backend.
 - **Integração a definir:** mapear APIs, autenticação, estados e regras de reserva/baixa, além de prevenção de pedidos duplicados, antes de construir o checkout. Detalhamento: `FLUXOS-PEDIDOS-SITE-B2B.md`.
 - Não adicionar pagamento online, cadastro obrigatório ou backend até haver necessidade comercial e avaliação de segurança/cotas.
 - Preservar o acesso rápido ao WhatsApp em todos os fluxos.
@@ -68,6 +69,7 @@ O Sabor do Alemão terá **catálogo institucional + WhatsApp** e, em uma etapa 
 - [ ] Revisar a política LGPD conforme o caminho real dos dados (formulário local -> confirmação do usuário -> WhatsApp).
 - [ ] Informar finalidade, contato para solicitações do titular, período de armazenamento e operadores de dados, após validação jurídica.
 - [ ] Sem login, pagamentos, CPF/CNPJ ou backend nesta fase: evitar custo e exposição sem uma necessidade concreta.
+- [ ] Implementar **futuramente** autenticação própria para clientes no site: login por e-mail/senha, recuperação de senha, verificação de e-mail, estados pendente/autorizado/suspenso, vínculo ao cliente no Bischof Vendas e autorização efetiva no servidor. Definir antes o modelo de cadastro: público pendente ou convite pela equipe.
 - [ ] Caso futuramente exista CRM, pedidos ou pagamentos, especificar integração, segurança, consentimento e retenção antes de criar APIs.
 - [ ] Testar cabeçalhos de segurança no Pages e configurações DNS/HTTPS após abrir um ambiente de teste.
 - [ ] Rotina de backup GitHub, controle de versões, checklist de regressão e rollback por commit.
