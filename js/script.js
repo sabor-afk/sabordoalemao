@@ -174,14 +174,25 @@ function carregarProdutos() {
 carregarProdutos();
 
 // ── MODAL PRIVACIDADE ─────────────────────────────────────────
+let privacyPreviousBodyOverflow = '';
+let privacyPreviousFocus = null;
 function abrirPrivacidade(e) {
-    e.preventDefault();
-    document.getElementById("modalPrivacidade").style.display = "flex";
-    document.body.style.overflow = "hidden";
+    e?.preventDefault();
+    const modal = document.getElementById('modalPrivacidade');
+    if (!modal || modal.style.display === 'flex') return;
+    privacyPreviousFocus = document.activeElement;
+    privacyPreviousBodyOverflow = document.body.style.overflow;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('.privacidade-fechar')?.focus({preventScroll:true});
 }
 function fecharPrivacidade() {
-    document.getElementById("modalPrivacidade").style.display = "none";
-    document.body.style.overflow = "";
+    const modal = document.getElementById('modalPrivacidade');
+    if (!modal || modal.style.display !== 'flex') return;
+    modal.style.display = 'none';
+    document.body.style.overflow = privacyPreviousBodyOverflow;
+    if (privacyPreviousFocus?.isConnected) privacyPreviousFocus.focus({preventScroll:true});
+    privacyPreviousFocus = null;
 }
 // Fechar clicando fora do modal
 document.getElementById("modalPrivacidade").addEventListener("click", function(e) {
@@ -282,8 +293,8 @@ function abrirProduto(index) {
     }
     document.getElementById('prodDescModal').textContent = p.descricao;
     document.getElementById('prodEmbalagem').textContent = p.embalagem || '—';
-    document.getElementById('prodValidade').textContent = p.validade || '6 meses congelado';
-    document.getElementById('prodConservacao').textContent = p.conservacao || 'Manter congelado a -18°C';
+    document.getElementById('prodValidade').textContent = p.validade || 'Consulte a ficha técnica do produto';
+    document.getElementById('prodConservacao').textContent = p.conservacao || 'Consulte a ficha técnica do produto';
 
     // Peso
     const pesoWrap = document.getElementById('prodPesoWrap');
